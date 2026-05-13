@@ -1,6 +1,6 @@
 # Web Anatomy
 
-> Page-anatomy skills for AI agents. Section by section, archetype by archetype — built for the people who actually ship pages.
+> AI agent skills for shipping landing pages. Pick the archetype, sequence the sections, cite real patterns from Ramp, Wiz, Webflow.
 
 ```
 $ npx skills add GabrielAmz/web-anatomy
