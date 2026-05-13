@@ -69,6 +69,14 @@ for dir in "$SKILLS_DIR"/*/; do
     continue
   fi
 
+  # Unquoted colon+space inside the description value breaks YAML parsers
+  # by being interpreted as a `key: value` mapping. Catch before publish.
+  if printf '%s' "$description" | grep -q ': '; then
+    echo "FAIL  $skill_name — description contains ': ' (unquoted YAML colon — replace with ' — ' or quote the whole description)"
+    FAILED=$((FAILED + 1))
+    continue
+  fi
+
   body_lines="$(wc -l < "$skill_file" | tr -d '[:space:]')"
   if [ "$body_lines" -gt 500 ]; then
     echo "WARN  $skill_name — body is $body_lines lines (spec recommends <500; push detail into references/)"
