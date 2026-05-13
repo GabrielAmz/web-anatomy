@@ -1,0 +1,25 @@
+{
+  "name": "web-anatomy",
+  "version": "0.1.0",
+  "description": "Page-anatomy skills for AI agents. Section-by-section landing page creation, audits, and proven growth strategies — built for founders and growth engineers who ship pages.",
+  "homepage": "https://github.com/GabrielAmz/web-anatomy",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GabrielAmz/web-anatomy.git"
+  },
+  "author": {
+    "name": "Gabriel Amzallag",
+    "url": "https://github.com/GabrielAmz"
+  },
+  "license": "MIT",
+  "keywords": [
+    "claude-code",
+    "agent-skills",
+    "landing-page",
+    "conversion",
+    "cro",
+    "growth",
+    "marketing",
+    "website"
+  ]
+}
