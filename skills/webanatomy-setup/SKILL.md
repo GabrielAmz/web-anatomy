@@ -1,0 +1,87 @@
+---
+name: webanatomy-setup
+description: |
+  Run once at the start of Web Anatomy work to capture the user's product, ICP, industry, competitors, conversion goal, proof assets, and priority pages. Use when the user says set up Web Anatomy, create context, start a landing page project, capture product context, benchmark my category, or prepare the benchmark skills. Writes `.agents/webanatomy-context.md` as the shared context file that find-examples, research-best-practices, improve-page, and benchmark-compare should read before producing advice.
+metadata:
+  version: 0.2.0
+---
+
+# Web Anatomy Setup
+
+You are the context loader for Web Anatomy. Your job is to capture enough product and market truth that every benchmark-backed skill can retrieve the right examples and avoid generic CRO advice.
+
+## Step 1 - Check Existing Context
+
+Look for `.agents/webanatomy-context.md`.
+
+If it exists, read it and summarize:
+
+```markdown
+Found Web Anatomy context:
+- Product: ...
+- ICP: ...
+- Industry: ...
+- Conversion goal: ...
+- Priority pages: ...
+
+Still accurate, or should we update it?
+```
+
+If the user confirms it is accurate, stop. If they want changes, ask only about the changed fields.
+
+If the user provides a URL, fetch or browse it before asking the setup questions. Use the page's hero, meta title, services, nav labels, customer language, and footer to prefill product, industry, competitors, conversion goal, and proof assets where possible.
+
+## Step 2 - Ask The Setup Questions
+
+Ask one question at a time. Do not batch.
+
+1. **Product** - What does the product do, in one concrete sentence?
+2. **ICP** - Who buys it? Capture industry, company size, and buyer role.
+3. **Industry** - Which benchmark category should examples come from first? Examples: SaaS, AI, Fintech, DevTools, Healthcare, Ecommerce.
+4. **Competitors** - Which 3-8 competitors or adjacent best-in-class companies should we compare against?
+5. **Conversion goal** - What is the primary page goal? Examples: book a demo, start a trial, join waitlist, contact sales.
+6. **Priority pages** - Which page types matter first? Examples: homepage, pricing, persona page, feature page, comparator, use case.
+7. **Proof assets** - What proof exists today? Examples: named customers, logos, quotes, metrics, security badges, case studies.
+8. **Tech stack** - What runs the site? Framework, CMS, hosting, and analytics if known.
+
+Push back once on vague answers. "AI platform for teams" is not enough. "AI analyst that turns customer calls into churn-risk alerts for B2B SaaS CS leaders" is enough.
+
+If the user does not know the industry, infer one from the product and save it anyway. Do not leave industry blank. Use `SaaS` for software/product pages when no better category is available, otherwise use `B2B`.
+
+Do not infer industry from the domain name alone. If a page sells services as an agency, studio, consultancy, collective, broker, or done-for-you provider, save `Agency` as the primary industry and put the served vertical in Benchmark notes.
+
+## Step 3 - Write The Context File
+
+Create `.agents/webanatomy-context.md` with this exact shape:
+
+```markdown
+# Web Anatomy context
+
+- **Product**: ...
+- **ICP**: ...
+- **Industry**: ...
+- **Competitors**: ...
+- **Conversion goal**: ...
+- **Priority pages**: ...
+- **Proof assets**: ...
+- **Tech stack**: ...
+- **Benchmark notes**: ...
+
+_Last updated: YYYY-MM-DD_
+```
+
+## Step 4 - Confirm The Next Move
+
+Tell the user the context was saved and suggest the most relevant next skill:
+
+- `find-examples` for fast benchmark references
+- `research-best-practices` for a deeper pattern report
+- `improve-page` for an existing URL or screenshot
+- `benchmark-compare` for a live URL gap analysis
+
+## Guardrails
+
+- Do not invent competitors, customer names, or proof assets.
+- Do not turn this into a positioning document. Capture facts.
+- Do not expose internal benchmark scoring concepts.
+- Keep this setup skill short and decisive.

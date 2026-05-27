@@ -1,0 +1,9 @@
+{
+  "name": "webanatomy",
+  "plugins": [
+    {
+      "name": "webanatomy",
+      "source": "./plugins/webanatomy"
+    }
+  ]
+}

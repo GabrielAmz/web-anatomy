@@ -1,0 +1,12 @@
+{
+  "name": "webanatomy",
+  "version": "0.2.0",
+  "description": "Benchmark-backed landing page anatomy skills for finding examples, researching patterns, improving pages, and comparing against market standards.",
+  "author": {
+    "name": "Gabriel Amzallag",
+    "url": "https://github.com/GabrielAmz"
+  },
+  "homepage": "https://github.com/GabrielAmz/web-anatomy",
+  "repository": "https://github.com/GabrielAmz/web-anatomy",
+  "license": "MIT"
+}

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="Web Anatomy">
+  <rect width="128" height="128" rx="24" fill="#111827"/>
+  <path d="M28 36h72v14H28zM28 58h34v34H28zM70 58h30v10H70zM70 76h30v10H70z" fill="#F9FAFB"/>
+  <path d="M28 104h72" stroke="#38BDF8" stroke-width="8" stroke-linecap="round"/>
+</svg>

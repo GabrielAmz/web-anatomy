@@ -1,0 +1,45 @@
+{
+  "name": "webanatomy",
+  "version": "0.2.0",
+  "description": "Benchmark-backed landing page anatomy skills for finding examples, researching patterns, improving pages, and comparing against market standards.",
+  "author": {
+    "name": "Gabriel Amzallag",
+    "url": "https://github.com/GabrielAmz"
+  },
+  "homepage": "https://github.com/GabrielAmz/web-anatomy",
+  "repository": "https://github.com/GabrielAmz/web-anatomy",
+  "license": "MIT",
+  "keywords": [
+    "webanatomy",
+    "landing-pages",
+    "conversion",
+    "cro",
+    "benchmarks",
+    "agent-skills"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Web Anatomy",
+    "shortDescription": "Improve landing pages with benchmark-backed examples.",
+    "longDescription": "Use Web Anatomy skills to classify landing pages, find strong section examples, research repeatable conversion patterns, and produce practical gap analyses. The skills are ready to use a Web Anatomy MCP when one is configured, without exposing internal scoring mechanics.",
+    "developerName": "Gabriel Amzallag",
+    "category": "Marketing",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/GabrielAmz/web-anatomy",
+    "privacyPolicyURL": "https://github.com/GabrielAmz/web-anatomy",
+    "termsOfServiceURL": "https://github.com/GabrielAmz/web-anatomy",
+    "defaultPrompt": [
+      "Find strong SaaS hero examples",
+      "Research pricing page best practices",
+      "Improve this landing page"
+    ],
+    "brandColor": "#111827",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/logo.svg",
+    "screenshots": []
+  }
+}

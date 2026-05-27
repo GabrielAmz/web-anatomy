@@ -7,11 +7,13 @@
 #   3. front matter `name:` field matches the directory name
 #   4. front matter `description:` field exists and is non-empty
 #   5. Body is < 500 lines (per spec recommendation)
+#   6. Plugin-bundled skills mirror the source skills directory
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 SKILLS_DIR="$SCRIPT_DIR/skills"
+PLUGIN_SKILLS_DIR="$SCRIPT_DIR/plugins/webanatomy/skills"
 FAILED=0
 PASSED=0
 
@@ -85,6 +87,31 @@ for dir in "$SKILLS_DIR"/*/; do
   echo "OK    $skill_name"
   PASSED=$((PASSED + 1))
 done
+
+echo ""
+echo "Source skill pass: $PASSED · Failed so far: $FAILED"
+
+if [ -d "$PLUGIN_SKILLS_DIR" ]; then
+  source_list="$(find "$SKILLS_DIR" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sort)"
+  plugin_list="$(find "$PLUGIN_SKILLS_DIR" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sort)"
+
+  if [ "$source_list" != "$plugin_list" ]; then
+    echo "FAIL  plugin skills — plugins/webanatomy/skills does not mirror skills/"
+    echo "Source skills:"
+    printf '%s\n' "$source_list"
+    echo "Plugin skills:"
+    printf '%s\n' "$plugin_list"
+    FAILED=$((FAILED + 1))
+  else
+    while IFS= read -r skill_name; do
+      [ -z "$skill_name" ] && continue
+      if ! diff -qr "$SKILLS_DIR/$skill_name" "$PLUGIN_SKILLS_DIR/$skill_name" >/dev/null; then
+        echo "FAIL  plugin skills — $skill_name differs from source"
+        FAILED=$((FAILED + 1))
+      fi
+    done <<< "$source_list"
+  fi
+fi
 
 echo ""
 echo "Passed: $PASSED · Failed: $FAILED"
