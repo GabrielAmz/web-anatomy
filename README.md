@@ -13,7 +13,7 @@ Installs the Web Anatomy skill pack for Claude Code, OpenAI Codex, Cursor, Winds
 Web Anatomy now has two layers:
 
 - **Skills-only install** with `npx skills add GabrielAmz/web-anatomy`
-- **Plugin install** from this repo's marketplace files, bundling skills now and ready for a future MCP connection
+- **Plugin install** from this repo's marketplace files, bundling the same skill set for plugin-aware agents
 
 The new benchmark-backed workflow skills are:
 
@@ -45,11 +45,9 @@ Web Anatomy does not rely on chat to render screenshots. The output skills write
 
 The chat response should stay short: top findings, report path, and any screenshot or MCP limitations. `report.html` is the product experience.
 
-## MCP Contract
+## MCP Config
 
-The skills are MCP-aware, but v0.2 does not assume a public Web Anatomy MCP server exists yet.
-
-For now, the repo includes `.mcp.example.json` as the future hosted-server contract:
+The skills are MCP-aware. The repo includes `.mcp.example.json` as an optional local config template:
 
 ```bash
 export WEBANATOMY_MCP_TOKEN=...
@@ -62,19 +60,6 @@ Token lookup order:
 3. `~/.codex/webanatomy_mcp_token`
 
 The skills use MCP tools such as `search_sections` when available. Scores, thresholds, raw marker coordinates, and benchmark field names stay internal; user-facing reports translate them into plain-English patterns and gap labels.
-
-When `https://webanatomy.com/mcp` is live, copy `.mcp.example.json` to `.mcp.json` and add `"mcpServers": "./.mcp.json"` back to `plugins/webanatomy/.codex-plugin/plugin.json`.
-
-## What's coming (v1.0)
-
-~30 skills across four categories:
-
-- **Teardowns (8)** — full-page audits: `wa-landing-page-teardown`, `wa-pricing-page-teardown`, `wa-comparator-teardown`, `wa-persona-teardown`, `wa-signup-flow-teardown`, ...
-- **Section revamps (9)** — single-section deep cuts: `wa-hero-revamp`, `wa-pricing-table-revamp`, `wa-feature-grid-revamp`, `wa-faq-revamp`, `wa-comparison-table-revamp`, ...
-- **Page generation (4)** — `wa-page-create` (already in v0.1) + dedicated builders: `wa-comparator-page`, `wa-pricing-page`, `wa-use-case-page`
-- **Strategic plays (~10)** — `play-best-x-category-pages`, `play-switching-motion`, `play-show-value-upfront`, `play-roi-calculator`, `play-self-segmenting-homepage`, `play-blurred-form-background`, `play-free-tools-ecosystem`, `play-community-templates`, `play-use-case-pages`, plus `play-persona-pages` in v0.1
-
-See [VERSIONS.md](VERSIONS.md) for the roadmap.
 
 ## Why "Anatomy"
 
