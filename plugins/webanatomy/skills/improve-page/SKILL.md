@@ -1,7 +1,7 @@
 ---
 name: improve-page
 description: |
-  Improve an existing landing page, homepage, pricing page, persona page, feature page, comparator page, or individual section using Web Anatomy benchmarks. Use when the user asks for a critique, audit, redesign brief, section improvement, CRO review, why is this page weak, compare my page to best practices, or create a Lazyweb-style improvement report. Classifies the page, captures current reality first, routes to the right archetype, searches benchmark examples, and writes a report under `.webanatomy/improve-page/`.
+  Improve an existing landing page, homepage, pricing page, persona page, feature page, comparator page, or individual section using Web Anatomy benchmarks. Use when the user asks what can you do to improve my LP, what can you do to improve my landing page, improve my site, critique, audit, redesign brief, section improvement, CRO review, why is this page weak, compare my page to best practices, or create a Lazyweb-style improvement report. Classifies the page, captures current reality first, routes to the right archetype, searches benchmark examples, and writes a report under `.webanatomy/improve-page/`.
 metadata:
   version: 0.2.0
 ---
@@ -49,7 +49,7 @@ Only fall back to hand-written HTML if the renderer cannot be run.
 
 ## Step 1 - Load Context
 
-Read `.agents/webanatomy-context.md` if it exists. If it does not, continue, but make only conservative assumptions and ask for product/ICP when it affects the recommendation.
+Read `.agents/webanatomy-context.md` if it exists. If it does not, continue with conservative assumptions. Offer `webanatomy-setup` as an optional preflight only when missing ICP, industry, competitors, conversion goal, or proof assets would materially change the recommendation. Do not block quick audits or URL-based feedback on setup.
 
 ## Step 2 - Capture Current Reality
 
