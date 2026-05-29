@@ -1,7 +1,7 @@
 {
   "name": "web-anatomy",
-  "version": "0.1.0",
-  "description": "AI agent skills for shipping landing pages. Pick the archetype, sequence the sections, cite real patterns from Ramp, Wiz, Webflow.",
+  "version": "0.2.0",
+  "description": "Benchmark-backed AI agent skills for finding examples, researching patterns, improving landing pages, and comparing against market standards.",
   "homepage": "https://github.com/GabrielAmz/web-anatomy",
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
     "conversion",
     "cro",
     "growth",
+    "benchmarks",
     "marketing",
     "website"
   ]
