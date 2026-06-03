@@ -4,7 +4,7 @@
       "command": "sh",
       "args": [
         "-lc",
-        "TOKEN=\"${WEBANATOMY_MCP_TOKEN:-}\"; if [ -z \"$TOKEN\" ] && [ -f \"$HOME/.webanatomy/webanatomy_mcp_token\" ]; then TOKEN=\"$(cat \"$HOME/.webanatomy/webanatomy_mcp_token\")\"; fi; if [ -z \"$TOKEN\" ] && [ -f \"$HOME/.codex/webanatomy_mcp_token\" ]; then TOKEN=\"$(cat \"$HOME/.codex/webanatomy_mcp_token\")\"; fi; exec npx -y mcp-remote https://webanatomy.com/mcp --header \"Authorization: Bearer $TOKEN\" --transport http-first --silent"
+        "TOKEN=\"${WEBANATOMY_MCP_TOKEN:-}\"; if [ -z \"$TOKEN\" ] && [ -f \"$HOME/.webanatomy/webanatomy_mcp_token\" ]; then TOKEN=\"$(cat \"$HOME/.webanatomy/webanatomy_mcp_token\")\"; fi; if [ -z \"$TOKEN\" ] && [ -f \"$HOME/.codex/webanatomy_mcp_token\" ]; then TOKEN=\"$(cat \"$HOME/.codex/webanatomy_mcp_token\")\"; fi; exec npx -y mcp-remote https://www.webanatomy.ai/mcp --header \"Authorization: Bearer $TOKEN\" --transport http-first --silent"
       ]
     }
   }
