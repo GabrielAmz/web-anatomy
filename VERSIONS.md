@@ -14,7 +14,7 @@ Adds the Lazyweb-inspired plugin architecture and benchmark-backed workflow skil
 
 - Repo marketplace files for Codex and Claude plugin discovery.
 - `plugins/webanatomy` bundle with Codex/Claude manifests, assets, and mirrored skills.
-- `.mcp.example.json` documenting the future `https://webanatomy.com/mcp` connection and token fallback.
+- `.mcp.example.json` documenting the future `https://www.webanatomy.ai/mcp` connection and token fallback.
 - Removes the initial `wa-*` prototype skills from the active pack.
 - `webanatomy-setup` — captures product, ICP, industry, competitors, proof assets, and priority pages.
 - `find-examples` — fast benchmark-backed section references.
