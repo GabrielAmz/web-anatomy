@@ -176,20 +176,35 @@ SCORECARD
 Hero <n> · Value Proposition <n> · Copywriting <n> · Trust & Credibility <n>
 Conversion <n> · Design & UX <n> · Mobile Experience <n>
 
-REVAMP IN THIS ORDER
-1. [P0] hero — <problem + why it costs conversion>
-2. [P1] cta — <problem>
-3. [P1] trust — <problem>
-4. [P2] faq (missing) — <why its absence hurts>
+OPPORTUNITIES (priority order)
 
-PAGE-LEVEL (not one section)
-- <global fix, e.g. weak visual hierarchy / mobile tap targets>
+P0 — Critical
+1. **[Critical] (<section>) <the move to make>.** <what it unlocks and why it matters, tied to what is actually on the page>
+2. **[Critical] (<section>) <the move>.** <why>
 
-START HERE → <the single highest-leverage section> — <one line why>
+P1 — High
+3. **[High] (<section>) <the move>.** <why>
+
+P2 — Medium
+4. **[Medium] (<section>) <the move>.** <why>
+
+START HERE → <the single highest-leverage section>
 ```
 
-The score, the scorecard, the severity, and the order are the deliverable. State
-plainly that this score is directional and framework-based; the calibrated,
+Write each finding as an OPPORTUNITY, not a complaint: the bold title is the move
+to make (the gain), and the sentence after it is what that move unlocks, grounded
+in what is actually on the page. Tag every item with its section in parentheses
+(from the taxonomy), use the severity label (P0/P1/P2/P3), and order by the
+rollup from Step 4. Cross-cutting `page` items appear under their severity tagged
+`(page)`.
+
+Include sector-specific opportunities even when they are NOT in the 53-item
+rubric (e.g. a capital-loss risk notice + consent on a regulated finance page).
+Tag them with the section and mark them as sector-specific so it is clear they
+come from judgment, not the checklist.
+
+The score, scorecard, and the prioritized opportunities are the deliverable.
+State plainly that this score is directional and framework-based; the calibrated,
 benchmark-anchored view (how the page compares to real industry winners) comes
 from improve-page + the benchmark MCP.
 
