@@ -1,7 +1,7 @@
 ---
 name: audit-page
 description: |
-  Audit the current state of a landing page, homepage, pricing page, feature page, or comparator page. Score it against a 53-point CRO rubric, diagnose it section by section, and return a PRIORITIZED list of what to fix first. Scoring, diagnosis, and prioritization only — no rewrites, no copy, no benchmark data required. Use when the user asks audit my page, what is wrong with my landing page, what should I fix first, review my homepage, critique this page, or shares a URL or the page in their codebase and wants direction before improving. Runs standalone with no MCP connection. Writes a handoff artifact that improve-page consumes so the grounded rewrite does not re-diagnose. For the grounded fix use improve-page. For real examples use find-examples.
+  Audit the current state of a landing page, homepage, pricing page, feature page, or comparator page. Score it against a 49-point CRO rubric, diagnose it section by section, and return a PRIORITIZED list of what to fix first. Scoring, diagnosis, and prioritization only — no rewrites, no copy, no benchmark data required. Use when the user asks audit my page, what is wrong with my landing page, what should I fix first, review my homepage, critique this page, or shares a URL or the page in their codebase and wants direction before improving. Runs standalone with no MCP connection. Writes a handoff artifact that improve-page consumes so the grounded rewrite does not re-diagnose. For the grounded fix use improve-page. For real examples use find-examples.
 metadata:
   version: 0.1.0
 ---
@@ -133,7 +133,7 @@ headline, stop, that is improve-page.
 
 ## Step 3.5 — Score the page
 
-Read `references/scoring.md` and run the rubric: judge each of the 53 checklist
+Read `references/scoring.md` and run the rubric: judge each of the 49 checklist
 items Pass / Fail / Not-evaluable against the page, then compute the weighted
 category scores and the overall score with the formula there. Record `score`
 (overall 0-100) and `categoryScores` (per category: score, passCount, failCount)
@@ -174,7 +174,7 @@ Score: <overall>/100   ·   <one line on where conversion leaks most>
 
 SCORECARD
 Hero <n> · Value Proposition <n> · Copywriting <n> · Trust & Credibility <n>
-Conversion <n> · Design & UX <n> · Mobile Experience <n>
+Conversion <n> · Design & UX <n>
 
 OPPORTUNITIES (priority order)
 

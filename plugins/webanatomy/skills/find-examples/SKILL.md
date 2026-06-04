@@ -119,6 +119,8 @@ If the result set is thin:
 
 The tool may expose fields such as `score`, `criteria_hits`, or marker coordinates. Use those internally to choose examples, but never expose them.
 
+`strengths` comes back as a list of plain-language strings (the MCP normalizes them); cite them as text. There are no `how`/`why`/`evidence` sub-fields to read.
+
 ## Selection Rules
 
 Pick 5-10 examples. Prefer:

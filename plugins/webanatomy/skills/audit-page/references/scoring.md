@@ -27,7 +27,11 @@ compares to the real top-converting pages in its industry — is the `improve-pa
 Be honest on Pass/Fail. A generous audit that inflates the score is useless. When
 in doubt between Pass and Fail, Fail and explain why in the section problem.
 
-## Checklist (53 items, 7 categories)
+## Checklist (49 items, 6 categories)
+
+Mobile is intentionally out of scope here: a desktop-context audit cannot reliably
+judge mobile fold, tap targets, or readable text. Mobile is assessed by the full
+pipeline (with a mobile screenshot), not this offline rubric.
 
 ### Hero
 - **M1 — Product & Target Audience Clarity** (10): Hero contains both (1) product category or function AND (2) target audience or use case. Missing either = Fail. _e.g. "Billing automation for EU SaaS finance teams."_
@@ -91,12 +95,6 @@ in doubt between Pass and Fail, Fail and explain why in the section problem.
 - **V8 — Professional Visual Tone** (5): Icons share one style; no random emojis in headings/body.
 - **V21 — Organized Footer** (5): Footer has ≥2 labeled link sections with 3+ links each.
 
-### Mobile Experience
-- **Mob1 — Mobile Hero Visibility** (10): On a typical phone, hero shows H1 and one main CTA without scrolling.
-- **Mob2 — Mobile Readable Text** (9): Body/headings readable without zooming (body ≥16px).
-- **Mob3 — Mobile Tap Targets** (9): Buttons/links have enough height/spacing to avoid mis-taps (CTA ≥44px).
-- **Mob7 — Sticky or Frequent CTA** (9): Mobile has a sticky CTA bar OR the main CTA appears ≥3 times. One hero CTA only = Fail.
-
 ## Section rollup index
 
 This maps every item to the ONE section it most affects, so failures roll up by
@@ -106,18 +104,18 @@ or two are P0, the rest descend. Items under `page` are cross-cutting (global
 design, quality, narrative, mobile-global) — they do not belong to a single
 section; surface them as page-level findings, not as one section's fault.
 
-- **hero**: M1, M14, V1, V2, M15, V23, V22, M2, M37, Mob1
+- **hero**: M1, M14, V1, V2, M15, V23, V22, M2, M37
 - **problem**: M23
 - **value_proposition**: M4, M17
 - **features**: M35, M21, V16, V4
 - **trust**: M8, V14, V15
 - **testimonial**: M22, M41, V12, M34
-- **cta**: M18, M19, M20, V3, V13, M38, M32, V25, Mob7
+- **cta**: M18, M19, M20, V3, V13, M38, M32, V25
 - **faq**: M9, V20
 - **pricing**: M36
 - **navbar**: V19
 - **footer**: V17, V21
-- **page** (global, not one section): M3, M39, M6, M26, M5, M33, V6, V9, V5, V24, V7, V8, Mob2, Mob3
+- **page** (global, not one section): M3, M39, M6, M26, M5, M33, V6, V9, V5, V24, V7, V8
 
 The 7-category scorecard (rubric view) and this section rollup (action view) come
 from the same 53 evaluations — one is grouped by category, the other by section.
