@@ -51,7 +51,23 @@ Only fall back to hand-written HTML if the renderer cannot be run.
 
 Read `.agents/webanatomy-context.md` if it exists. If it does not, continue with conservative assumptions. Offer `webanatomy-setup` as an optional preflight only when missing ICP, industry, competitors, conversion goal, or proof assets would materially change the recommendation. Do not block quick audits or URL-based feedback on setup.
 
+## Step 1.5 - Use A Prior Audit If One Exists (orchestration)
+
+Before re-diagnosing, check whether `audit-page` already diagnosed this target. Look for the most recent `.webanatomy/audit-page/{target}-*/audit.json` whose `target` matches the page in this request.
+
+If a matching `audit.json` is found (schema `webanatomy.audit-page.v1`):
+
+- Reuse its `industry`, `locale`, `currentSnapshot`, and `prioritizedSections` instead of re-capturing, re-classifying, and re-prioritizing. Skip Steps 2, 3, and 4.
+- Benchmark (Step 5) the sections the audit flagged, `startHere` first, then the remaining P0/P1 sections. Do not re-rank.
+- Treat each section's `missingLevers` as the brief: search and recommend against exactly those gaps.
+- Still capture a fresh current screenshot for the report when browser tools are available.
+- Note in the report TL;DR: "Built on the audit-page diagnosis from {date}."
+
+If no matching audit is found, proceed with Steps 2-4 as normal. This skill must still run fully standalone when no prior audit exists.
+
 ## Step 2 - Capture Current Reality
+
+(Skip if a prior audit was loaded in Step 1.5; reuse its `currentSnapshot`.)
 
 If the user provides a URL, screenshot, pasted copy, or local page:
 
@@ -63,6 +79,8 @@ If the user provides a URL, screenshot, pasted copy, or local page:
 Do not write a gap analysis against an imagined page.
 
 ## Step 3 - Classify
+
+(Skip if a prior audit was loaded in Step 1.5; reuse its `prioritizedSections`.)
 
 Classify both page archetype and section types.
 
@@ -89,6 +107,8 @@ Section aliases:
 If the request is about a whole page, identify the 3-5 highest-impact sections to benchmark. Do not audit every section equally.
 
 ## Step 4 - Resolve Industry
+
+(Skip if a prior audit was loaded in Step 1.5; reuse its `industry` and `locale`.)
 
 Always resolve an industry before benchmark search. Do not leave industry blank.
 
