@@ -42,9 +42,14 @@ re-diagnose. Use this exact shape:
     {
       "section_type": "hero",
       "severity": "P0",
+      "failedWeight": 0,
+      "failedItemIds": ["M1", "M14"],
       "problem": "what is wrong and why it costs conversion",
       "missingLevers": ["outcome promise", "risk reducer near CTA"]
     }
+  ],
+  "pageLevel": [
+    { "problem": "global issue (e.g. weak visual hierarchy across the page)", "failedItemIds": ["V6"] }
   ],
   "startHere": "hero",
   "notes": "industry inferred from page copy; no context file present"
@@ -141,21 +146,25 @@ compares to real industry winners) is the improve-page + MCP upgrade, not comput
 here. Show the score and plain-language findings only; never expose the weights or
 the internal math.
 
-## Step 4 — Prioritize (force a gradient)
+## Step 4 — Prioritize (deterministic, from the rollup)
 
-Rank by conversion impact (page-cro impact order), then by how broken the section
-is:
+Use the section rollup index in `references/scoring.md`. For each section, sum the
+weights of its FAILED items = that section's failed weight. Rank sections by
+failed weight (heaviest first). That ranking is the priority order — it is
+derived from the actual evaluation, not vibes.
 
-- Highest: above-the-fold conversion path — `hero`, primary `cta`, form friction.
-- High: belief and objection layer — `trust`, `faq`, `problem`.
-- Medium: supporting argument — `value_proposition`, `how_it_works`, `features`,
-  `pricing`.
-- Lower: polish — `testimonial`, `about`, `footer`.
+- Break ties with conversion impact: above-the-fold path (`hero`, primary `cta`,
+  form friction) outranks belief/objection (`trust`, `faq`, `problem`), which
+  outranks supporting (`value_proposition`, `how_it_works`, `features`,
+  `pricing`), which outranks polish (`testimonial`, `about`, `footer`).
+- The `page` bucket (global items: hierarchy, contrast, scannability, narrative,
+  content quality, mobile-global) is NOT a section. Surface its failures as
+  separate page-level findings, not as one section's fault.
 
-**Discipline (rule, not suggestion): at most one or two P0s.** If everything is
-high, you have not prioritized. The whole value of this skill is naming the ONE
-section to fix first. A flat list of high-severity findings is a failure, not a
-thorough audit. Set `startHere` to the single highest-leverage section.
+**Discipline (rule, not suggestion): at most one or two P0s.** Even if three
+sections score badly, P0 is reserved for the one or two with the heaviest failed
+weight on the conversion path. If everything is P0 you have not prioritized. Set
+`startHere` to the single highest failed-weight section.
 
 ## Step 5 — Output
 
@@ -172,6 +181,9 @@ REVAMP IN THIS ORDER
 2. [P1] cta — <problem>
 3. [P1] trust — <problem>
 4. [P2] faq (missing) — <why its absence hurts>
+
+PAGE-LEVEL (not one section)
+- <global fix, e.g. weak visual hierarchy / mobile tap targets>
 
 START HERE → <the single highest-leverage section> — <one line why>
 ```
