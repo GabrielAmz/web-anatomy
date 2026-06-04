@@ -57,7 +57,7 @@ Before re-diagnosing, check whether `audit-page` already diagnosed this target. 
 
 If a matching `audit.json` is found (schema `webanatomy.audit-page.v1`):
 
-- Reuse its `industry`, `locale`, `currentSnapshot`, and `prioritizedSections` instead of re-capturing, re-classifying, and re-prioritizing. Skip Steps 2, 3, and 4.
+- Reuse its `industry`, `locale`, `currentSnapshot`, `score`/`categoryScores`, and `prioritizedSections` instead of re-capturing, re-classifying, and re-prioritizing. Skip Steps 2, 3, and 4. The audit's score is the framework-relative baseline; your contribution is the benchmark-relative view (how the page compares to real winners) plus the grounded fix.
 - Benchmark (Step 5) the sections the audit flagged, `startHere` first, then the remaining P0/P1 sections. Do not re-rank.
 - Treat each section's `missingLevers` as the brief: search and recommend against exactly those gaps.
 - Still capture a fresh current screenshot for the report when browser tools are available.
