@@ -22,9 +22,17 @@ Adds the Lazyweb-inspired plugin architecture and benchmark-backed workflow skil
 - `improve-page` — current-reality capture, page classification, benchmark matching, and gap analysis.
 - `benchmark-compare` — concise URL/screenshot comparison with public gap labels.
 
+## v0.2.1 — 2026-06-04 (homepage MCP expansion)
+
+Updates the workflow skills for hosted MCP page inspiration.
+
+- `find-examples` can now use `search_pages` for whole-homepage examples and `search_sections` for section examples.
+- `research-best-practices`, `improve-page`, and `benchmark-compare` use page-level examples for homepage/category patterns before falling back to section-level evidence.
+- Plugin mirror skills now include the same hosted MCP instructions.
+
 ## Roadmap
 
-**v0.3** — MCP tool expansion. Add `get_section`, `search_pages`, `classify_page_or_section`, and `compare_url_to_benchmark` once the hosted server exposes them.
+**v0.3** — MCP tool expansion. Add `classify_page_or_section` and `compare_url_to_benchmark` once the hosted server exposes them.
 
 **v0.4** — port pipeline. Add `play-use-case-pages`, `play-best-x-category-pages`, `play-switching-motion`, `play-show-value-upfront` from the Web Anatomy strategy library. ~4 more skills.
 

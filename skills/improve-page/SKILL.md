@@ -51,7 +51,23 @@ Only fall back to hand-written HTML if the renderer cannot be run.
 
 Read `.agents/webanatomy-context.md` if it exists. If it does not, continue with conservative assumptions. Offer `webanatomy-setup` as an optional preflight only when missing ICP, industry, competitors, conversion goal, or proof assets would materially change the recommendation. Do not block quick audits or URL-based feedback on setup.
 
+## Step 1.5 - Use A Prior Audit If One Exists (orchestration)
+
+Before re-diagnosing, check whether `audit-page` already diagnosed this target. Look for the most recent `.webanatomy/audit-page/{target}-*/audit.json` whose `target` matches the page in this request.
+
+If a matching `audit.json` is found (schema `webanatomy.audit-page.v1`):
+
+- Reuse its `industry`, `locale`, `currentSnapshot`, the `score` block, and `recommendations` instead of re-capturing, re-classifying, and re-prioritizing. Skip Steps 2, 3, and 4. The audit's `score.overall` is the framework-relative baseline (facts); the `recommendations` are the free CRO read; your contribution is the benchmark-relative view (how the page compares to real winners) plus the grounded fix.
+- Benchmark (Step 5) the sections the recommendations name, `startHere` first, then the remaining P0/P1 recommendations. Do not re-rank.
+- Treat each recommendation's `opportunity` as the brief: search and recommend against exactly that move. When a recommendation carries `failedItemIds`, use them to target the exact gap.
+- Still capture a fresh current screenshot for the report when browser tools are available.
+- Note in the report TL;DR: "Built on the audit-page diagnosis from {date}."
+
+If no matching audit is found, proceed with Steps 2-4 as normal. This skill must still run fully standalone when no prior audit exists.
+
 ## Step 2 - Capture Current Reality
+
+(Skip if a prior audit was loaded in Step 1.5; reuse its `currentSnapshot`.)
 
 If the user provides a URL, screenshot, pasted copy, or local page:
 
@@ -63,6 +79,8 @@ If the user provides a URL, screenshot, pasted copy, or local page:
 Do not write a gap analysis against an imagined page.
 
 ## Step 3 - Classify
+
+(Skip if a prior audit was loaded in Step 1.5; reuse its `prioritizedSections`.)
 
 Classify both page archetype and section types.
 
@@ -90,6 +108,8 @@ If the request is about a whole page, identify the 3-5 highest-impact sections t
 
 ## Step 4 - Resolve Industry
 
+(Skip if a prior audit was loaded in Step 1.5; reuse its `industry` and `locale`.)
+
 Always resolve an industry before benchmark search. Do not leave industry blank.
 
 Use this order:
@@ -109,13 +129,25 @@ For French real-estate or property-investment product pages, default to `Real Es
 Also resolve locale before search:
 
 1. explicit locale in the request
-2. page language after current-reality capture
-3. French URL/copy/product context -> `fr`
-4. fallback -> `en`
+2. `.agents/webanatomy-context.md` Locale
+3. page language after current-reality capture
+4. French URL/copy/product context -> `fr`
+5. fallback -> `en`
 
 ## Step 5 - Search Benchmarks
 
-For each priority section, call `search_sections` with:
+For whole homepage or landing-page work, first call `search_pages` once to collect full-page references for the resolved industry and locale:
+
+```json
+{
+  "industry": "<resolved primary industry>",
+  "locale": "<resolved locale>",
+  "min_score": 60,
+  "limit": 5
+}
+```
+
+Use these page examples for overall positioning, proof strategy, page focus, and what strong companies in the category make visible. Then benchmark the priority sections. For each priority section, call `search_sections` with:
 
 ```json
 {
@@ -127,9 +159,9 @@ For each priority section, call `search_sections` with:
 }
 ```
 
-Treat `min_score: 80` as a preferred quality floor, not a hard promise. The MCP may relax internally to avoid thin result sets. Prioritize examples by relevance, visible evidence, and strongest available match.
+Treat `min_score` as a preferred quality floor, not a hard promise. The MCP may relax internally to avoid thin result sets. Prioritize examples by relevance, visible evidence, and strongest available match.
 
-If a secondary industry was inferred, run a second search with the same section type and locale using the secondary industry, then choose the examples that best match the user's business model.
+If a secondary industry was inferred, run a second page search and/or section search with the secondary industry, then choose the examples that best match the user's business model.
 
 Broaden only if results are thin. Use internal scores and criteria only for selection. Translate them into plain-English practices in the report.
 
@@ -143,7 +175,7 @@ For the current page:
 For each selected benchmark result with `screenshot_url`:
 
 1. Download it into `references/`.
-2. Use a readable filename: `{company-slug}-{section-type}.png` or `.jpg`.
+2. Use a readable filename: `{company-slug}-{section-type}.png` for section examples or `{company-slug}-homepage.png` for page examples.
 3. Reference it from `report.md` with a relative path.
 4. Include it in `report.html` next to the recommendation it supports.
 
@@ -184,7 +216,7 @@ Use this structure:
 
 ### [Company] - [Section]
 ![Benchmark match](references/company-section.png)
-[What to notice. Mention screenshot/source availability if useful.]
+[What to notice. Mention screenshot/source availability if useful. Page examples can be labeled “Homepage” in the `section` field.]
 
 ## Gap Analysis
 
@@ -218,3 +250,4 @@ Read `references/audit-method.md` before writing the gap analysis.
 - Do not recommend copying a reference exactly. Adapt the pattern.
 - Do not invent proof the user does not have.
 - If the page cannot be inspected, say what input is missing and switch to a market-pattern report.
+- Follow the shared house style in `webanatomy-setup/references/house-style.md` for the report and any rewritten copy: no em-dashes, "The X…" not "Your X…", gap labels (HIGH/MEDIUM/LOW) not P-levels, and never expose framework internals. When `.agents/webanatomy-context.md` records a Voice and tone or a Locale, write the rework copy in that voice and language.

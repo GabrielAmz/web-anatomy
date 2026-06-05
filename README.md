@@ -20,7 +20,7 @@ The new benchmark-backed workflow skills are:
 | Skill | What it does |
 |---|---|
 | `webanatomy-setup` | Run once. Captures product, ICP, industry, competitors, proof assets, and priority pages into `.agents/webanatomy-context.md`. |
-| `find-examples` | Fast benchmark lookup. Returns strong section examples grouped by repeatable pattern. |
+| `find-examples` | Fast benchmark lookup. Returns strong homepage or section examples grouped by repeatable pattern. |
 | `research-best-practices` | Deep research report. Pulls benchmark examples, live references when available, and writes `.webanatomy/research-best-practices/...`. |
 | `improve-page` | Flagship improvement workflow. Captures current reality, classifies the page, routes to section benchmarks, and writes a gap-analysis report. |
 | `benchmark-compare` | Concise URL or screenshot comparison against benchmark patterns with public `HIGH` / `MEDIUM` / `LOW` gap labels. |
@@ -59,7 +59,7 @@ Token lookup order:
 2. `~/.webanatomy/webanatomy_mcp_token`
 3. `~/.codex/webanatomy_mcp_token`
 
-The skills use MCP tools such as `search_sections` when available. Scores, thresholds, raw marker coordinates, and benchmark field names stay internal; user-facing reports translate them into plain-English patterns and gap labels.
+The skills use MCP tools such as `search_pages`, `get_page`, `search_sections`, and `get_section` when available. Scores, thresholds, raw marker coordinates, and benchmark field names stay internal; user-facing reports translate them into plain-English patterns and gap labels.
 
 ## Why "Anatomy"
 

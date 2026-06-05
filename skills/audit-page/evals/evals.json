@@ -1,0 +1,56 @@
+{
+  "skill_name": "audit-page",
+  "evals": [
+    {
+      "id": 1,
+      "name": "paid-landing-url-french",
+      "prompt": "my google ads landing page just isn't converting and i can't tell where the drop-off is. can you audit it and tell me the one thing to fix first before i touch anything? it's https://info.planity.com/ — it's in french, for salon and barbershop owners.",
+      "expected_output": "A page audit: an overall score plus the six-category scorecard at the top, then a priority-ordered list of section-tagged opportunities (at most one or two P0s), a page-level and a sector-specific note, and a single start-here section. No copy rewrites. An audit.json + report.md handoff written under .webanatomy/audit-page/. Ends by handing off to improve-page.",
+      "files": [],
+      "assertions": [
+        { "text": "Writes an audit.json under .webanatomy/audit-page/ that parses as valid JSON", "passed": null, "evidence": "" },
+        { "text": "audit.json schema field equals 'webanatomy.audit-page.v1'", "passed": null, "evidence": "" },
+        { "text": "audit.json has a score.overall between 0 and 100, a score.band [lo,hi], and score.categoryScores covering all six categories (Hero, Value Proposition, Copywriting, Trust & Credibility, Conversion, Design & UX)", "passed": null, "evidence": "" },
+        { "text": "Writes a scorecard.json with all 49 rubric items, each having a status (pass|fail|n/a) and, for pass/fail items, an evidence_source (dom|render|text|inferred); score.overall in audit.json matches what score.mjs computes from it", "passed": null, "evidence": "" },
+        { "text": "Recommendations contain at most two items at severity P0", "passed": null, "evidence": "" },
+        { "text": "startHere is non-empty and equals the section of one of the recommendations", "passed": null, "evidence": "" },
+        { "text": "Every recommendation is tagged with both a section and a severity label", "passed": null, "evidence": "" },
+        { "text": "Output exposes no internal rubric item ids (no dotted tokens like hero.outcome_focus or conversion.cta_repetition) and no raw weights or thresholds", "passed": null, "evidence": "" },
+        { "text": "Output contains no paste-ready copy or headline rewrites (diagnosis only)", "passed": null, "evidence": "" },
+        { "text": "Output ends by offering the two grounded next steps (benchmark-compare for the market view and improve-page for the section rework) and names the start-here section", "passed": null, "evidence": "" }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "codebase-homepage-no-render",
+      "prompt": "Before I start improving it, audit the marketing homepage in this repo and tell me which sections to revamp first. The page component is at app/(marketing)/page.tsx. Don't rewrite any copy yet, I just want direction and the order to work in.",
+      "expected_output": "A section-by-section audit driven from the page source. Because there may be no live render, the visual (V) items are marked Not-evaluable and excluded from the score rather than guessed, and that is noted. Still produces the scorecard for the messaging items, a prioritized opportunity list, and a start-here section, plus the audit.json + report.md handoff.",
+      "files": [],
+      "assertions": [
+        { "text": "Writes an audit.json under .webanatomy/audit-page/ that parses as valid JSON", "passed": null, "evidence": "" },
+        { "text": "If the page could not be rendered, the visual items are marked n/a in scorecard.json, score.coverage is below 1, and the audit notes the visual items were not evaluated rather than guessing them", "passed": null, "evidence": "" },
+        { "text": "Findings are organized section-first, not dimension-first", "passed": null, "evidence": "" },
+        { "text": "Recommendations contain at most two items at severity P0", "passed": null, "evidence": "" },
+        { "text": "section values use the taxonomy section types (e.g. hero, value-proposition, social-proof, pricing, faq), not freeform labels", "passed": null, "evidence": "" },
+        { "text": "Output contains no paste-ready copy or headline rewrites (diagnosis only)", "passed": null, "evidence": "" },
+        { "text": "Output ends by offering the two grounded next steps (benchmark-compare for the market view and improve-page for the section rework) and names the start-here section", "passed": null, "evidence": "" }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "pricing-page-url",
+      "prompt": "what's wrong with this pricing page? feels like people bounce instead of picking a plan. https://www.example-saas.com/pricing — give me a prioritized list of what to fix, no copy please.",
+      "expected_output": "A pricing-page audit: scorecard on top, then prioritized opportunities focused on plan clarity, a recommended plan, objection handling, and the path to checkout. Urgency is treated as evaluable on a pricing page (not skipped). A start-here section, page-level note, and the audit.json + report.md handoff.",
+      "files": [],
+      "assertions": [
+        { "text": "Writes an audit.json under .webanatomy/audit-page/ that parses as valid JSON", "passed": null, "evidence": "" },
+        { "text": "audit.json has a score.overall between 0 and 100 and score.categoryScores covering all six categories", "passed": null, "evidence": "" },
+        { "text": "Recommendations contain at most two items at severity P0", "passed": null, "evidence": "" },
+        { "text": "At least one recommendation addresses a pricing-page concern (plan clarity, recommended plan, objection handling, or path to checkout)", "passed": null, "evidence": "" },
+        { "text": "Output exposes no internal rubric item IDs and no raw weights or thresholds", "passed": null, "evidence": "" },
+        { "text": "Output contains no paste-ready copy or headline rewrites (diagnosis only)", "passed": null, "evidence": "" },
+        { "text": "Output ends by offering the two grounded next steps (benchmark-compare for the market view and improve-page for the section rework) and names the start-here section", "passed": null, "evidence": "" }
+      ]
+    }
+  ]
+}

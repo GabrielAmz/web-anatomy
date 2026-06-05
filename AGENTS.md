@@ -51,8 +51,9 @@ Or invoke by slug directly:
 
 - **Workflow skills**: use clear verbs: `find-examples`, `research-best-practices`, `improve-page`, `benchmark-compare`.
 - **Strategic plays**: prefix `play-<strategy-slug>` when those return, e.g. `play-roi-calculator`.
-- **Foundation**: `webanatomy-setup` writes `.agents/webanatomy-context.md`.
-- **Benchmark evidence**: workflow skills use the Web Anatomy MCP when available and keep internal scores, thresholds, raw marker coordinates, and field names hidden.
+- **Foundation**: `webanatomy-setup` writes `.agents/webanatomy-context.md` (product, ICP, industry, locale, voice and tone, constraints).
+- **House style**: the shared output canon (copy rules, severity and gap vocabularies, no exposed internals, honesty rules) lives once in `webanatomy-setup/references/house-style.md`. Every skill follows it; do not restate it per skill.
+- **Benchmark evidence**: workflow skills use the Web Anatomy MCP when available. Use `search_pages` for whole-homepage inspiration and `search_sections` for section patterns. Keep internal scores, thresholds, raw marker coordinates, and field names hidden.
 - **Visual reports**: `find-examples`, `research-best-practices`, `improve-page`, and `benchmark-compare` write `report.md`, `report.html`, and `references/` under `.webanatomy/`. Chat should summarize and point to the report, not dump the whole artifact.
 
 ## File layout in your project after install

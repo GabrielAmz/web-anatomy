@@ -27,68 +27,21 @@ Match by priority:
 
 Do not overfit to industry if the section pattern is universal. Pricing pages, testimonial blocks, and CTA bands often transfer well across adjacent B2B categories.
 
-## 3. Compare Only Useful Dimensions
+## 3. Use The Canonical Criteria (do not maintain a parallel list)
 
-Hero:
+The per-section criteria live in ONE place: the audit-page scoring rubric at
+`skills/audit-page/references/scoring.md` (49 items across Hero, Value
+Proposition, Copywriting, Trust & Credibility, Conversion, Design & UX, each
+mapped to a section). Do not restate or invent a separate dimension list here.
 
-- category clarity
-- outcome specificity
-- audience specificity
-- CTA clarity
-- proof proximity
-- product visual
-- risk reduction
-- above-the-fold hierarchy
+- If this run was preceded by `audit-page`, use the audit handoff: each flagged
+  section already carries its `missingLevers` and `failedItemIds`. Benchmark and
+  recommend against exactly those gaps.
+- If there is no prior audit, apply the rubric directly to decide what to check
+  per section.
 
-Pricing:
-
-- plan differentiation
-- default or recommended plan
-- annual/monthly choice architecture
-- trial/demo path
-- objection handling
-- enterprise path
-- surrounding proof
-
-Testimonials:
-
-- named person
-- title and company credibility
-- quantified outcome
-- before/after specificity
-- photo, logo, or video support
-- relevance to the target buyer
-
-Trust:
-
-- logo relevance
-- proof density
-- security/compliance
-- metric specificity
-- proximity to conversion action
-
-Features:
-
-- benefit translation
-- product screenshot evidence
-- use-case grouping
-- information hierarchy
-- scanability
-
-CTA:
-
-- action specificity
-- motivation
-- risk reduction
-- visual prominence
-- consistency with hero CTA
-
-FAQ:
-
-- real objections
-- answer specificity
-- pricing/migration/security coverage
-- useful links to docs or sales paths
+This keeps each criterion (e.g. what makes a strong hero) defined once, so
+audit-page and improve-page diagnose the same page consistently.
 
 ## 4. Use Public Gap Labels
 
