@@ -188,3 +188,4 @@ After saving, respond in chat with:
 - Do not invent customer names, proof, or metrics.
 - Separate benchmark evidence from interpretation.
 - If the benchmark corpus is thin, say so and broaden deliberately.
+- Follow the shared house style in `webanatomy-setup/references/house-style.md`: no em-dashes, "The X…" not "Your X…", and never expose framework internals. Match the Locale from `.agents/webanatomy-context.md` when present.

@@ -1,7 +1,7 @@
 ---
 name: webanatomy-setup
 description: |
-  Optional context setup for Web Anatomy. Use when the user says set up Web Anatomy, create context, start a landing page project, capture product context, benchmark my category, or prepare the benchmark skills. Also offer it as an optional preflight when another Web Anatomy workflow lacks product context and better recommendations would depend on ICP, industry, competitors, conversion goal, proof assets, or priority pages. Do not require setup before find-examples, research-best-practices, improve-page, or benchmark-compare; those skills should continue with conservative assumptions if the user wants speed. Writes `.agents/webanatomy-context.md` as shared context.
+  Optional context setup for Web Anatomy. Use when the user says set up Web Anatomy, create context, start a landing page project, capture product context, benchmark my category, or prepare the benchmark skills. Also offer it as an optional preflight when another Web Anatomy workflow lacks product context and better recommendations would depend on ICP, industry, locale, competitors, conversion goal, proof assets, priority pages, or the voice and tone the rework copy should use. Do not require setup before find-examples, research-best-practices, improve-page, or benchmark-compare; those skills should continue with conservative assumptions if the user wants speed. Writes `.agents/webanatomy-context.md` as shared context.
 metadata:
   version: 0.2.0
 ---
@@ -23,8 +23,10 @@ Found Web Anatomy context:
 - Product: ...
 - ICP: ...
 - Industry: ...
+- Locale: ...
 - Conversion goal: ...
 - Priority pages: ...
+- Voice and tone: ...
 
 Still accurate, or should we update it?
 ```
@@ -45,6 +47,9 @@ Ask one question at a time. Do not batch.
 6. **Priority pages** - Which page types matter first? Examples: homepage, pricing, persona page, feature page, comparator, use case.
 7. **Proof assets** - What proof exists today? Examples: named customers, logos, quotes, metrics, security badges, case studies.
 8. **Tech stack** - What runs the site? Framework, CMS, hosting, and analytics if known.
+9. **Locale** - What language is the site in, `en` or `fr`? This decides which benchmark locale to search and which language the rework copy is written in. Infer from the URL or copy if the user does not say.
+10. **Voice and tone** - How should copy sound? Capture 2-4 words (for example "direct, technical, no hype" or "warm, plain, reassuring") and one line to avoid (for example "no buzzwords, no exclamation marks"). This is the one field that shapes the copy the grounded skills write, so it is worth getting. Leave blank only if the user truly has no preference.
+11. **Constraints** - Anything off-limits in the output? Competitors not to name, claims that are not allowed (regulated industries), sensitive topics to avoid.
 
 Push back once on vague answers. "AI platform for teams" is not enough. "AI analyst that turns customer calls into churn-risk alerts for B2B SaaS CS leaders" is enough.
 
@@ -62,15 +67,25 @@ Create `.agents/webanatomy-context.md` with this exact shape:
 - **Product**: ...
 - **ICP**: ...
 - **Industry**: ...
+- **Locale**: en | fr
 - **Competitors**: ...
 - **Conversion goal**: ...
 - **Priority pages**: ...
 - **Proof assets**: ...
+- **Voice and tone**: ... (and one line to avoid)
+- **Constraints**: ... (off-limits competitors, claims, topics; "none" if so)
 - **Tech stack**: ...
 - **Benchmark notes**: ...
+- **Confidence and gaps**: which fields are confirmed vs inferred, and what is still unknown
 
 _Last updated: YYYY-MM-DD_
 ```
+
+The other skills read this file as the source of truth: `Locale` and `Voice and
+tone` drive the language and style of the copy they write (see
+`references/house-style.md`), `Constraints` keep that output inside the user's
+guardrails, and `Confidence and gaps` keeps inferred fields honest rather than
+presented as fact.
 
 ## Step 4 - Confirm The Next Move
 

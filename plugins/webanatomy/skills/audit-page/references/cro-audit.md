@@ -62,8 +62,9 @@ can defend it, recommend it. Judgment beats coverage.
   to what is actually on the page. "Move a named customer quote directly under the
   hero CTA" beats "improve trust."
 - Tag each with its section. Plain language only — no rubric item IDs, no scores.
-- Frame as opportunities (the gain), not complaints. "The X…", not "Your X…". No
-  em-dashes.
+- Frame as opportunities (the gain), not complaints, and follow the shared house
+  style for the written findings ("The X…" not "Your X…", no em-dashes, severity
+  vocabulary). The canon is `webanatomy-setup/references/house-style.md`.
 
 The score (from the rubric) and these recommendations are generated independently.
 They meet only in the output: score on top as the proof, recommendations below as

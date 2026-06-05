@@ -129,9 +129,10 @@ For French real-estate or property-investment product pages, default to `Real Es
 Also resolve locale before search:
 
 1. explicit locale in the request
-2. page language after current-reality capture
-3. French URL/copy/product context -> `fr`
-4. fallback -> `en`
+2. `.agents/webanatomy-context.md` Locale
+3. page language after current-reality capture
+4. French URL/copy/product context -> `fr`
+5. fallback -> `en`
 
 ## Step 5 - Search Benchmarks
 
@@ -249,3 +250,4 @@ Read `references/audit-method.md` before writing the gap analysis.
 - Do not recommend copying a reference exactly. Adapt the pattern.
 - Do not invent proof the user does not have.
 - If the page cannot be inspected, say what input is missing and switch to a market-pattern report.
+- Follow the shared house style in `webanatomy-setup/references/house-style.md` for the report and any rewritten copy: no em-dashes, "The X…" not "Your X…", gap labels (HIGH/MEDIUM/LOW) not P-levels, and never expose framework internals. When `.agents/webanatomy-context.md` records a Voice and tone or a Locale, write the rework copy in that voice and language.

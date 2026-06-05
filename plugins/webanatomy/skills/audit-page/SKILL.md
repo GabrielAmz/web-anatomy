@@ -218,6 +218,34 @@ from the grounded next step (benchmark-compare or improve-page) + the benchmark 
 
 No copy. No rewrites. The deliverable is "which section, why, in what order".
 
+## Step 5.5 — Coherence check (before you output)
+
+The score and the recommendations are produced by two independent tracks (Step 3
+and Step 4 on purpose), so they can disagree. Before you output, re-read them
+together and confirm they tell the same story. This is a quick self-review, not a
+new analysis. Fix any mismatch silently; never show the reconciliation.
+
+Check, and reconcile if any fails:
+
+- **Score band vs priority mix.** A low overall score (under ~55) with no P0 or P1
+  is incoherent: either the score is too harsh or you under-prioritized. A high
+  overall score (~75+) while you list a true P0 (a comprehension, trust, or
+  conversion blocker) is also incoherent: a real P0 should pull the score down.
+  Re-judge whichever track is wrong.
+- **Weak categories vs where the P0/P1 cluster.** The lowest-scoring categories
+  should be where the highest-severity opportunities land. If your P0 is in the
+  hero but the Hero category scored well, one of the two reads is off. Resolve it.
+- **`startHere` consistency.** `startHere` must be the single highest-leverage fix,
+  and it must appear as a P0 (or the top P1 if there is genuinely no P0). It cannot
+  point at a section you scored as fine.
+- **No internal contradictions.** A section cannot be both a listed strength and the
+  top failure. A "missing X" finding cannot stand for an element you could not
+  verify in the DOM (Step 2): downgrade it to "could not verify". A page-level move
+  cannot contradict a section finding.
+
+If the two tracks cannot be reconciled, trust the recommendations (the substance)
+and adjust the score read, not the other way around.
+
 ## Step 6 — Handoff to the grounded next step (ask which)
 
 The audit is the ungrounded on-ramp. The edge is grounding it in real benchmark
@@ -265,5 +293,8 @@ explained where it first appears, so treat them as a checklist, not new rules.
   handoff to its benchmark sections (Step 4).
 - Keep findings in plain language; item IDs, weights, and thresholds are framework
   internals the reader does not need (Step 3).
-- The findings copy avoids em-dashes and frames around "The X…", not "Your X…", to
-  match house style.
+- Reconcile the score and the recommendations before output, so they tell the same
+  story (Step 5.5).
+- Follow the shared house style for all written output: no em-dashes, "The X…" not
+  "Your X…", the severity vocabulary, and never exposing framework internals. The
+  canon is `webanatomy-setup/references/house-style.md`; this list is just the recap.

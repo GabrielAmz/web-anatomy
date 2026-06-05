@@ -202,3 +202,4 @@ After saving, respond in chat with:
 - Do not claim conversion lifts unless the user supplied them.
 - Translate benchmark mechanics into plain language. Example: `risk_reducer` becomes "risk is lowered before the click."
 - If MCP is unavailable, say that benchmark search is unavailable and provide a static, clearly labeled fallback.
+- Follow the shared house style in `webanatomy-setup/references/house-style.md`: no em-dashes, "The X…" not "Your X…", and never expose framework internals. Match the Locale from `.agents/webanatomy-context.md` when present.

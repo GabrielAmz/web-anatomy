@@ -188,3 +188,4 @@ After saving, respond in chat with:
 - Do not say "best-in-class" unless benchmark evidence supports it.
 - Do not over-audit low-impact sections when the hero, pricing, or proof is the real blocker.
 - Say when the benchmark set is thin or only adjacent.
+- Follow the shared house style in `webanatomy-setup/references/house-style.md`: no em-dashes, "The X…" not "Your X…", gap labels (HIGH/MEDIUM/LOW), and never expose framework internals. Match the Voice and tone and Locale from `.agents/webanatomy-context.md` when present.
