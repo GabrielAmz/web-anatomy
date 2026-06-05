@@ -1,7 +1,7 @@
 ---
 name: audit-page
 description: |
-  Audit the current state of a landing page, homepage, pricing page, feature page, or comparator page. Score it against a 49-point CRO rubric, diagnose it section by section, and return a PRIORITIZED list of what to fix first. Diagnosis and prioritization only, with no rewrites, no copy, and no benchmark data required. Use when the user asks to audit my page, what is wrong with my landing page, what should I fix first, review my homepage, critique this page, or shares a URL or a page in their codebase and wants direction before improving. Runs standalone with no MCP connection. Writes a handoff artifact that improve-page consumes so the grounded rewrite does not re-diagnose. For the grounded fix use improve-page. For real examples use find-examples.
+  Audit the current state of a landing page, homepage, pricing page, feature page, or comparator page. Score it against a 49-point CRO rubric, diagnose it section by section, and return a PRIORITIZED list of what to fix first. Diagnosis and prioritization only, with no rewrites, no copy, and no benchmark data required. Use when the user asks to audit my page, what is wrong with my landing page, what should I fix first, review my homepage, critique this page, or shares a URL or a page in their codebase and wants direction before improving. Runs standalone with no MCP connection. Writes a handoff artifact that improve-page consumes so the grounded rewrite does not re-diagnose. For the grounded section rework use improve-page. To compare the page against the best in its industry use benchmark-compare. For real examples use find-examples.
 metadata:
   version: 0.1.0
 ---
@@ -14,8 +14,9 @@ organize the audit by SECTION so the output routes straight into the fix.
 
 You do NOT write copy, headlines, or rewrites here, and you do NOT need benchmark
 data. Output is problem framing and prioritization: where conversion leaks and
-what to fix first. This is the on-ramp. The grounded rework (improve-page) is
-where the real edge is, so always end by handing off to it.
+what to fix first. This is the on-ramp. The grounded next step is where the real
+edge is, so always end by handing off to it. There are two grounded paths and they
+answer different questions, so Step 6 asks the user which one they want.
 
 ## Output Behavior
 
@@ -213,21 +214,39 @@ Rules for the opportunity list:
 
 State plainly that the score is directional and framework-based; the calibrated,
 benchmark-anchored view (how the page compares to real industry winners) comes
-from improve-page + the benchmark MCP.
+from the grounded next step (benchmark-compare or improve-page) + the benchmark MCP.
 
 No copy. No rewrites. The deliverable is "which section, why, in what order".
 
-## Step 6 — Handoff to improve-page (orchestration)
+## Step 6 — Handoff to the grounded next step (ask which)
 
-After presenting the order, offer the grounded fix and hand off to improve-page,
-which reads the `audit.json` you just wrote and skips re-diagnosis — it goes
-straight to pulling real winners for the flagged sections and writing the
-grounded rework. Say it like this:
+The audit is the ungrounded on-ramp. The edge is grounding it in real benchmark
+data, and there are two grounded paths. They answer different questions, so do not
+choose for the user. Present both and ask which they want:
 
-> "The highest-leverage fix is the `<startHere>` section. Run improve-page next —
-> it picks up this audit, pulls the top-converting real `<startHere>` sections in
-> <industry>, and writes the grounded rework. That benchmark grounding is the
-> difference between this audit and a generic CRO checklist."
+1. **See what the best in the market are doing (page and industry level).** This is
+   `benchmark-compare`. It looks at the whole-page structure for the industry and
+   shows how the top pages in the market handle the flagged areas, with gap labels
+   and reference screenshots. Best when the user wants the market and structure
+   picture before changing anything.
+2. **Get the sections plus copy to follow (section level).** This is
+   `improve-page`. It picks up this `audit.json`, skips re-diagnosis, pulls the
+   top-converting real `<startHere>` sections in the industry, and writes the
+   grounded rework the user can apply. Best when the user wants concrete sections
+   and copy to follow now.
+
+Ask it like this:
+
+> "The highest-leverage fix is the `<startHere>` section. Two grounded next steps,
+> which do you want? (a) benchmark-compare, to see how the best pages in
+> <industry> are structured and handle this, the market view. (b) improve-page, to
+> pull the top-converting real `<startHere>` sections in <industry> and get the
+> rework and copy to follow. Either way the benchmark grounding is the difference
+> between this audit and a generic CRO checklist."
+
+If the user does not pick, default to `improve-page` on the `<startHere>` section:
+the audit already named the section to fix and improve-page consumes this handoff
+directly, so it is the most direct continuation.
 
 ## Hard rules (a recap; the reasoning is in the steps above)
 
