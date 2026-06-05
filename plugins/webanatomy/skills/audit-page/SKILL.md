@@ -75,27 +75,41 @@ industry, and locale. If missing, proceed from the URL, screenshot, or codebase
 with conservative assumptions. Context makes the problem framing specific instead
 of generic; use it when present, never require it.
 
-## Step 2 — Get the page accurately (render it)
+## Step 2 — Get the page accurately (capture, then verify in the DOM)
 
-Render the page and capture a screenshot using whatever browser/screenshot
-capability you have — a headless-browser tool, your agent's built-in browser, or
-a vision-capable view of a provided screenshot. Do not audit raw HTML alone:
-landing pages inject the form, the proof, and the layout via JS, so source-only
-reading produces false "this is missing" findings (real failure mode: calling a
-form absent when it loads dynamically). See what the visitor sees.
+Prefer a canonical server capture when available: if a `capture_page` MCP tool
+exists, use it — it returns reliable desktop + mobile screenshots plus
+DOM-extracted structure (headings, CTAs, form fields, sections). That is the
+trustworthy path and it sidesteps the failure mode below.
 
-- Codebase mode: read the source AND render the running page if you can.
-- URL mode: render + screenshot the URL.
+If you must render it yourself (no capture service), follow this recipe exactly —
+a single quick screenshot is NOT enough and will lie:
 
-**The screenshot gates the visual items.** The `V`-prefixed rubric items (visual
-hierarchy, contrast, product visual, imagery, palette, above-the-fold layout, CTA
-dominance) can only be judged from a render. The `M`-prefixed items (messaging,
-copy, structure) can be judged from the page text. If you genuinely cannot render
-the page, say so, score the `M` items, and mark the `V` items Not-evaluable in
-Step 3.5 — do not guess them.
+1. Navigate, then **wait for network idle** so JS/iframe embeds (forms, widgets,
+   proof) finish loading. Landing-page forms are often third-party embeds
+   (HubSpot, Calendly) that paint after first render.
+2. **Dismiss cookie/consent overlays** (Axeptio, OneTrust, etc.) — they cover the
+   hero and block both the screenshot and the form.
+3. **Scroll the full page** to trigger lazy-loaded sections, then screenshot
+   (above-the-fold and full-page).
+4. **Verify presence/absence in the DOM, never from the screenshot alone.** Query
+   the DOM for form fields (`input`/`select`/`textarea`), CTAs (buttons/links),
+   and section anchors. A screenshot taken too early shows a form as "missing"
+   when it is actually in the DOM — do not make that mistake.
 
-Capture headline, subheadline, CTA, proof, product visual, hierarchy, and visible
-friction into `currentSnapshot`. Do not diagnose an imagined page.
+**Hard rule: never assert an element is missing from a screenshot.** "No form",
+"no CTA", "no FAQ" must be confirmed against the DOM (and after networkidle +
+scroll). If you cannot verify in the DOM, say "could not verify" rather than
+"missing".
+
+**The render gates the visual items.** The `V`-prefixed rubric items (hierarchy,
+contrast, product visual, imagery, palette, above-the-fold layout, CTA dominance)
+need a real render. The `M`-prefixed items (messaging, copy, structure) can be
+judged from the page text/DOM. If you genuinely cannot render, score the `M`
+items and mark the `V` items Not-evaluable in Step 3.5 — do not guess them.
+
+Capture headline, subheadline, CTA, proof, product visual, hierarchy, form fields,
+and visible friction into `currentSnapshot`. Do not diagnose an imagined page.
 
 ## Step 3 — Diagnose each section (apply the framework within it)
 
