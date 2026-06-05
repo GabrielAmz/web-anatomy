@@ -1,7 +1,7 @@
 ---
 name: audit-page
 description: |
-  Audit the current state of a landing page, homepage, pricing page, feature page, or comparator page. Score it against a 49-point CRO rubric, diagnose it section by section, and return a PRIORITIZED list of what to fix first. Scoring, diagnosis, and prioritization only — no rewrites, no copy, no benchmark data required. Use when the user asks audit my page, what is wrong with my landing page, what should I fix first, review my homepage, critique this page, or shares a URL or the page in their codebase and wants direction before improving. Runs standalone with no MCP connection. Writes a handoff artifact that improve-page consumes so the grounded rewrite does not re-diagnose. For the grounded fix use improve-page. For real examples use find-examples.
+  Audit the current state of a landing page, homepage, pricing page, feature page, or comparator page. Score it against a 49-point CRO rubric, diagnose it section by section, and return a PRIORITIZED list of what to fix first. Diagnosis and prioritization only, with no rewrites, no copy, and no benchmark data required. Use when the user asks to audit my page, what is wrong with my landing page, what should I fix first, review my homepage, critique this page, or shares a URL or a page in their codebase and wants direction before improving. Runs standalone with no MCP connection. Writes a handoff artifact that improve-page consumes so the grounded rewrite does not re-diagnose. For the grounded fix use improve-page. For real examples use find-examples.
 metadata:
   version: 0.1.0
 ---
@@ -229,13 +229,22 @@ grounded rework. Say it like this:
 > <industry>, and writes the grounded rework. That benchmark grounding is the
 > difference between this audit and a generic CRO checklist."
 
-## Hard rules
+## Hard rules (a recap; the reasoning is in the steps above)
 
-- Section-first, never dimension-first.
-- Diagnosis and prioritization only. No paste-ready copy.
-- Force a priority gradient. At most one or two P0s.
-- View the rendered page, never raw HTML, when auditing a URL.
-- Use the taxonomy section types verbatim so the improve-page handoff is valid.
-- Plain-language findings. Never surface internal field names, scores, or
-  thresholds.
-- No em-dashes. "The X…" framing, not "Your X…".
+These restate the load-bearing constraints so they are easy to find. Each one is
+explained where it first appears, so treat them as a checklist, not new rules.
+
+- Organize by section, not by dimension, so every finding routes straight into the
+  fix (Step 5).
+- Diagnose and prioritize only. No paste-ready copy or rewrites; the grounded
+  rewrite is improve-page's job (Step 4).
+- Keep a real priority gradient, at most one or two P0s, so "start here" actually
+  points somewhere (Step 4).
+- Audit the rendered page, not raw HTML, so the visual items reflect what a visitor
+  sees (Step 2).
+- Use the taxonomy section types verbatim, otherwise improve-page cannot match the
+  handoff to its benchmark sections (Step 4).
+- Keep findings in plain language; item IDs, weights, and thresholds are framework
+  internals the reader does not need (Step 3).
+- The findings copy avoids em-dashes and frames around "The X…", not "Your X…", to
+  match house style.
