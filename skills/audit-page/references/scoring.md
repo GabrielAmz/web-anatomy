@@ -9,23 +9,93 @@ criteria). It is directional. The **benchmark-relative** score — how the page
 compares to the real top-converting pages in its industry — is the `improve-page`
 + MCP upgrade, and is not computed here.
 
-## Method (status_weighted)
+## Method (status_weighted, deterministic)
 
-1. For each checklist item, judge it against the page and assign a status:
-   - **Pass** — the page clearly satisfies the `pass_rule`. Multiplier `1.0`.
-   - **Fail** — the page does not satisfy it. Multiplier `0.0`.
-   - **Not evaluable** — the item genuinely does not apply to this page type (rare;
-     do not use to dodge a hard call). Excluded from the math.
-2. Category score = `round( Σ(weight × multiplier) / Σ(weight) × 100 )` over the
-   item's evaluated (Pass/Fail) items only.
-3. Overall score = `round( average of the category scores )`.
-4. Report the overall score, each category score, and pass/fail counts. Translate
-   weak items into the section problems and priorities (see SKILL.md). Never expose
-   raw weights or this internal scoring math to the end user — show the score and
-   plain-language findings only.
+You do the judging. A script does the arithmetic. This split is what makes the
+score reproducible: the same judgments always produce the same number, with no
+LLM math drift.
 
-Be honest on Pass/Fail. A generous audit that inflates the score is useless. When
-in doubt between Pass and Fail, Fail and explain why in the section problem.
+### Step A — Judge each item with evidence
+
+For all 49 items, assign a status and record where the verdict came from:
+
+- **pass** — the page clearly satisfies the `pass_rule`. Multiplier `1.0`.
+- **fail** — the page does not satisfy it. Multiplier `0.0`.
+- **n/a** — the item genuinely does not apply to this page type (rare; do not use
+  to dodge a hard call). Excluded from the math.
+
+Every `pass`/`fail` item also records an **evidence source**, so the score is
+auditable and reproducible rather than a guess:
+
+- `dom` — decided from the extracted DOM (counts, presence, attributes). Most
+  reliable. Prefer this whenever the item is countable (nav items, CTA repetition,
+  footer sections, pricing link).
+- `render` — decided from a real screenshot (visual items: hierarchy, contrast,
+  above-the-fold layout).
+- `text` — decided from the page copy (messaging and wording items).
+- `inferred` — a reasoned read with no hard observation. Use sparingly. An item
+  decided on `inferred` may NOT assert that an element is absent (honesty rule): if
+  you cannot observe it, it is `n/a` or a `fail` with a stated assumption, never a
+  confident "missing".
+
+Be honest. A generous audit that inflates the score is useless. When in doubt
+between pass and fail, fail and explain why in the section problem.
+
+### Step B — Write the scorecard, then run the scorer
+
+Write a `scorecard.json` (one object per item) next to the audit:
+
+```json
+{
+  "schema": "webanatomy.scorecard.v1",
+  "items": [
+    { "id": "M1",  "status": "pass", "evidence_source": "text", "evidence_note": "hero names product and EU SaaS finance teams" },
+    { "id": "V19", "status": "fail", "evidence_source": "dom",  "evidence_note": "9 top-level nav links, threshold is 4-7" }
+  ]
+}
+```
+
+All 49 ids must be present. `n/a` items may omit `evidence_source`. Then run the
+shared scorer from this skill pack:
+
+```bash
+node <skill-dir>/scripts/score.mjs --input=.webanatomy/audit-page/{target}-{date}/scorecard.json
+```
+
+Resolve `<skill-dir>` relative to this skill. The script is the single source of
+truth for the numbers: it holds the item weights and category weights, validates
+the scorecard, excludes `n/a`, and writes `score.json` with the overall score, the
+six category scores, pass/fail/na counts, the failed-item ids per category, and the
+confidence figures below. Copy those values into `audit.json`. Only fall back to
+hand-computing if node cannot run.
+
+### The math the script applies (for reference, do not hand-compute when node runs)
+
+- Category score = `round( Σ(weight × multiplier) / Σ(weight) × 100 )` over that
+  category's evaluated (pass/fail) items only.
+- Overall score = `round( Σ(category_score × category_weight) / Σ(category_weight) )`
+  over categories with at least one evaluated item. Category weights:
+
+  | Category | Weight | Why |
+  |---|---|---|
+  | Hero | 1.5 | Gates comprehension above the fold |
+  | Value Proposition | 1.5 | Caps everything below it |
+  | Trust & Credibility | 1.25 | Gates the decision |
+  | Conversion | 1.25 | Gates the action |
+  | Copywriting | 1.0 | Support |
+  | Design & UX | 1.0 | Support |
+
+- **Coverage** = `evaluated / 49` (how much of the rubric actually applied;
+  the rest is `n/a`).
+- **Evidence-backed** = `(dom + render count) / evaluated` (how much of the score
+  rests on hard observation versus text or inference).
+- **Confidence band** = `overall ± round((1 - evidenceBacked) × 10)`, clamped to
+  0-100. A score built mostly on `inferred` reads gets a wider band, so the number
+  is honest about its own softness (for example "64/100, band 58-70, no render").
+
+Never expose raw weights, item ids, or this math to the end user. Show the overall
+score, the category scorecard, and plain-language findings only. The band and a one
+line note on coverage are fine to surface.
 
 ## Checklist (49 items, 6 categories)
 

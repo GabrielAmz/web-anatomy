@@ -22,11 +22,14 @@ answer different questions, so Step 6 asks the user which one they want.
 
 When file access is available, always write the orchestration handoff:
 
+- `.webanatomy/audit-page/{page-or-section}-{YYYY-MM-DD}/scorecard.json` (your per-item judgments)
+- `.webanatomy/audit-page/{page-or-section}-{YYYY-MM-DD}/score.json` (written by the scorer)
 - `.webanatomy/audit-page/{page-or-section}-{YYYY-MM-DD}/audit.json`
 - `.webanatomy/audit-page/{page-or-section}-{YYYY-MM-DD}/report.md`
 
 `audit.json` is the machine handoff that improve-page reads so it does not
-re-diagnose. Use this exact shape:
+re-diagnose. The `score` block is copied verbatim from `score.json` (Step 3); do
+not hand-edit those numbers. Use this exact shape:
 
 ```json
 {
@@ -34,17 +37,25 @@ re-diagnose. Use this exact shape:
   "target": "<url or page name>",
   "industry": "<resolved or inferred industry>",
   "locale": "en|fr",
-  "score": 0,
-  "categoryScores": [
-    { "category": "Hero", "score": 0, "passCount": 0, "failCount": 0 }
-  ],
+  "score": {
+    "overall": 0,
+    "band": [0, 0],
+    "coverage": 1,
+    "evidenceBacked": 1,
+    "evaluated": 49,
+    "naCount": 0,
+    "categoryScores": [
+      { "category": "Hero", "score": 0, "passCount": 0, "failCount": 0, "naCount": 0, "failedItemIds": [] }
+    ]
+  },
   "currentSnapshot": [{ "label": "Headline", "text": "..." }],
   "recommendations": [
     {
       "section": "hero",
       "severity": "P0",
       "opportunity": "Lead the H1 with the outcome, not the product name",
-      "why": "what it unlocks, tied to the real page"
+      "why": "what it unlocks, tied to the real page",
+      "failedItemIds": ["M14"]
     }
   ],
   "pageLevel": [
@@ -58,9 +69,13 @@ re-diagnose. Use this exact shape:
 }
 ```
 
-Note the split: `score` + `categoryScores` come from the rubric (Step 3, facts).
-`recommendations` come from the free CRO audit (Step 4, judgment) — they are NOT
-keyed to rubric items.
+Note the split: the `score` block comes from the rubric and the scorer (Step 3,
+facts). `recommendations` come from the free CRO audit (Step 4, judgment) and are
+NOT derived from which rubric items failed. The optional `failedItemIds` on a
+recommendation is a cross-reference only (so improve-page can target exact gaps),
+not the source of the recommendation. Attach the rubric items a recommendation
+relates to when there is a clean match; leave it off for judgment or sector moves
+that the rubric does not cover.
 
 `report.md` is the short human-readable version (the prioritized list below). Chat
 is a one-line summary plus the start-here section.
@@ -120,24 +135,41 @@ scroll). If you cannot verify in the DOM, say "could not verify" rather than
 contrast, product visual, imagery, palette, above-the-fold layout, CTA dominance)
 need a real render. The `M`-prefixed items (messaging, copy, structure) can be
 judged from the page text/DOM. If you genuinely cannot render, score the `M`
-items and mark the `V` items Not-evaluable in Step 3 — do not guess them.
+items and mark the `V` items `n/a` in Step 3 — do not guess them. The score's
+coverage and band will then reflect that the visual half was not seen.
 
 Capture headline, subheadline, CTA, proof, product visual, hierarchy, form fields,
 and visible friction into `currentSnapshot`. Do not diagnose an imagined page.
 
 ## Step 3 — Score (the facts, the overview)
 
-Read `references/scoring.md` and run the rubric: judge each of the 49 items Pass /
-Fail / Not-evaluable. Score the `V` (visual) items only from a render; if you
-could not render, mark them Not-evaluable (excluded from the math), note it, and
-score the `M` items. Compute the weighted category scores and the overall score
-with the formula there. Record `score` and `categoryScores` in `audit.json`.
+You judge the items; a script does the arithmetic. This keeps the score
+reproducible. Read `references/scoring.md` and follow its Method:
 
-This is the ONLY thing the rubric produces: the overall score + the 6-category
-scorecard, as the factual overview and the proof the page needs a revamp. It does
-NOT generate the recommendations (Step 4 does, separately). The score is
-framework-relative and directional; the calibrated, benchmark-anchored view is the
-improve-page + MCP upgrade. Never expose item IDs, weights, or thresholds.
+1. Judge each of the 49 items `pass` / `fail` / `n/a`, and for every pass/fail
+   record an `evidence_source` (`dom` / `render` / `text` / `inferred`) and a short
+   `evidence_note`. Score the `V` (visual) items only from a render; if you could
+   not render, mark them `n/a`, note it, and score the `M` items from the text/DOM.
+2. Write `scorecard.json` (all 49 items) next to the audit.
+3. Run the deterministic scorer and copy its output into the `score` block of
+   `audit.json`:
+
+   ```bash
+   node <skill-dir>/scripts/score.mjs --input=.webanatomy/audit-page/{page-or-section}-{YYYY-MM-DD}/scorecard.json
+   ```
+
+   Resolve `<skill-dir>` relative to this `SKILL.md`. The script owns the weights
+   and the math (category weights, coverage, evidence-backed share, confidence
+   band). Do not hand-compute when node is available; only fall back to the formula
+   in `scoring.md` if node cannot run.
+
+This is the ONLY thing the rubric produces: the overall score, the 6-category
+scorecard, and the confidence figures, as the factual overview and the proof the
+page needs a revamp. It does NOT generate the recommendations (Step 4 does,
+separately). The score is framework-relative and directional, and its band and
+coverage say how solid it is; the calibrated, benchmark-anchored view is the
+improve-page + MCP upgrade. Never expose item IDs, weights, or thresholds; the
+overall score, the scorecard, the band, and a one-line coverage note are fine.
 
 ## Step 4 — Recommend (free CRO audit, the substance)
 
@@ -158,8 +190,9 @@ checklist readout.
   (no item IDs). Frame as opportunities, not complaints.
 
 Record the recommendations in `audit.json` under `recommendations` (each:
-`section`, `severity`, the `opportunity` move, `why`), plus `pageLevel` and
-`sectorSpecific`. These are the brief improve-page consumes.
+`section`, `severity`, the `opportunity` move, `why`, and optional `failedItemIds`
+when the move maps cleanly to rubric items), plus `pageLevel` and `sectorSpecific`.
+These are the brief improve-page consumes.
 
 ## Step 5 — Output
 
@@ -169,7 +202,8 @@ The opportunities below are the substance.
 
 ```
 PAGE AUDIT — <url or page name>
-Score: <overall>/100   ·   <one line on where conversion leaks most>
+Score: <overall>/100 (band <lo>-<hi>)   ·   <one line on where conversion leaks most>
+<only when coverage < 1: "Scored on the copy and structure; visual items not evaluated (no render).">
 
 SCORECARD
 Hero <n> · Value Proposition <n> · Copywriting <n> · Trust & Credibility <n>
