@@ -195,6 +195,10 @@ weight on the conversion path. If everything is P0 you have not prioritized. Set
 
 ## Step 5 — Output
 
+The score and scorecard sit at the TOP as the overview — they give the read at a
+glance and prove the page needs a revamp. They are the hook, not the substance.
+The opportunities below are the substance.
+
 ```
 PAGE AUDIT — <url or page name>
 Score: <overall>/100   ·   <one line on where conversion leaks most>
@@ -206,32 +210,41 @@ Conversion <n> · Design & UX <n>
 OPPORTUNITIES (priority order)
 
 P0 — Critical
-1. **[Critical] (<section>) <the move to make>.** <what it unlocks and why it matters, tied to what is actually on the page>
-2. **[Critical] (<section>) <the move>.** <why>
+- **[Critical] (<section>) <the move to make>.** <what it unlocks, tied to the real page>
 
 P1 — High
-3. **[High] (<section>) <the move>.** <why>
+- **[High] (<section>) <the move>.** <why>
+- **[High] (<section>) <the move>.** <why>
 
 P2 — Medium
-4. **[Medium] (<section>) <the move>.** <why>
+- **[Medium] (<section>) <the move>.** <why>
+
+PAGE-LEVEL
+- **(page) <global move>.** <why>
+
+SECTOR-SPECIFIC
+- **(<section>) <move>.** <why> (judgment, not the rubric)
 
 START HERE → <the single highest-leverage section>
 ```
 
-Write each finding as an OPPORTUNITY, not a complaint: the bold title is the move
-to make (the gain), and the sentence after it is what that move unlocks, grounded
-in what is actually on the page. Tag every item with its section in parentheses
-(from the taxonomy), use the severity label (P0/P1/P2/P3), and order by the
-rollup from Step 4. Cross-cutting `page` items appear under their severity tagged
-`(page)`.
+Rules for the opportunity list:
 
-Include sector-specific opportunities even when they are NOT in the 53-item
-rubric (e.g. a capital-loss risk notice + consent on a regulated finance page).
-Tag them with the section and mark them as sector-specific so it is clear they
-come from judgment, not the checklist.
+- **One opportunity per distinct issue. Do NOT bundle.** A failing item is its own
+  problem: "no outcome promise", "audience not named", "no risk reducer at the
+  CTA", and "generic differentiation" are four separate opportunities, not one.
+  A section with five weak items produces ~five opportunities. Be comprehensive —
+  the audit's job is to surface every real gap, not a tidy summary.
+- **Never show internal item IDs or category internals** (no `M1`, `V23`, raw
+  weights, scores, thresholds) in this output. Those live in `audit.json` for the
+  improve-page handoff only. The reader sees plain-language opportunities.
+- Write each as an OPPORTUNITY (the move + what it unlocks), not a complaint. Tag
+  the section, use the severity label, order by the Step 4 rollup. At most one or
+  two P0s (severity discipline still applies per issue).
+- Include sector-specific opportunities even when NOT in the rubric (e.g. a
+  capital-loss risk notice on a regulated finance page), flagged as judgment.
 
-The score, scorecard, and the prioritized opportunities are the deliverable.
-State plainly that this score is directional and framework-based; the calibrated,
+State plainly that the score is directional and framework-based; the calibrated,
 benchmark-anchored view (how the page compares to real industry winners) comes
 from improve-page + the benchmark MCP.
 
