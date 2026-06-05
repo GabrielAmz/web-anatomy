@@ -38,35 +38,48 @@ re-diagnose. Use this exact shape:
     { "category": "Hero", "score": 0, "passCount": 0, "failCount": 0 }
   ],
   "currentSnapshot": [{ "label": "Headline", "text": "..." }],
-  "prioritizedSections": [
+  "recommendations": [
     {
-      "section_type": "hero",
+      "section": "hero",
       "severity": "P0",
-      "failedWeight": 0,
-      "failedItemIds": ["M1", "M14"],
-      "problem": "what is wrong and why it costs conversion",
-      "missingLevers": ["outcome promise", "risk reducer near CTA"]
+      "opportunity": "Lead the H1 with the outcome, not the product name",
+      "why": "what it unlocks, tied to the real page"
     }
   ],
   "pageLevel": [
-    { "problem": "global issue (e.g. weak visual hierarchy across the page)", "failedItemIds": ["V6"] }
+    { "section": "page", "opportunity": "Fix the narrative order (pain then outcome then product)", "why": "..." }
+  ],
+  "sectorSpecific": [
+    { "section": "contact", "opportunity": "Surface the capital-loss risk notice near the form", "why": "regulated finance; judgment, not the rubric" }
   ],
   "startHere": "hero",
-  "notes": "industry inferred from page copy; no context file present"
+  "notes": "industry inferred; capture method + confidence"
 }
 ```
+
+Note the split: `score` + `categoryScores` come from the rubric (Step 3, facts).
+`recommendations` come from the free CRO audit (Step 4, judgment) — they are NOT
+keyed to rubric items.
 
 `report.md` is the short human-readable version (the prioritized list below). Chat
 is a one-line summary plus the start-here section.
 
-## The framework (page-cro), reorganized by section
+## Two independent tracks (do not let one drive the other)
 
-The CRO lens is the page-cro framework — value proposition clarity, headline,
-CTA, visual hierarchy, trust and social proof, objection handling, friction, in
-that impact order. The difference here: you do not report by those dimensions
-(that is a generic checklist any agent runs). You apply the relevant dimensions
-WITHIN each section, because people rebuild a page section by section and because
-a flagged section is the exact unit improve-page works on.
+This skill produces two things by two different methods, and they must stay
+dissociated:
+
+1. **The score (facts / overview).** Run the rubric in `references/scoring.md` to
+   get the overall score + category scorecard. This is the factual best-practices
+   read whose job is to prove the page needs a revamp. Mechanical.
+2. **The recommendations (substance).** Do a free, expert CRO audit using
+   `references/cro-audit.md` (the page-cro-equivalent lens) and your judgment.
+   These are NOT derived from which rubric items failed — deriving recos from the
+   checklist gives detailed-but-mediocre output. A free expert read gives sharper,
+   higher-ROI recommendations.
+
+Score one way, recommend another way. They meet only at output (Step 5): score on
+top as the proof, recommendations below as the substance.
 
 ## Step 1 — Context (optional, do not block)
 
@@ -106,92 +119,46 @@ scroll). If you cannot verify in the DOM, say "could not verify" rather than
 contrast, product visual, imagery, palette, above-the-fold layout, CTA dominance)
 need a real render. The `M`-prefixed items (messaging, copy, structure) can be
 judged from the page text/DOM. If you genuinely cannot render, score the `M`
-items and mark the `V` items Not-evaluable in Step 3.5 — do not guess them.
+items and mark the `V` items Not-evaluable in Step 3 — do not guess them.
 
 Capture headline, subheadline, CTA, proof, product visual, hierarchy, form fields,
 and visible friction into `currentSnapshot`. Do not diagnose an imagined page.
 
-## Step 3 — Diagnose each section (apply the framework within it)
+## Step 3 — Score (the facts, the overview)
 
-Identify which sections are PRESENT, then diagnose each against the page-cro
-dimensions that matter for it, phrased in plain language. Use these section types
-verbatim (they match the benchmark library, which keeps the improve-page handoff
-clean):
+Read `references/scoring.md` and run the rubric: judge each of the 49 items Pass /
+Fail / Not-evaluable. Score the `V` (visual) items only from a render; if you
+could not render, mark them Not-evaluable (excluded from the math), note it, and
+score the `M` items. Compute the weighted category scores and the overall score
+with the formula there. Record `score` and `categoryScores` in `audit.json`.
 
-`hero` · `value_proposition` · `problem` · `how_it_works` · `features` ·
-`trust` · `testimonial` · `pricing` · `pricing_table` · `comparison` · `faq` ·
-`cta` · `contact` · `use_cases` · `integrations` · `about` · `resources` ·
-`navbar` · `footer`
+This is the ONLY thing the rubric produces: the overall score + the 6-category
+scorecard, as the factual overview and the proof the page needs a revamp. It does
+NOT generate the recommendations (Step 4 does, separately). The score is
+framework-relative and directional; the calibrated, benchmark-anchored view is the
+improve-page + MCP upgrade. Never expose item IDs, weights, or thresholds.
 
-Per-section levers (the proven CRO checks for each):
+## Step 4 — Recommend (free CRO audit, the substance)
 
-- **hero** (value prop + headline + CTA + hierarchy): clear product category; a
-  specific outcome promise, not a feature list; names who it is for;
-  differentiates; primary CTA above the fold; some proof above the fold; a real
-  product visual; a risk reducer near the CTA; clean H1 > H2 > CTA hierarchy.
-- **cta**: one clear primary action; value-loaded copy ("Get my report", not
-  "Submit"/"Learn more"); reassuring microcopy beside it; a soft secondary path
-  for the undecided.
-- **trust**: recognizable logos; quantified proof; faces where it humanizes;
-  security/compliance badges where relevant; a guarantee or risk reversal; placed
-  near CTAs and after claims.
-- **problem**: names the specific pain the ICP feels; resonates; sets up the
-  solution.
-- **how_it_works**: a clear 3-5 step path; effort/duration per step; what the
-  user provides; expectation-setting.
-- **features**: each tied to a benefit or outcome; not a feature dump.
-- **faq**: answers the real objections (price, risk, fit, time-to-value,
-  switching, data use); placed before the final CTA.
-- **pricing / pricing_table**: clear tiers; a recommended plan; included vs
-  excluded; answers "which plan is right for me".
-- **value_proposition**: a differentiated "why us" below the fold, not a restated
-  hero.
-- **testimonial**: specific, attributed, benefit-diverse; not a wall.
-- **contact (forms)**: minimal fields; reassuring microcopy; consent/compliance
-  where the sector requires it.
+Now set the rubric aside and read the page as a CRO expert. Read
+`references/cro-audit.md` and follow it: audit freely across value prop, headline,
+CTA, hierarchy, trust, objections, friction — plus anything high-leverage the page
+reveals (structure, message-match, sector compliance). Write the recommendations
+from judgment, **NOT** from which rubric items failed. Deriving recos from the
+checklist gives detailed-but-mediocre output; a free expert read gives sharper,
+higher-ROI moves. The bar is a strong teardown (see the cro-audit lens), not a
+checklist readout.
 
-For each, record `section_type`, a `problem` (what is weak/missing AND why it
-costs conversion, tied to the real page, framed with "The X…" not "Your X…"), the
-`missingLevers`, and a `severity`. No replacement copy — if you start writing the
-headline, stop, that is improve-page.
+- One recommendation per distinct issue; do not bundle; be comprehensive.
+- Prioritize by conversion impact — P0 (blocks comprehension/trust/conversion),
+  P1, P2, P3 — not by the score. At most one or two P0s; name the single
+  highest-leverage fix as `startHere`.
+- Each is a concrete move tied to the real page, section-tagged, plain language
+  (no item IDs). Frame as opportunities, not complaints.
 
-## Step 3.5 — Score the page
-
-Read `references/scoring.md` and run the rubric: judge each of the 49 checklist
-items Pass / Fail / Not-evaluable against the page. Score the `V`-prefixed (visual)
-items only from the rendered screenshot; if you could not render the page, mark
-every `V` item Not-evaluable (they are excluded from the math) and note "visual
-items not assessed — no render", then score on the `M` items. Compute the weighted
-category scores and the overall score with the formula there. Record `score`
-(overall 0-100) and `categoryScores` (per category: score, passCount, failCount)
-in `audit.json`.
-
-Use the weak categories to inform prioritization in Step 4: a category scoring
-low, with high-weight Fails, points at the sections that should be P0. The score
-is framework-relative and directional. The benchmark-relative score (how the page
-compares to real industry winners) is the improve-page + MCP upgrade, not computed
-here. Show the score and plain-language findings only; never expose the weights or
-the internal math.
-
-## Step 4 — Prioritize (deterministic, from the rollup)
-
-Use the section rollup index in `references/scoring.md`. For each section, sum the
-weights of its FAILED items = that section's failed weight. Rank sections by
-failed weight (heaviest first). That ranking is the priority order — it is
-derived from the actual evaluation, not vibes.
-
-- Break ties with conversion impact: above-the-fold path (`hero`, primary `cta`,
-  form friction) outranks belief/objection (`trust`, `faq`, `problem`), which
-  outranks supporting (`value_proposition`, `how_it_works`, `features`,
-  `pricing`), which outranks polish (`testimonial`, `about`, `footer`).
-- The `page` bucket (global items: hierarchy, contrast, scannability, narrative,
-  content quality, mobile-global) is NOT a section. Surface its failures as
-  separate page-level findings, not as one section's fault.
-
-**Discipline (rule, not suggestion): at most one or two P0s.** Even if three
-sections score badly, P0 is reserved for the one or two with the heaviest failed
-weight on the conversion path. If everything is P0 you have not prioritized. Set
-`startHere` to the single highest failed-weight section.
+Record the recommendations in `audit.json` under `recommendations` (each:
+`section`, `severity`, the `opportunity` move, `why`), plus `pageLevel` and
+`sectorSpecific`. These are the brief improve-page consumes.
 
 ## Step 5 — Output
 
@@ -236,11 +203,11 @@ Rules for the opportunity list:
   A section with five weak items produces ~five opportunities. Be comprehensive —
   the audit's job is to surface every real gap, not a tidy summary.
 - **Never show internal item IDs or category internals** (no `M1`, `V23`, raw
-  weights, scores, thresholds) in this output. Those live in `audit.json` for the
-  improve-page handoff only. The reader sees plain-language opportunities.
+  weights, scores, thresholds) in this output. The reader sees plain-language
+  opportunities.
 - Write each as an OPPORTUNITY (the move + what it unlocks), not a complaint. Tag
-  the section, use the severity label, order by the Step 4 rollup. At most one or
-  two P0s (severity discipline still applies per issue).
+  the section, use the severity label, order by conversion impact (Step 4). At
+  most one or two P0s.
 - Include sector-specific opportunities even when NOT in the rubric (e.g. a
   capital-loss risk notice on a regulated finance page), flagged as judgment.
 

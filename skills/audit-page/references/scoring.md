@@ -95,27 +95,7 @@ pipeline (with a mobile screenshot), not this offline rubric.
 - **V8 — Professional Visual Tone** (5): Icons share one style; no random emojis in headings/body.
 - **V21 — Organized Footer** (5): Footer has ≥2 labeled link sections with 3+ links each.
 
-## Section rollup index
-
-This maps every item to the ONE section it most affects, so failures roll up by
-section, not just by category. Sum the weights of the FAILED items in each section
-= that section's failed weight. Rank sections by failed weight: the heaviest one
-or two are P0, the rest descend. Items under `page` are cross-cutting (global
-design, quality, narrative, mobile-global) — they do not belong to a single
-section; surface them as page-level findings, not as one section's fault.
-
-- **hero**: M1, M14, V1, V2, M15, V23, V22, M2, M37
-- **problem**: M23
-- **value_proposition**: M4, M17
-- **features**: M35, M21, V16, V4
-- **trust**: M8, V14, V15
-- **testimonial**: M22, M41, V12, M34
-- **cta**: M18, M19, M20, V3, V13, M38, M32, V25
-- **faq**: M9, V20
-- **pricing**: M36
-- **navbar**: V19
-- **footer**: V17, V21
-- **page** (global, not one section): M3, M39, M6, M26, M5, M33, V6, V9, V5, V24, V7, V8
-
-The 7-category scorecard (rubric view) and this section rollup (action view) come
-from the same 53 evaluations — one is grouped by category, the other by section.
+This rubric produces ONLY the overall score + the 6-category scorecard — the
+factual overview. It does not produce the recommendations. The recommendations
+come from a separate, free CRO audit (`cro-audit.md`), prioritized by judgment,
+not by which items here failed. Keep the two dissociated.
