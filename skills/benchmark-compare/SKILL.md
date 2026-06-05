@@ -52,10 +52,39 @@ Only fall back to hand-written HTML if the renderer cannot be run.
 1. **Capture target** - URL, screenshot, pasted copy, or local page. If a URL is provided, fetch or browse it before classifying. Capture a screenshot when possible.
 2. **Classify** - Determine page archetype and visible section types.
 3. **Resolve industry and locale** - Always set an industry and locale before benchmark search: context first, explicit request second, URL/page inference third, broad category fourth, `SaaS`/`B2B` and `en` fallbacks last.
-4. **Select benchmark set** - Search 3-5 benchmark examples per priority section.
+4. **Select benchmark set** - For whole homepage/landing-page targets, search page examples first with `search_pages`; then search 3-5 benchmark examples per priority section with `search_sections`.
 5. **Compare dimensions** - Use the audit method in `references/audit-method.md`.
 6. **Prioritize gaps** - Label gaps `HIGH`, `MEDIUM`, or `LOW`.
 7. **Recommend next actions** - Give fixes in priority order.
+
+## MCP Retrieval
+
+Use `search_pages` for whole homepage or landing-page comparisons. It returns public-safe page examples with `analysis_bullets`, `strengths`, `stealable_moves`, `source_url`, and `screenshot_url`. Use `search_sections` for priority section comparisons.
+
+For whole-page comparison, call:
+
+```json
+{
+  "industry": "<resolved primary industry>",
+  "locale": "<resolved locale>",
+  "min_score": 60,
+  "limit": 5
+}
+```
+
+For section comparison, call:
+
+```json
+{
+  "section_type": "<section_type>",
+  "industry": "<resolved primary industry>",
+  "locale": "<resolved locale>",
+  "min_score": 80,
+  "limit": 5
+}
+```
+
+Keep all scores, thresholds, raw summary IDs, field names, and marker data internal. Translate benchmark evidence into plain-English gap labels.
 
 ## Screenshot Handling
 
@@ -67,7 +96,7 @@ For the current page:
 For each selected benchmark result with `screenshot_url`:
 
 1. Download it into `references/`.
-2. Use a readable filename: `{company-slug}-{section-type}.png` or `.jpg`.
+2. Use a readable filename: `{company-slug}-{section-type}.png` for section examples or `{company-slug}-homepage.png` for page examples.
 3. Reference it from `report.md` with a relative path.
 4. Include it in `report.html`.
 
@@ -130,7 +159,7 @@ Use dimensions that match the section:
 
 ## Best Benchmark Matches
 ![Benchmark match](references/company-section.png)
-**[Company] [Section]** - [what to notice]
+**[Company] [Section or Homepage]** - [what to notice]
 
 ![Benchmark match](references/company-section-2.png)
 **[Company] [Section]** - [what to notice]

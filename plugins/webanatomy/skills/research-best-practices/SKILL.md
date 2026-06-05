@@ -50,18 +50,47 @@ Only fall back to hand-written HTML if the renderer cannot be run.
 1. **Load context** - Read `.agents/webanatomy-context.md` when present.
 2. **Clarify scope** - Identify section type, page archetype, industry, platform, and target buyer.
 3. **Resolve industry and locale** - Always set an industry and locale before search: context first, explicit request second, fetched URL/page inference third, broad category fourth, `SaaS`/`B2B` and `en` fallbacks last.
-4. **Search benchmarks** - Use `search_sections` with 3-5 angles: exact section, adjacent section, same industry, broad market, competitor names if supported.
+4. **Search benchmarks** - Use `search_pages` for whole-homepage/page-archetype research and `search_sections` for section-specific patterns. Run 3-5 angles: exact scope, adjacent section, same industry, broad market, competitor names if supported.
 5. **Inspect evidence** - Use screenshot URLs, strengths, and marker summaries to determine what is actually visible.
 6. **Supplement current web research** - If browse/WebFetch is available, capture recent public competitor examples. Label them as live web examples, not benchmark examples.
 7. **Synthesize patterns** - Group by repeatable pattern, not by company rank.
 8. **Write report and HTML** - Use relative image paths when references are downloaded.
+
+## MCP Retrieval
+
+Use `search_pages` when the question is about homepage or whole landing-page inspiration: what top pages do, what structure or positioning they use, or what a user can steal from strong pages in an industry. Use `search_sections` when the question is about a specific section type such as hero, pricing, testimonial, FAQ, CTA, trust, or features.
+
+For page research, call:
+
+```json
+{
+  "industry": "<resolved primary industry>",
+  "locale": "<resolved locale>",
+  "min_score": 60,
+  "limit": 8
+}
+```
+
+For section research, call:
+
+```json
+{
+  "section_type": "<section_type>",
+  "industry": "<resolved primary industry>",
+  "locale": "<resolved locale>",
+  "min_score": 80,
+  "limit": 8
+}
+```
+
+Use page result fields `analysis_bullets`, `strengths`, and `stealable_moves` as qualitative evidence. Use section result fields `strengths` and `pattern_notes` as section evidence. Keep scores, thresholds, raw summary IDs, and marker data internal.
 
 ## Screenshot Handling
 
 For each selected benchmark result with `screenshot_url`:
 
 1. Download it into `references/`.
-2. Use a readable filename: `{company-slug}-{section-type}.png` or `.jpg`.
+2. Use a readable filename: `{company-slug}-{section-type}.png` for section examples or `{company-slug}-homepage.png` for page examples.
 3. Reference it from `report.md` with a relative path.
 4. Include it in `report.html` as a visual card with a caption.
 

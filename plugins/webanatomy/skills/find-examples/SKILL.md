@@ -1,7 +1,7 @@
 ---
 name: find-examples
 description: |
-  Fast Web Anatomy benchmark lookup. Use when the user asks to find examples, show references, get inspiration, find strong sections, show SaaS pricing examples, show AI hero examples, find testimonial patterns, or provide a swipe file without a full research report. Uses the Web Anatomy MCP search_sections tool when available, keeps internal scores and raw benchmark fields hidden, and writes a lightweight visual swipe file under `.webanatomy/find-examples/`.
+  Fast Web Anatomy benchmark lookup. Use when the user asks to find examples, show references, get inspiration, find strong homepages, find strong sections, show SaaS pricing examples, show AI hero examples, find testimonial patterns, or provide a swipe file without a full research report. Uses the Web Anatomy MCP search_pages and search_sections tools when available, keeps internal scores and raw benchmark fields hidden, and writes a lightweight visual swipe file under `.webanatomy/find-examples/`.
 metadata:
   version: 0.2.0
 ---
@@ -48,12 +48,14 @@ Only fall back to hand-written HTML if the renderer cannot be run.
 
 Infer these from the request and `.agents/webanatomy-context.md` when available:
 
+- scope: whole homepage/landing page inspiration vs individual section pattern
+- page type: homepage for whole-page benchmark examples in v1
 - section type: hero, pricing, testimonial, value_proposition, cta, features, trust, faq, integrations, use_cases
 - industry: user's context first, then request/URL/page inference, then broad fallback
 - locale: request/page language first, then default `en`
 - intent: swipe file, redesign inspiration, competitor reference, or section pattern
 
-If the section type is unclear, map aliases:
+If the request is for homepage or landing page examples, set scope to whole page and use `search_pages` first. If the section type is unclear for a section-level request, map aliases:
 
 - "above the fold" -> hero
 - "customer proof" -> testimonial or trust
@@ -92,9 +94,20 @@ Also resolve locale before search:
 
 ## MCP Retrieval
 
-Use the `webanatomy` MCP `search_sections` tool when available.
+Use the `webanatomy` MCP tools when available. Use `search_pages` for whole-homepage inspiration and `search_sections` for specific section patterns.
 
-Start narrow:
+For whole-page or homepage examples, start with:
+
+```json
+{
+  "industry": "<resolved primary industry>",
+  "locale": "<resolved locale>",
+  "min_score": 60,
+  "limit": 8
+}
+```
+
+For section-level examples, start with:
 
 ```json
 {
@@ -106,7 +119,7 @@ Start narrow:
 }
 ```
 
-Treat `min_score: 80` as a preferred quality floor, not a hard promise. The MCP may relax internally to avoid thin result sets. Keep the highest-priority examples first and choose final examples by relevance, visible evidence, and business-model fit.
+Treat `min_score` as a preferred quality floor, not a hard promise. The MCP may relax internally to avoid thin result sets. Keep the highest-priority examples first and choose final examples by relevance, visible evidence, and business-model fit.
 
 If a secondary industry was inferred from page text, run a second search with the secondary industry and keep whichever examples best fit the business model.
 
@@ -114,18 +127,18 @@ If the result set is thin:
 
 1. lower the internal floor,
 2. drop industry,
-3. try a neighboring section type,
+3. for section searches, try a neighboring section type,
 4. then use named static references only as fallback.
 
-The tool may expose fields such as `score`, `criteria_hits`, or marker coordinates. Use those internally to choose examples, but never expose them.
+The tool may expose fields such as `score`, `criteria_hits`, marker coordinates, or raw scoring summaries. Use those internally to choose examples, but never expose them.
 
-`strengths` comes back as a list of plain-language strings (the MCP normalizes them); cite them as text. There are no `how`/`why`/`evidence` sub-fields to read.
+For page results, use `analysis_bullets`, `strengths`, and `stealable_moves` as plain-language evidence. For section results, use `strengths` and `pattern_notes`. There are no `how`/`why`/`evidence` sub-fields to read.
 
 ## Selection Rules
 
 Pick 5-10 examples. Prefer:
 
-- direct section-type match
+- direct page-scope or section-type match
 - same or adjacent industry
 - named company and source URL present
 - screenshot URL present
@@ -139,7 +152,7 @@ Do not include a screenshot or company just because it is famous. The example ha
 For each selected benchmark result with `screenshot_url`:
 
 1. Download it into `references/`.
-2. Use a readable filename: `{company-slug}-{section-type}.png` or `.jpg`.
+2. Use a readable filename: `{company-slug}-{section-type}.png` for sections or `{company-slug}-homepage.png` for page examples.
 3. Reference it from `report.md` with a relative path.
 4. Include it in `report.html`.
 

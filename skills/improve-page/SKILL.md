@@ -135,7 +135,18 @@ Also resolve locale before search:
 
 ## Step 5 - Search Benchmarks
 
-For each priority section, call `search_sections` with:
+For whole homepage or landing-page work, first call `search_pages` once to collect full-page references for the resolved industry and locale:
+
+```json
+{
+  "industry": "<resolved primary industry>",
+  "locale": "<resolved locale>",
+  "min_score": 60,
+  "limit": 5
+}
+```
+
+Use these page examples for overall positioning, proof strategy, page focus, and what strong companies in the category make visible. Then benchmark the priority sections. For each priority section, call `search_sections` with:
 
 ```json
 {
@@ -147,9 +158,9 @@ For each priority section, call `search_sections` with:
 }
 ```
 
-Treat `min_score: 80` as a preferred quality floor, not a hard promise. The MCP may relax internally to avoid thin result sets. Prioritize examples by relevance, visible evidence, and strongest available match.
+Treat `min_score` as a preferred quality floor, not a hard promise. The MCP may relax internally to avoid thin result sets. Prioritize examples by relevance, visible evidence, and strongest available match.
 
-If a secondary industry was inferred, run a second search with the same section type and locale using the secondary industry, then choose the examples that best match the user's business model.
+If a secondary industry was inferred, run a second page search and/or section search with the secondary industry, then choose the examples that best match the user's business model.
 
 Broaden only if results are thin. Use internal scores and criteria only for selection. Translate them into plain-English practices in the report.
 
@@ -163,7 +174,7 @@ For the current page:
 For each selected benchmark result with `screenshot_url`:
 
 1. Download it into `references/`.
-2. Use a readable filename: `{company-slug}-{section-type}.png` or `.jpg`.
+2. Use a readable filename: `{company-slug}-{section-type}.png` for section examples or `{company-slug}-homepage.png` for page examples.
 3. Reference it from `report.md` with a relative path.
 4. Include it in `report.html` next to the recommendation it supports.
 
@@ -204,7 +215,7 @@ Use this structure:
 
 ### [Company] - [Section]
 ![Benchmark match](references/company-section.png)
-[What to notice. Mention screenshot/source availability if useful.]
+[What to notice. Mention screenshot/source availability if useful. Page examples can be labeled “Homepage” in the `section` field.]
 
 ## Gap Analysis
 
