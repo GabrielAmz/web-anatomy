@@ -75,14 +75,24 @@ industry, and locale. If missing, proceed from the URL, screenshot, or codebase
 with conservative assumptions. Context makes the problem framing specific instead
 of generic; use it when present, never require it.
 
-## Step 2 — Get the page accurately
+## Step 2 — Get the page accurately (render it)
 
-- Codebase mode: read the page source, and if you can, view it rendered. Source
-  on disk is not what a visitor sees.
-- URL mode: view the RENDERED page (screenshot it). Do not audit raw HTML.
-  Landing pages inject the form, the proof, and the layout via JS, so auditing
-  source produces false "this is missing" findings (real failure mode: calling a
-  form absent when it loads dynamically). See what the visitor sees.
+Render the page and capture a screenshot using whatever browser/screenshot
+capability you have — a headless-browser tool, your agent's built-in browser, or
+a vision-capable view of a provided screenshot. Do not audit raw HTML alone:
+landing pages inject the form, the proof, and the layout via JS, so source-only
+reading produces false "this is missing" findings (real failure mode: calling a
+form absent when it loads dynamically). See what the visitor sees.
+
+- Codebase mode: read the source AND render the running page if you can.
+- URL mode: render + screenshot the URL.
+
+**The screenshot gates the visual items.** The `V`-prefixed rubric items (visual
+hierarchy, contrast, product visual, imagery, palette, above-the-fold layout, CTA
+dominance) can only be judged from a render. The `M`-prefixed items (messaging,
+copy, structure) can be judged from the page text. If you genuinely cannot render
+the page, say so, score the `M` items, and mark the `V` items Not-evaluable in
+Step 3.5 — do not guess them.
 
 Capture headline, subheadline, CTA, proof, product visual, hierarchy, and visible
 friction into `currentSnapshot`. Do not diagnose an imagined page.
@@ -134,7 +144,10 @@ headline, stop, that is improve-page.
 ## Step 3.5 — Score the page
 
 Read `references/scoring.md` and run the rubric: judge each of the 49 checklist
-items Pass / Fail / Not-evaluable against the page, then compute the weighted
+items Pass / Fail / Not-evaluable against the page. Score the `V`-prefixed (visual)
+items only from the rendered screenshot; if you could not render the page, mark
+every `V` item Not-evaluable (they are excluded from the math) and note "visual
+items not assessed — no render", then score on the `M` items. Compute the weighted
 category scores and the overall score with the formula there. Record `score`
 (overall 0-100) and `categoryScores` (per category: score, passCount, failCount)
 in `audit.json`.
