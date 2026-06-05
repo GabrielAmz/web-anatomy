@@ -16,7 +16,7 @@
         { "text": "Every recommendation is tagged with both a section and a severity label", "passed": null, "evidence": "" },
         { "text": "Output exposes no internal rubric item IDs (no tokens like M1 or V23) and no raw weights or thresholds", "passed": null, "evidence": "" },
         { "text": "Output contains no paste-ready copy or headline rewrites (diagnosis only)", "passed": null, "evidence": "" },
-        { "text": "Output ends by handing off to improve-page and names the start-here section", "passed": null, "evidence": "" }
+        { "text": "Output ends by offering the two grounded next steps (benchmark-compare for the market view and improve-page for the section rework) and names the start-here section", "passed": null, "evidence": "" }
       ]
     },
     {
@@ -32,7 +32,7 @@
         { "text": "Recommendations contain at most two items at severity P0", "passed": null, "evidence": "" },
         { "text": "section values use the taxonomy section types (e.g. hero, value-proposition, social-proof, pricing, faq), not freeform labels", "passed": null, "evidence": "" },
         { "text": "Output contains no paste-ready copy or headline rewrites (diagnosis only)", "passed": null, "evidence": "" },
-        { "text": "Output ends by handing off to improve-page and names the start-here section", "passed": null, "evidence": "" }
+        { "text": "Output ends by offering the two grounded next steps (benchmark-compare for the market view and improve-page for the section rework) and names the start-here section", "passed": null, "evidence": "" }
       ]
     },
     {
@@ -48,7 +48,7 @@
         { "text": "At least one recommendation addresses a pricing-page concern (plan clarity, recommended plan, objection handling, or path to checkout)", "passed": null, "evidence": "" },
         { "text": "Output exposes no internal rubric item IDs and no raw weights or thresholds", "passed": null, "evidence": "" },
         { "text": "Output contains no paste-ready copy or headline rewrites (diagnosis only)", "passed": null, "evidence": "" },
-        { "text": "Output ends by handing off to improve-page and names the start-here section", "passed": null, "evidence": "" }
+        { "text": "Output ends by offering the two grounded next steps (benchmark-compare for the market view and improve-page for the section rework) and names the start-here section", "passed": null, "evidence": "" }
       ]
     }
   ]
