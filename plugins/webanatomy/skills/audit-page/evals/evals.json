@@ -15,7 +15,7 @@
         { "text": "Recommendations contain at most two items at severity P0", "passed": null, "evidence": "" },
         { "text": "startHere is non-empty and equals the section of one of the recommendations", "passed": null, "evidence": "" },
         { "text": "Every recommendation is tagged with both a section and a severity label", "passed": null, "evidence": "" },
-        { "text": "Output exposes no internal rubric item IDs (no tokens like M1 or V23) and no raw weights or thresholds", "passed": null, "evidence": "" },
+        { "text": "Output exposes no internal rubric item ids (no dotted tokens like hero.outcome_focus or conversion.cta_repetition) and no raw weights or thresholds", "passed": null, "evidence": "" },
         { "text": "Output contains no paste-ready copy or headline rewrites (diagnosis only)", "passed": null, "evidence": "" },
         { "text": "Output ends by offering the two grounded next steps (benchmark-compare for the market view and improve-page for the section rework) and names the start-here section", "passed": null, "evidence": "" }
       ]

@@ -14,31 +14,44 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 
-// id -> category. Item weights are intrinsic to each item (from the rubric).
+// Canonical registry: [id, category, weight, mode]. This is the single source of
+// truth for the rubric id set; scoring.md must stay in sync. Mode is text (judged
+// from copy/DOM) or visual (needs a render); it gates which items go n/a with no
+// render and does not affect the math.
 const ITEMS = [
   // Hero
-  ['M1', 'Hero', 10], ['M14', 'Hero', 10], ['V1', 'Hero', 10], ['V2', 'Hero', 9],
-  ['M15', 'Hero', 9], ['V23', 'Hero', 8], ['V22', 'Hero', 8],
+  ['hero.audience_clarity', 'Hero', 10, 'text'], ['hero.outcome_focus', 'Hero', 10, 'text'],
+  ['hero.five_second_test', 'Hero', 10, 'visual'], ['hero.numeric_proof', 'Hero', 9, 'visual'],
+  ['hero.differentiation', 'Hero', 9, 'text'], ['hero.risk_reducer', 'Hero', 8, 'visual'],
+  ['hero.product_visual', 'Hero', 8, 'visual'],
   // Value Proposition
-  ['M2', 'Value Proposition', 9], ['M3', 'Value Proposition', 8], ['M4', 'Value Proposition', 8],
-  ['M23', 'Value Proposition', 8], ['M37', 'Value Proposition', 8], ['M17', 'Value Proposition', 7],
-  ['M35', 'Value Proposition', 7],
+  ['value_prop.specific_promise', 'Value Proposition', 9, 'text'], ['value_prop.promise_alignment', 'Value Proposition', 8, 'text'],
+  ['value_prop.evidence_backed', 'Value Proposition', 8, 'text'], ['value_prop.problem_clarity', 'Value Proposition', 8, 'text'],
+  ['value_prop.message_simplicity', 'Value Proposition', 8, 'text'], ['value_prop.unlike_framing', 'Value Proposition', 7, 'text'],
+  ['value_prop.feature_outcome', 'Value Proposition', 7, 'text'],
   // Copywriting
-  ['M18', 'Copywriting', 8], ['M9', 'Copywriting', 8], ['M39', 'Copywriting', 8],
-  ['M21', 'Copywriting', 7], ['M6', 'Copywriting', 7], ['M26', 'Copywriting', 7],
-  ['M19', 'Copywriting', 6], ['M20', 'Copywriting', 5], ['M5', 'Copywriting', 5],
+  ['copy.action_cta', 'Copywriting', 8, 'text'], ['copy.objection_handling', 'Copywriting', 8, 'text'],
+  ['copy.narrative', 'Copywriting', 8, 'text'], ['copy.transformation', 'Copywriting', 7, 'text'],
+  ['copy.benefit_headings', 'Copywriting', 7, 'text'], ['copy.plain_language', 'Copywriting', 7, 'text'],
+  ['copy.consistent_cta', 'Copywriting', 6, 'text'], ['copy.secondary_cta', 'Copywriting', 5, 'text'],
+  ['copy.you_centric', 'Copywriting', 5, 'text'],
   // Trust & Credibility
-  ['M8', 'Trust & Credibility', 8], ['V14', 'Trust & Credibility', 7], ['M22', 'Trust & Credibility', 7],
-  ['M33', 'Trust & Credibility', 7], ['M41', 'Trust & Credibility', 7], ['V12', 'Trust & Credibility', 6],
-  ['V15', 'Trust & Credibility', 6], ['V17', 'Trust & Credibility', 5], ['M34', 'Trust & Credibility', 5],
+  ['trust.quantified_proof', 'Trust & Credibility', 8, 'text'], ['trust.customer_logos', 'Trust & Credibility', 7, 'visual'],
+  ['trust.before_after_testimonial', 'Trust & Credibility', 7, 'text'], ['trust.content_quality', 'Trust & Credibility', 7, 'text'],
+  ['trust.niche_testimonials', 'Trust & Credibility', 7, 'text'], ['trust.human_social_proof', 'Trust & Credibility', 6, 'visual'],
+  ['trust.trust_badges', 'Trust & Credibility', 6, 'visual'], ['trust.policy_transparency', 'Trust & Credibility', 5, 'visual'],
+  ['trust.linked_proof', 'Trust & Credibility', 5, 'text'],
   // Conversion
-  ['M36', 'Conversion', 8], ['V3', 'Conversion', 7], ['V13', 'Conversion', 7],
-  ['M38', 'Conversion', 7], ['M32', 'Conversion', 6], ['V25', 'Conversion', 5],
+  ['conversion.pricing_visibility', 'Conversion', 8, 'text'], ['conversion.cta_dominance', 'Conversion', 7, 'visual'],
+  ['conversion.cta_repetition', 'Conversion', 7, 'visual'], ['conversion.low_commitment_cta', 'Conversion', 7, 'text'],
+  ['conversion.post_submit_clarity', 'Conversion', 6, 'text'], ['conversion.urgency', 'Conversion', 5, 'visual'],
   // Design & UX
-  ['V4', 'Design & UX', 8], ['V6', 'Design & UX', 8], ['V9', 'Design & UX', 8],
-  ['V5', 'Design & UX', 7], ['V19', 'Design & UX', 7], ['V24', 'Design & UX', 7],
-  ['V7', 'Design & UX', 6], ['V16', 'Design & UX', 6], ['V20', 'Design & UX', 6],
-  ['V8', 'Design & UX', 5], ['V21', 'Design & UX', 5],
+  ['design.authentic_imagery', 'Design & UX', 8, 'visual'], ['design.visual_hierarchy', 'Design & UX', 8, 'visual'],
+  ['design.color_contrast', 'Design & UX', 8, 'visual'], ['design.scannability', 'Design & UX', 7, 'visual'],
+  ['design.nav_structure', 'Design & UX', 7, 'visual'], ['design.page_focus', 'Design & UX', 7, 'visual'],
+  ['design.palette_consistency', 'Design & UX', 6, 'visual'], ['design.interactive_product', 'Design & UX', 6, 'visual'],
+  ['design.faq', 'Design & UX', 6, 'visual'], ['design.visual_tone', 'Design & UX', 5, 'visual'],
+  ['design.footer', 'Design & UX', 5, 'visual'],
 ];
 
 const CATEGORY_WEIGHTS = {
@@ -52,7 +65,7 @@ const CATEGORY_WEIGHTS = {
 
 const CATEGORY_ORDER = ['Hero', 'Value Proposition', 'Copywriting', 'Trust & Credibility', 'Conversion', 'Design & UX'];
 
-const ITEM_MAP = new Map(ITEMS.map(([id, category, weight]) => [id, { category, weight }]));
+const ITEM_MAP = new Map(ITEMS.map(([id, category, weight, mode]) => [id, { category, weight, mode }]));
 const VALID_STATUS = new Set(['pass', 'fail', 'n/a']);
 const VALID_EVIDENCE = new Set(['dom', 'render', 'text', 'inferred']);
 

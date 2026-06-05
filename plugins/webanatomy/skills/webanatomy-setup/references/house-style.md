@@ -36,7 +36,7 @@ P-levels in a benchmark report or HIGH/MEDIUM/LOW in an audit.
 
 The reader sees plain-English practices, never the machinery:
 
-- No rubric item IDs (`M1`, `V23`), category weights, thresholds, or the internal
+- No rubric item ids (dotted tokens like `hero.outcome_focus`), category weights, thresholds, or the internal
   scoring math.
 - No benchmark scores, angle counts, raw criteria field names, or marker
   coordinates from the MCP.

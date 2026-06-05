@@ -49,8 +49,8 @@ Write a `scorecard.json` (one object per item) next to the audit:
 {
   "schema": "webanatomy.scorecard.v1",
   "items": [
-    { "id": "M1",  "status": "pass", "evidence_source": "text", "evidence_note": "hero names product and EU SaaS finance teams" },
-    { "id": "V19", "status": "fail", "evidence_source": "dom",  "evidence_note": "9 top-level nav links, threshold is 4-7" }
+    { "id": "hero.audience_clarity", "status": "pass", "evidence_source": "text", "evidence_note": "hero names product and EU SaaS finance teams" },
+    { "id": "design.nav_structure",  "status": "fail", "evidence_source": "dom",  "evidence_note": "9 top-level nav links, threshold is 4-7" }
   ]
 }
 ```
@@ -103,67 +103,73 @@ Mobile is intentionally out of scope here: a desktop-context audit cannot reliab
 judge mobile fold, tap targets, or readable text. Mobile is assessed by the full
 pipeline (with a mobile screenshot), not this offline rubric.
 
+Each item below is written as `category.slug` (its stable id, used verbatim in
+`scorecard.json`), then its name, then `(weight, mode)`. Mode is `text` (judged
+from the copy or DOM) or `visual` (needs a real render). When you cannot render,
+the `visual` items are the ones marked `n/a`. The id set lives canonically in
+`scripts/score.mjs`; these and the script must stay in sync.
+
 ### Hero
-- **M1 — Product & Target Audience Clarity** (10): Hero contains both (1) product category or function AND (2) target audience or use case. Missing either = Fail. _e.g. "Billing automation for EU SaaS finance teams."_
-- **M14 — Outcome / Capability Focus** (10): H1 or subhead contains a measurable result, time reference, or specific capability. Just a product name or category = Fail. _e.g. "Close your books 3x faster, without changing tools."_
-- **V1 — 5-Second Top of Page Test** (10): Above the fold, visitor sees H1, key value prop, one main CTA, and one key visual without scrolling.
-- **V2 — Hero Numeric Proof** (9): A specific number (users, ratings, revenue, time saved) OR a third-party review widget with visible rating is visible in the hero or nav above the fold. Logo without a visible numeric rating = Fail.
-- **M15 — Specific Differentiation** (9): Hero explicitly states what makes it different ("built for X", "unlike Y", "the only Z"). Generic superlatives ("best", "fastest", "#1") alone = Fail.
-- **V23 — Risk Reducer Near CTA** (8): A risk reducer (free trial, no credit card, cancel anytime, money-back) appears within ~100px of the hero CTA or directly below it.
-- **V22 — Hero Product Visual** (8): Hero shows a real screenshot of the product UI or a device mockup of the actual product. Text-only/abstract/people-only/no-product = Fail.
+- **hero.audience_clarity** — Product & Target Audience Clarity (10, text): Hero contains both (1) product category or function AND (2) target audience or use case. Missing either = Fail. _e.g. "Billing automation for EU SaaS finance teams."_
+- **hero.outcome_focus** — Outcome / Capability Focus (10, text): H1 or subhead contains a measurable result, time reference, or specific capability. Just a product name or category = Fail. _e.g. "Close your books 3x faster, without changing tools."_
+- **hero.five_second_test** — 5-Second Top of Page Test (10, visual): Above the fold, visitor sees H1, key value prop, one main CTA, and one key visual without scrolling.
+- **hero.numeric_proof** — Hero Numeric Proof (9, visual): A specific number (users, ratings, revenue, time saved) OR a third-party review widget with visible rating is visible in the hero or nav above the fold. Logo without a visible numeric rating = Fail.
+- **hero.differentiation** — Specific Differentiation (9, text): Hero explicitly states what makes it different ("built for X", "unlike Y", "the only Z"). Generic superlatives ("best", "fastest", "#1") alone = Fail.
+- **hero.risk_reducer** — Risk Reducer Near CTA (8, visual): A risk reducer (free trial, no credit card, cancel anytime, money-back) appears within ~100px of the hero CTA or directly below it.
+- **hero.product_visual** — Hero Product Visual (8, visual): Hero shows a real screenshot of the product UI or a device mockup of the actual product. Text-only/abstract/people-only/no-product = Fail.
 
 ### Value Proposition
-- **M2 — Core Promise Specific** (9): Main promise includes at least one specific number or timeframe. Vague ("improve", "boost", "better") = Fail.
-- **M3 — Alignment With Core Promise** (8): All H2 headings relate to the same core topic as the H1 promise.
-- **M4 — Evidence-Backed Differentiators** (8): At least 2 differentiators, each with supporting detail (screenshot, stat, explanation). Claims without evidence = Fail.
-- **M23 — Target Audience Problem Clarity** (8): Names 1-3 specific pains in the hero or first 2 sections. No problem mentioned = Fail.
-- **M37 — Message Simplicity** (8): Hero conveys ONE primary message. Competing value props or >3 distinct benefits above the fold = Fail.
-- **M17 — "Unlike" Framing** (7): Text directly names an alternative (competitor, "spreadsheets", "manual process") and why this is better.
-- **M35 — Feature-to-Outcome Mapping** (7): At least 3 features paired with a stated benefit/result. Features without outcomes = Fail.
+- **value_prop.specific_promise** — Core Promise Specific (9, text): Main promise includes at least one specific number or timeframe. Vague ("improve", "boost", "better") = Fail.
+- **value_prop.promise_alignment** — Alignment With Core Promise (8, text): All H2 headings relate to the same core topic as the H1 promise.
+- **value_prop.evidence_backed** — Evidence-Backed Differentiators (8, text): At least 2 differentiators, each with supporting detail (screenshot, stat, explanation). Claims without evidence = Fail.
+- **value_prop.problem_clarity** — Target Audience Problem Clarity (8, text): Names 1-3 specific pains in the hero or first 2 sections. No problem mentioned = Fail.
+- **value_prop.message_simplicity** — Message Simplicity (8, text): Hero conveys ONE primary message. Competing value props or >3 distinct benefits above the fold = Fail.
+- **value_prop.unlike_framing** — "Unlike" Framing (7, text): Text directly names an alternative (competitor, "spreadsheets", "manual process") and why this is better.
+- **value_prop.feature_outcome** — Feature-to-Outcome Mapping (7, text): At least 3 features paired with a stated benefit/result. Features without outcomes = Fail.
 
 ### Copywriting
-- **M18 — Action-Oriented CTAs** (8): Primary CTA uses a specific action verb (Start, Get, Try, Book, Create). Generic ("Learn more", "Submit", "Click here") = Fail.
-- **M9 — Objection Handling** (8): Page/FAQ addresses ≥2 of: price, setup time, security, integration, switching cost.
-- **M39 — Persuasive Page Narrative** (8): Logical flow — names the problem first, shows the outcome, presents product as the bridge. Straight to features without pain = Fail.
-- **M21 — Transformation Clarity** (7): A before/after with both states named, OR a testimonial naming a past problem AND a current result, OR a two-state visual. "Great product" with no past state = Fail.
-- **M6 — Benefit-Driven Headings** (7): ≥half of H2 headings focus on benefits/results, not feature names.
-- **M26 — Plain Language** (7): Hero and key sections use simple words, no unexplained acronyms/jargon.
-- **M19 — Consistent CTA Copy** (6): All primary CTAs for the same action use identical wording. Different verbs = Fail.
-- **M20 — Secondary / Passive CTA** (5): A lower-commitment CTA exists (demo video, docs, case study).
-- **M5 — You-Centric Language** (5): Hero and key sections use "you/your", not "we/our".
+- **copy.action_cta** — Action-Oriented CTAs (8, text): Primary CTA uses a specific action verb (Start, Get, Try, Book, Create). Generic ("Learn more", "Submit", "Click here") = Fail.
+- **copy.objection_handling** — Objection Handling (8, text): Page/FAQ addresses ≥2 of: price, setup time, security, integration, switching cost.
+- **copy.narrative** — Persuasive Page Narrative (8, text): Logical flow — names the problem first, shows the outcome, presents product as the bridge. Straight to features without pain = Fail.
+- **copy.transformation** — Transformation Clarity (7, text): A before/after with both states named, OR a testimonial naming a past problem AND a current result, OR a two-state visual. "Great product" with no past state = Fail.
+- **copy.benefit_headings** — Benefit-Driven Headings (7, text): ≥half of H2 headings focus on benefits/results, not feature names.
+- **copy.plain_language** — Plain Language (7, text): Hero and key sections use simple words, no unexplained acronyms/jargon.
+- **copy.consistent_cta** — Consistent CTA Copy (6, text): All primary CTAs for the same action use identical wording. Different verbs = Fail.
+- **copy.secondary_cta** — Secondary / Passive CTA (5, text): A lower-commitment CTA exists (demo video, docs, case study).
+- **copy.you_centric** — You-Centric Language (5, text): Hero and key sections use "you/your", not "we/our".
 
 ### Trust & Credibility
-- **M8 — Quantified Outcome Proof** (8): At least one metric linking product usage to a concrete business result.
-- **V14 — Customer Logos** (7): ≥3 customer/partner logos in the hero or first 2 sections.
-- **M22 — User Evolution from Pain** (7): A testimonial mentioning both a before state and an after state. Generic praise = Fail.
-- **M33 — Content Quality** (7): No spelling/grammar errors in H1/H2/CTA, no placeholder ("Lorem ipsum"). Any visible error = Fail.
-- **M41 — Niche-Specific Testimonials** (7): A testimonial explicitly naming industry/role/use case matching the target audience.
-- **V12 — Human Element in Social Proof** (6): Testimonials include a name AND ≥1 of role, company, location, or context. Anonymous = Fail.
-- **V15 — Trust Badges & Security Signals** (6): ≥1 of review-site badge (G2/Capterra/TrustPilot), press logo, award, or security badge (SOC 2/GDPR/ISO).
-- **V17 — Policy Transparency** (5): Footer or near forms has clear privacy/terms (and refund/SLA if relevant) links.
-- **M34 — Linked Social Proof** (5): ≥1 testimonial links to a full case study or video testimonial.
+- **trust.quantified_proof** — Quantified Outcome Proof (8, text): At least one metric linking product usage to a concrete business result.
+- **trust.customer_logos** — Customer Logos (7, visual): ≥3 customer/partner logos in the hero or first 2 sections.
+- **trust.before_after_testimonial** — User Evolution from Pain (7, text): A testimonial mentioning both a before state and an after state. Generic praise = Fail.
+- **trust.content_quality** — Content Quality (7, text): No spelling/grammar errors in H1/H2/CTA, no placeholder ("Lorem ipsum"). Any visible error = Fail.
+- **trust.niche_testimonials** — Niche-Specific Testimonials (7, text): A testimonial explicitly naming industry/role/use case matching the target audience.
+- **trust.human_social_proof** — Human Element in Social Proof (6, visual): Testimonials include a name AND ≥1 of role, company, location, or context. Anonymous = Fail.
+- **trust.trust_badges** — Trust Badges & Security Signals (6, visual): ≥1 of review-site badge (G2/Capterra/TrustPilot), press logo, award, or security badge (SOC 2/GDPR/ISO).
+- **trust.policy_transparency** — Policy Transparency (5, visual): Footer or near forms has clear privacy/terms (and refund/SLA if relevant) links.
+- **trust.linked_proof** — Linked Social Proof (5, text): ≥1 testimonial links to a full case study or video testimonial.
 
 ### Conversion
-- **M36 — Pricing Visibility** (8): Pricing is visible on page, or a clear link reaches it within one click.
-- **V3 — CTA Dominance** (7): All primary CTAs for the main action share the same background color. Two equally prominent primary colors = Fail.
-- **V13 — CTA Repetition** (7): Main CTA appears at least in hero, one mid-page block, and near the bottom.
-- **M38 — Low-Commitment CTA Option** (7): ≥1 low-commitment CTA (watch demo, see docs, view case study) alongside the primary CTA.
-- **M32 — Post-Submit Clarity** (6): Text in the hero/form area explains what happens next (timeline, next step). None = Fail.
-- **V25 — Urgency or Scarcity Signal** (5): ≥1 urgency element (countdown, limited availability, time-sensitive offer, momentum). Evergreen non-pricing pages = Not evaluable; pricing pages = Fail.
+- **conversion.pricing_visibility** — Pricing Visibility (8, text): Pricing is visible on page, or a clear link reaches it within one click.
+- **conversion.cta_dominance** — CTA Dominance (7, visual): All primary CTAs for the main action share the same background color. Two equally prominent primary colors = Fail.
+- **conversion.cta_repetition** — CTA Repetition (7, visual): Main CTA appears at least in hero, one mid-page block, and near the bottom.
+- **conversion.low_commitment_cta** — Low-Commitment CTA Option (7, text): ≥1 low-commitment CTA (watch demo, see docs, view case study) alongside the primary CTA.
+- **conversion.post_submit_clarity** — Post-Submit Clarity (6, text): Text in the hero/form area explains what happens next (timeline, next step). None = Fail.
+- **conversion.urgency** — Urgency or Scarcity Signal (5, visual): ≥1 urgency element (countdown, limited availability, time-sensitive offer, momentum). Evergreen non-pricing pages = Not evaluable; pricing pages = Fail.
 
 ### Design & UX
 - **Note:** Design & UX items also cover Navigation, FAQ, and Footer.
-- **V4 — Authentic Imagery** (8): Visuals show the real interface/context, not only generic stock photos.
-- **V6 — Visual Hierarchy** (8): H1 visibly larger than H2, H2 larger than body, CTA buttons distinct in color/size.
-- **V9 — Accessible Color Contrast** (8): H1, body, and CTA text have clearly readable contrast.
-- **V5 — Scannability** (7): No text block exceeds ~5 lines without a subhead, bullets, or visual break.
-- **V19 — Clear Navigation Structure** (7): Nav has 4-7 top-level items (dropdowns = 1) and a visible CTA button. >7 items or no CTA = Fail.
-- **V24 — Page Focus** (7): One clear primary goal, ≤10 major sections. Competing goals or section overload = Fail.
-- **V7 — Color Palette Consistency** (6): ≤4 distinct accent colors (excluding grayscale/photos).
-- **V16 — Interactive Product Experience** (6): Product shown in action via video, interactive demo, or live preview.
-- **V20 — FAQ Section** (6): An FAQ addressing 4-8 common questions about product, pricing, or setup.
-- **V8 — Professional Visual Tone** (5): Icons share one style; no random emojis in headings/body.
-- **V21 — Organized Footer** (5): Footer has ≥2 labeled link sections with 3+ links each.
+- **design.authentic_imagery** — Authentic Imagery (8, visual): Visuals show the real interface/context, not only generic stock photos.
+- **design.visual_hierarchy** — Visual Hierarchy (8, visual): H1 visibly larger than H2, H2 larger than body, CTA buttons distinct in color/size.
+- **design.color_contrast** — Accessible Color Contrast (8, visual): H1, body, and CTA text have clearly readable contrast.
+- **design.scannability** — Scannability (7, visual): No text block exceeds ~5 lines without a subhead, bullets, or visual break.
+- **design.nav_structure** — Clear Navigation Structure (7, visual): Nav has 4-7 top-level items (dropdowns = 1) and a visible CTA button. >7 items or no CTA = Fail.
+- **design.page_focus** — Page Focus (7, visual): One clear primary goal, ≤10 major sections. Competing goals or section overload = Fail.
+- **design.palette_consistency** — Color Palette Consistency (6, visual): ≤4 distinct accent colors (excluding grayscale/photos).
+- **design.interactive_product** — Interactive Product Experience (6, visual): Product shown in action via video, interactive demo, or live preview.
+- **design.faq** — FAQ Section (6, visual): An FAQ addressing 4-8 common questions about product, pricing, or setup.
+- **design.visual_tone** — Professional Visual Tone (5, visual): Icons share one style; no random emojis in headings/body.
+- **design.footer** — Organized Footer (5, visual): Footer has ≥2 labeled link sections with 3+ links each.
 
 This rubric produces ONLY the overall score + the 6-category scorecard — the
 factual overview. It does not produce the recommendations. The recommendations

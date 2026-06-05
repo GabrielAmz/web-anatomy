@@ -55,7 +55,7 @@ not hand-edit those numbers. Use this exact shape:
       "severity": "P0",
       "opportunity": "Lead the H1 with the outcome, not the product name",
       "why": "what it unlocks, tied to the real page",
-      "failedItemIds": ["M14"]
+      "failedItemIds": ["hero.outcome_focus"]
     }
   ],
   "pageLevel": [
@@ -131,11 +131,11 @@ a single quick screenshot is NOT enough and will lie:
 scroll). If you cannot verify in the DOM, say "could not verify" rather than
 "missing".
 
-**The render gates the visual items.** The `V`-prefixed rubric items (hierarchy,
+**The render gates the visual items.** The `mode: visual` rubric items (hierarchy,
 contrast, product visual, imagery, palette, above-the-fold layout, CTA dominance)
-need a real render. The `M`-prefixed items (messaging, copy, structure) can be
-judged from the page text/DOM. If you genuinely cannot render, score the `M`
-items and mark the `V` items `n/a` in Step 3 — do not guess them. The score's
+need a real render. The `mode: text` items (messaging, copy, structure) can be
+judged from the page text/DOM. If you genuinely cannot render, score the `text`
+items and mark the `visual` items `n/a` in Step 3 — do not guess them. The score's
 coverage and band will then reflect that the visual half was not seen.
 
 Capture headline, subheadline, CTA, proof, product visual, hierarchy, form fields,
@@ -148,8 +148,9 @@ reproducible. Read `references/scoring.md` and follow its Method:
 
 1. Judge each of the 49 items `pass` / `fail` / `n/a`, and for every pass/fail
    record an `evidence_source` (`dom` / `render` / `text` / `inferred`) and a short
-   `evidence_note`. Score the `V` (visual) items only from a render; if you could
-   not render, mark them `n/a`, note it, and score the `M` items from the text/DOM.
+   `evidence_note`. Score the `mode: visual` items only from a render; if you could
+   not render, mark them `n/a`, note it, and score the `mode: text` items from the
+   text/DOM.
 2. Write `scorecard.json` (all 49 items) next to the audit.
 3. Run the deterministic scorer and copy its output into the `score` block of
    `audit.json`:
@@ -237,9 +238,9 @@ Rules for the opportunity list:
   CTA", and "generic differentiation" are four separate opportunities, not one.
   A section with five weak items produces ~five opportunities. Be comprehensive —
   the audit's job is to surface every real gap, not a tidy summary.
-- **Never show internal item IDs or category internals** (no `M1`, `V23`, raw
-  weights, scores, thresholds) in this output. The reader sees plain-language
-  opportunities.
+- **Never show internal item IDs or category internals** (no dotted ids like
+  `hero.outcome_focus`, no raw weights, scores, thresholds) in this output. The
+  reader sees plain-language opportunities.
 - Write each as an OPPORTUNITY (the move + what it unlocks), not a complaint. Tag
   the section, use the severity label, order by conversion impact (Step 4). At
   most one or two P0s.
