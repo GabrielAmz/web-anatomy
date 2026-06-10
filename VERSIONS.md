@@ -10,7 +10,7 @@ Initial release. Three skills.
 
 ## v0.2.0 — 2026-05-22 (benchmark plugin slice)
 
-Adds the Lazyweb-inspired plugin architecture and benchmark-backed workflow skills.
+Adds the plugin architecture and benchmark-backed workflow skills.
 
 - Repo marketplace files for Codex and Claude plugin discovery.
 - `plugins/webanatomy` bundle with Codex/Claude manifests, assets, and mirrored skills.
