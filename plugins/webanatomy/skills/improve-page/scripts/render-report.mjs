@@ -138,8 +138,8 @@ function validate(data) {
       over(row.strongPattern, BUDGETS.gapCell, `gapAnalysis[${i}].strongPattern`);
     });
 
-    if (data.working.length < BUDGETS.workingMin || data.working.length > BUDGETS.workingMax) {
-      errors.push(`working needs ${BUDGETS.workingMin}-${BUDGETS.workingMax} bullets (got ${data.working.length})`);
+    if (data.working.length && (data.working.length < BUDGETS.workingMin || data.working.length > BUDGETS.workingMax)) {
+      errors.push(`working needs ${BUDGETS.workingMin}-${BUDGETS.workingMax} bullets when present (got ${data.working.length})`);
     }
     data.working.forEach((item, i) => over(item, BUDGETS.workingItem, `working[${i}]`));
 

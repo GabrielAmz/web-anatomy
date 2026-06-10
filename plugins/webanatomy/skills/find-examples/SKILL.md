@@ -3,7 +3,7 @@ name: find-examples
 description: |
   Fast Web Anatomy benchmark lookup. Use when the user asks to find examples, show references, get inspiration, find strong homepages, find strong sections, show SaaS pricing examples, show AI hero examples, find testimonial patterns, or provide a swipe file without a full research report. Uses the Web Anatomy MCP search_pages and search_sections tools when available, keeps internal scores and raw benchmark fields hidden, and writes a lightweight visual swipe file under `.webanatomy/find-examples/`.
 metadata:
-  version: 0.2.0
+  version: 0.3.0
 ---
 
 # Find Examples
@@ -36,11 +36,17 @@ node <skill-dir>/scripts/render-report.mjs --input=.webanatomy/find-examples/{to
 
 Resolve `<skill-dir>` relative to this `SKILL.md`. The renderer validates the report data, downloads every `screenshotUrl` into `references/`, writes `report.md`, writes `report.html`, and renders "screenshot unavailable" when no screenshot exists.
 
-Use this report-data shape:
+Use this report-data shape (v2):
 
-- `title`, `summary`, optional `eyebrow`, `subtitle`, `target`
-- `references`: `{ "title": "...", "company": "...", "section": "...", "sourceUrl": "...", "screenshotUrl": "...", "caption": "...", "insight": "..." }[]`
-- optional `recommendations`, `gapAnalysis`, `weekActions`, `quarterActions`, `footer`
+- `title`: plain and descriptive (`{Topic} - benchmark examples`), no editorial framing
+- optional `eyebrow`, `subtitle`, `target`
+- `summary`: `string[]` of max 3 bullets (each max 140 chars) on what the examples show. The first bullet renders as the "TL;DR:" lead sentence of the blue callout under the title.
+- `recommendations` used as **patterns** (set `recommendationsHeading: "Patterns"`): `{ "title": "...", "why": "...", "how": ["..."], "refIds": ["..."] }[]` - one entry per plain-English pattern. `title` is the pattern name; `why` (max 220 chars) is what makes it work; `how` is 1-5 adaptation bullets, each max 160 chars; `refIds` lists the example references showing it (their screenshots render inline; 2-3 render as options A/B/C). Skip `priority`/`kind`/`prompt`; this is a swipe file, not an audit.
+- `references`: `{ "id": "...", "title": "...", "company": "...", "section": "...", "sourceUrl": "...", "screenshotUrl": "...", "caption": "...", "insight": "..." }[]` - `id` is a stable kebab-case slug; `insight` is the one-line what-to-notice, max 200 chars. References not claimed by a pattern render in an "All references" gallery at the bottom; for a flat ranked list, leave `recommendations` empty and let all references render in the gallery.
+- optional `footer`
+- set `ungrounded: true` only on explicit no-MCP runs
+
+The renderer enforces the budgets and fails loudly with the exact overruns. When it fails, rewrite the content shorter; never pad, never bypass the renderer with hand-written HTML.
 
 Only fall back to hand-written HTML if the renderer cannot be run.
 
@@ -162,33 +168,13 @@ Do not expose marker JSON. If markers are available, translate them into visible
 
 ## Report Output
 
-Write `report.md` in this shape:
+Fill the v2 report-data shape and let the renderer produce both files. The report reads in this order:
 
-```markdown
-# Web Anatomy Examples: [Topic]
+1. **TL;DR** (`summary`) - the blue callout, 3 bullets max on what the examples show.
+2. **Patterns** (`recommendations` with `recommendationsHeading: "Patterns"`) - one numbered card per pattern, its example screenshots inline, adaptation steps as `how` bullets.
+3. **All references** - the remaining examples render automatically in the gallery.
 
-## TL;DR
-[1-2 sentences on what the examples show.]
-
-### Pattern: [Plain-English Pattern Name]
-![Company section](references/company-section.png)
-**[Company]** - [what to notice; why this is useful for the user]
-
-![Company section](references/company-section-2.png)
-**[Company]** - [what to notice]
-
-### Pattern: [Pattern Name]
-- ...
-
-## How To Use These
-1. [specific adaptation]
-2. [specific adaptation]
-3. [specific adaptation]
-```
-
-If the user asks for a swipe file, group by pattern instead of rank.
-
-Generate `report.html` alongside the Markdown. Use inline CSS, system fonts, a max-width around 1000px, image cards, clear pattern headings, and relative image paths.
+When the user asks for a swipe file, group by pattern (one card per pattern, examples in `refIds`). When they ask for a flat ranked list, leave `recommendations` empty and let all references render in the gallery in rank order.
 
 After saving, respond in chat with:
 
