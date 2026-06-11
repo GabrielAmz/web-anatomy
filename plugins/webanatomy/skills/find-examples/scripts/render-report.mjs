@@ -174,7 +174,7 @@ function inferExt(url, contentType) {
   return ext || ".png";
 }
 
-async function downloadReferences(data, inputPath) {
+async function downloadReferences(data, inputPath, raw) {
   const root = path.dirname(inputPath);
   const referencesDir = path.join(root, "references");
   await fs.mkdir(referencesDir, { recursive: true });
@@ -224,8 +224,19 @@ async function downloadReferences(data, inputPath) {
   }
 
   if (changed) {
-    const { v2, ...persisted } = data;
-    await fs.writeFile(inputPath, `${JSON.stringify(persisted, null, 2)}\n`);
+    // Persist only the download results onto the raw input shape, so a legacy
+    // (pre-v2) report-data.json is never rewritten into the normalized shape.
+    const rawRefs = Array.isArray(raw?.references) ? raw.references : [];
+    data.references.forEach((ref, i) => {
+      if (!rawRefs[i]) return;
+      if (ref.localImage) rawRefs[i].localImage = ref.localImage;
+      if (ref.screenshotUnavailableReason) {
+        rawRefs[i].screenshotUnavailableReason = ref.screenshotUnavailableReason;
+      } else {
+        delete rawRefs[i].screenshotUnavailableReason;
+      }
+    });
+    await fs.writeFile(inputPath, `${JSON.stringify(raw ?? data, null, 2)}\n`);
   }
 }
 
@@ -479,10 +490,11 @@ if (!input || input.startsWith("--")) usage();
 const inputPath = path.resolve(input);
 const htmlPath = path.resolve(getArg("--out-html") || defaultPath(inputPath, ".html"));
 const mdPath = path.resolve(getArg("--out-md") || defaultPath(inputPath, ".md"));
-const data = normalize(JSON.parse(await fs.readFile(inputPath, "utf8")));
+const raw = JSON.parse(await fs.readFile(inputPath, "utf8"));
+const data = normalize(raw);
 validate(data);
 
-if (!hasFlag("--no-download")) await downloadReferences(data, inputPath);
+if (!hasFlag("--no-download")) await downloadReferences(data, inputPath, raw);
 
 await fs.mkdir(path.dirname(htmlPath), { recursive: true });
 await fs.mkdir(path.dirname(mdPath), { recursive: true });
