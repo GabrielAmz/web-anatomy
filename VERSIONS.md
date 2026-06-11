@@ -30,6 +30,16 @@ Updates the workflow skills for hosted MCP page inspiration.
 - `research-best-practices`, `improve-page`, and `benchmark-compare` use page-level examples for homepage/category patterns before falling back to section-level evidence.
 - Plugin mirror skills now include the same hosted MCP instructions.
 
+## v0.2.2 — 2026-06-11 (report v2 layout)
+
+Redesigns the report every workflow skill produces, tested against a real audit.
+
+- New layout: plain descriptive title, blue TL;DR callout (max 3 bullets), numbered cards with their reference screenshots inline; 2-3 references render as options A/B/C.
+- The shared renderer enforces hard word budgets and a grounding floor (min 3 cards with refIds), failing loudly with exact overruns so the writing agent rewrites instead of padding.
+- `improve-page` (0.3.0): mandatory hero slot, per-recommendation copy-paste agent prompts, What's working section.
+- `audit-page` (0.2.0): P0-P3 severities become HIGH/MEDIUM/LOW, audit.json schema v2, recommendations typed copy|design, prose budgets on the handoff.
+- `benchmark-compare`, `find-examples`, `research-best-practices` (0.3.0): same layout; patterns/gaps/findings carry their example screenshots inline. Legacy report-data still renders.
+
 ## Roadmap
 
 **v0.3** — MCP tool expansion. Add `classify_page_or_section` and `compare_url_to_benchmark` once the hosted server exposes them.
