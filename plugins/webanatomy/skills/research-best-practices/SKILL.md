@@ -3,7 +3,7 @@ name: research-best-practices
 description: |
   Deep Web Anatomy research report for a page archetype, section type, industry, competitor set, or conversion problem. Use when the user asks for best practices, market patterns, what top pages do, competitive research, a design research report, pricing page research, hero best practices, testimonial research, or benchmark-backed recommendations before building. Produces durable files under `.webanatomy/research-best-practices/`.
 metadata:
-  version: 0.2.0
+  version: 0.3.0
 ---
 
 # Research Best Practices
@@ -36,12 +36,17 @@ node <skill-dir>/scripts/render-report.mjs --input=.webanatomy/research-best-pra
 
 Resolve `<skill-dir>` relative to this `SKILL.md`. The renderer validates the report data, downloads every `screenshotUrl` into `references/`, writes `report.md`, writes `report.html`, and renders "screenshot unavailable" when no screenshot exists.
 
-Use this report-data shape:
+Use this report-data shape (v2):
 
-- `title`, `summary`, optional `eyebrow`, `subtitle`, `target`
-- `references`: `{ "title": "...", "company": "...", "section": "...", "sourceUrl": "...", "screenshotUrl": "...", "caption": "...", "insight": "..." }[]`
-- `recommendations`: `{ "title": "...", "why": "...", "how": "..." }[]`
-- optional `currentSnapshot`, `gapAnalysis`, `weekActions`, `quarterActions`, `footer`
+- `title`: plain and descriptive (`{Topic} - what strong pages do`), no editorial framing
+- optional `eyebrow`, `subtitle`, `target`
+- `summary`: `string[]` of max 3 bullets (each max 140 chars), the practical answer. The first bullet renders as the "TL;DR:" lead sentence of the blue callout under the title.
+- `recommendations`: `{ "title": "...", "why": "...", "how": ["..."], "refIds": ["..."], "priority": "HIGH|MEDIUM|LOW" }[]` - the findings, ordered. `why` (max 220 chars) ties the finding to benchmark evidence; `how` is 1-5 adaptation bullets, each max 160 chars; `refIds` lists the references showing the pattern (their screenshots render inline as "Inspired by"; 2-3 render as options A/B/C). `kind` and `prompt` are optional.
+- `references`: `{ "id": "...", "title": "...", "company": "...", "section": "...", "sourceUrl": "...", "screenshotUrl": "...", "caption": "...", "insight": "..." }[]` - `id` is a stable kebab-case slug; `insight` is the one-line what-to-notice, max 200 chars. Label web-captured examples `[Web]` in the caption. References not claimed by any finding render in an "All references" gallery at the bottom.
+- optional `gapAnalysis` (max 6 rows, cells max 90 chars), `currentSnapshot` (max 6 items, collapsed at the bottom), `working`, `footer`
+- optional `ungrounded: true` - only for explicit no-MCP runs; lifts the floor of at least 3 findings carrying `refIds`
+
+The renderer enforces the budgets and the grounding floor, and fails loudly with the exact overruns. When it fails, rewrite the content shorter; never pad, never bypass the renderer with hand-written HTML. Put anti-patterns in `recommendations` too (a finding whose `how` says what to avoid), and source notes in `footer`.
 
 Only fall back to hand-written HTML if the renderer cannot be run.
 
@@ -138,43 +143,14 @@ Skip examples when:
 
 ## Report Shape
 
-```markdown
-# Web Anatomy Research: [Topic]
+Fill the v2 report-data shape and let the renderer produce both files. The report reads in this order:
 
-## TL;DR
-[2-3 sentences with the practical answer.]
+1. **TL;DR** (`summary`) - the practical answer as the blue callout, 3 bullets max.
+2. **Findings** (`recommendations`, heading via `recommendationsHeading`, for example "What strong pricing pages do") - numbered, strongest first, each pattern shown through its reference screenshots inline. Anti-patterns are findings too: name what fails and what to do instead.
+3. **All references** - examples no finding claimed render automatically in the gallery, with `[Web]`/benchmark labels in their captions.
+4. **Sources and corpus limits** go in `footer`.
 
-## Recommendations
-1. **[Recommendation]** - [why, tied to benchmark evidence]
-2. **[Recommendation]** - [why]
-3. **[Recommendation]** - [why]
-
-## What Strong [Section/Page] Examples Have In Common
-
-### [Pattern Name]
-[Explain the pattern.]
-
-Seen in:
-- [Company] - [what to notice]
-- [Company] - [what to notice]
-
-How to adapt it:
-- [specific guidance]
-
-## Anti-Patterns
-- [anti-pattern and why it fails]
-
-## Reference Gallery
-[Screenshots or links with source labels.]
-
-## Sources
-- [Benchmark examples are cited inline]
-- [Live web URLs]
-```
-
-## HTML Requirements
-
-The HTML report should be self-contained with inline CSS, system fonts, readable line height, max width around 1000px, clean tables, image cards, and images referenced with relative paths. It should be pleasant to open directly in a browser from disk.
+Write to be skimmed: every `why` is 2 lines max tied to evidence ("4 of 6 references do X"), every `how` is imperative bullets, one idea per sentence. No prevalence adjectives without a count.
 
 After saving, respond in chat with:
 

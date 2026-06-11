@@ -55,9 +55,12 @@ can defend it, recommend it. Judgment beats coverage.
 
 - **One recommendation per distinct issue.** Do not bundle (no-outcome-headline,
   no-named-audience, no-risk-reducer are three recs, not one). Be comprehensive.
-- **Prioritize by impact, not by any score:** P0 (blocks comprehension/trust/
-  conversion), P1 (meaningful lift), P2 (worth doing), P3 (polish). At most one or
-  two P0s — name the single highest-leverage fix.
+- **Prioritize by impact, not by any score:** HIGH (blocks comprehension/trust/
+  conversion), MEDIUM (meaningful lift), LOW (polish). At most two or three HIGHs
+  — name the single highest-leverage fix.
+- **Type each rec by the fix it needs:** `copy` (wording, message, angle; the fix
+  is rewrite alternatives) or `design` (structure, layout, hierarchy, visual
+  proof; the fix is benchmark-grounded section references).
 - **Each rec is a concrete move:** what to add, remove, rewrite, or re-order, tied
   to what is actually on the page. "Move a named customer quote directly under the
   hero CTA" beats "improve trust."
