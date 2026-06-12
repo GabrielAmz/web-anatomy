@@ -1,5 +1,9 @@
 {
   "name": "webanatomy",
+  "owner": {
+    "name": "Gabriel Amzallag",
+    "url": "https://github.com/GabrielAmz"
+  },
   "plugins": [
     {
       "name": "webanatomy",
