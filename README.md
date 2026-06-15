@@ -42,9 +42,9 @@ Web Anatomy does not rely on chat to render screenshots. The output skills write
 
 The chat response should stay short: top findings, report path, and any screenshot or MCP limitations. `report.html` is the product experience.
 
-## Live benchmark data (optional)
+## Live benchmark data (optional, highly recommended)
 
-The skills work on their own — install them and start immediately. To ground recommendations in live benchmark data, connect the hosted Web Anatomy MCP. It needs a beta token and one config command per IDE:
+The skills work on their own — install them and start immediately. Connecting the hosted Web Anatomy MCP is never mandatory, but highly recommended: it grounds every recommendation in live benchmark data and real reference examples instead of static guidance, which is where the skills are at their best. It needs a beta token and one config command per IDE:
 
 **Sign in at https://webanatomy.ai/mcp-install to get your token + per-IDE config.** You must be signed in — the page generates your personal token there.
 
