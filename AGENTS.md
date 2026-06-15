@@ -17,7 +17,7 @@ This copies every skill in this repo into `.agents/skills/` in your project. The
 
 A skill named `improve-page` installs to `.agents/skills/improve-page/SKILL.md` regardless of which agent loads it.
 
-`.mcp.example.json` documents the optional hosted MCP connection.
+Connecting the hosted Web Anatomy MCP for live benchmark data is optional — setup at https://webanatomy.ai/mcp-install. The skills run fully without it.
 
 ## How to invoke a skill
 

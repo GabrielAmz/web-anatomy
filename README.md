@@ -42,21 +42,13 @@ Web Anatomy does not rely on chat to render screenshots. The output skills write
 
 The chat response should stay short: top findings, report path, and any screenshot or MCP limitations. `report.html` is the product experience.
 
-## MCP Config
+## Live benchmark data (optional)
 
-The skills are MCP-aware. The repo includes `.mcp.example.json` as an optional local config template:
+The skills work on their own — install them and start immediately. To ground recommendations in live benchmark data, connect the hosted Web Anatomy MCP. It needs a beta token and one config command per IDE:
 
-```bash
-export WEBANATOMY_MCP_TOKEN=...
-```
+**Setup (token + per-IDE config) → https://webanatomy.ai/mcp-install**
 
-Token lookup order:
-
-1. `WEBANATOMY_MCP_TOKEN`
-2. `~/.webanatomy/webanatomy_mcp_token`
-3. `~/.codex/webanatomy_mcp_token`
-
-The skills use MCP tools such as `search_pages`, `get_page`, `search_sections`, and `get_section` when available. Scores, thresholds, raw marker coordinates, and benchmark field names stay internal; user-facing reports translate them into plain-English patterns and gap labels.
+The skills use MCP tools such as `search_pages`, `get_page`, `search_sections`, and `get_section` when connected, and degrade gracefully to static guidance when not. Scores, thresholds, raw marker coordinates, and benchmark field names stay internal; user-facing reports translate them into plain-English patterns and gap labels.
 
 ## Why "Anatomy"
 
@@ -90,11 +82,7 @@ After install, start with `webanatomy-setup`. The benchmark-backed workflows deg
 
 ## Repo layout
 
-```txt
-web-anatomy/
-├── .mcp.example.json   ← optional local MCP config template
-└── skills/             ← the skill pack (source of truth, installed by `npx skills add`)
-```
+`skills/` holds the skill pack — the source of truth installed by `npx skills add`.
 
 ## Contributing
 

@@ -47,7 +47,8 @@ Removes the plugin/marketplace layer in favor of one install path.
 - Deletes `.claude-plugin/`, `.agents/plugins/`, and the `plugins/webanatomy` bundle (mirrored skills, Codex/Claude manifests, assets, plugin-scoped `.mcp.example.json`).
 - `npx skills add GabrielAmz/web-anatomy` (Agent Skills spec) is now the single install path; it already covers Claude Code, Codex, Cursor, and Windsurf cross-client.
 - The marketplace mechanism was Claude-Code-only and schema-fragile (a missing `owner` field failed install on the user's machine); the skills installer has neither limitation.
-- `validate-skills.sh` no longer checks a plugin mirror, since there is no longer a mirror to keep in sync. Root `.mcp.example.json` is unchanged.
+- `validate-skills.sh` no longer checks a plugin mirror, since there is no longer a mirror to keep in sync.
+- Deletes the root `.mcp.example.json`. MCP setup (beta token + per-IDE config) now lives at https://webanatomy.ai/mcp-install; the README and AGENTS point there. Skills install first and run fully without MCP — connecting it is an optional upgrade for live benchmark data.
 
 ## Roadmap
 
