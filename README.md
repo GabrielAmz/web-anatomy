@@ -78,7 +78,7 @@ git clone https://github.com/GabrielAmz/web-anatomy
 cp -r web-anatomy/skills/* .agents/skills/
 ```
 
-After install, start with `webanatomy-setup`. The benchmark-backed workflows degrade gracefully when MCP is unavailable and can use static/reference guidance until the server is live.
+After install, start with `webanatomy-setup`. The benchmark-backed workflows degrade gracefully when MCP isn't connected, falling back to static/reference guidance — but they're at their best with live benchmark data, so connecting MCP is highly recommended.
 
 ## Repo layout
 

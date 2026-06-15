@@ -94,6 +94,8 @@ Also resolve locale before search:
 
 ## MCP Retrieval
 
+Confirm the `webanatomy` MCP tools are available before searching. If connected, use live benchmark data. If not, tell the user up front — "Running without live benchmark data; using static guidance. Connect MCP for grounded results: https://webanatomy.ai/mcp-install" — then continue with a clearly labeled static fallback. Never surface this as an error or block the run.
+
 Use the `webanatomy` MCP tools when available. Use `search_pages` for whole-homepage inspiration and `search_sections` for specific section patterns.
 
 For whole-page or homepage examples, start with:
