@@ -10,12 +10,9 @@ Installs the Web Anatomy skill pack for Claude Code, OpenAI Codex, Cursor, Winds
 
 ## What's in v0.2
 
-Web Anatomy now has two layers:
+Install the whole pack with one command — `npx skills add GabrielAmz/web-anatomy` — into any agent that reads the [Agent Skills](https://agentskills.io/) spec.
 
-- **Skills-only install** with `npx skills add GabrielAmz/web-anatomy`
-- **Plugin install** from this repo's marketplace files, bundling the same skill set for plugin-aware agents
-
-The new benchmark-backed workflow skills are:
+The benchmark-backed workflow skills are:
 
 | Skill | What it does |
 |---|---|
@@ -81,33 +78,23 @@ Every Web Anatomy skill turns a page into parts: hero, proof, problem, solution,
 # Recommended — installs the whole pack to .agents/skills/
 npx skills add GabrielAmz/web-anatomy
 
+# Update later (or just re-run the command above — it's idempotent)
+npx skills update GabrielAmz/web-anatomy
+
 # Or clone and copy manually
 git clone https://github.com/GabrielAmz/web-anatomy
 cp -r web-anatomy/skills/* .agents/skills/
-
-# Or git submodule (pull updates with one command)
-git submodule add https://github.com/GabrielAmz/web-anatomy .agents/web-anatomy
 ```
 
 After install, start with `webanatomy-setup`. The benchmark-backed workflows degrade gracefully when MCP is unavailable and can use static/reference guidance until the server is live.
 
-## Plugin layout
+## Repo layout
 
 ```txt
 web-anatomy/
-├── .agents/plugins/marketplace.json
-├── .claude-plugin/marketplace.json
-├── .mcp.example.json
-├── plugins/webanatomy/
-│   ├── .codex-plugin/plugin.json
-│   ├── .claude-plugin/plugin.json
-│   ├── .mcp.example.json
-│   ├── assets/
-│   └── skills/
-└── skills/
+├── .mcp.example.json   ← optional local MCP config template
+└── skills/             ← the skill pack (source of truth, installed by `npx skills add`)
 ```
-
-`skills/` is the source of truth. `plugins/webanatomy/skills/` mirrors it for marketplace/plugin installs.
 
 ## Contributing
 

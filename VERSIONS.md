@@ -40,6 +40,15 @@ Redesigns the report every workflow skill produces, tested against a real audit.
 - `audit-page` (0.2.0): P0-P3 severities become HIGH/MEDIUM/LOW, audit.json schema v2, recommendations typed copy|design, prose budgets on the handoff.
 - `benchmark-compare`, `find-examples`, `research-best-practices` (0.3.0): same layout; patterns/gaps/findings carry their example screenshots inline. Legacy report-data still renders.
 
+## v0.2.3 — 2026-06-15 (single install path)
+
+Removes the plugin/marketplace layer in favor of one install path.
+
+- Deletes `.claude-plugin/`, `.agents/plugins/`, and the `plugins/webanatomy` bundle (mirrored skills, Codex/Claude manifests, assets, plugin-scoped `.mcp.example.json`).
+- `npx skills add GabrielAmz/web-anatomy` (Agent Skills spec) is now the single install path; it already covers Claude Code, Codex, Cursor, and Windsurf cross-client.
+- The marketplace mechanism was Claude-Code-only and schema-fragile (a missing `owner` field failed install on the user's machine); the skills installer has neither limitation.
+- `validate-skills.sh` no longer checks a plugin mirror, since there is no longer a mirror to keep in sync. Root `.mcp.example.json` is unchanged.
+
 ## Roadmap
 
 **v0.3** — MCP tool expansion. Add `classify_page_or_section` and `compare_url_to_benchmark` once the hosted server exposes them.
