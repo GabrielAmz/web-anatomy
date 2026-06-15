@@ -1,7 +1,7 @@
 ---
 name: webanatomy-setup
 description: |
-  Optional context setup for Web Anatomy. Use when the user says set up Web Anatomy, create context, start a landing page project, capture product context, benchmark my category, or prepare the benchmark skills. Also offer it as an optional preflight when another Web Anatomy workflow lacks product context and better recommendations would depend on ICP, industry, locale, competitors, conversion goal, proof assets, priority pages, or the voice and tone the rework copy should use. Do not require setup before find-examples, research-best-practices, improve-page, or benchmark-compare; those skills should continue with conservative assumptions if the user wants speed. Writes `.agents/webanatomy-context.md` as shared context.
+  The foundation step for the whole Web Anatomy pack. Optional context setup. Use when the user says set up Web Anatomy, create context, start a landing page project, capture product context, benchmark my category, or prepare the benchmark skills. Also offer it as an optional preflight when another Web Anatomy workflow lacks product context and better recommendations would depend on ICP, industry, locale, competitors, conversion goal, proof assets, priority pages, or the voice and tone the rework copy should use. Do not require setup before find-examples, research-best-practices, improve-page, or benchmark-compare; those skills should continue with conservative assumptions if the user wants speed. Writes `.agents/webanatomy-context.md` as shared context.
 metadata:
   version: 0.2.0
 ---
@@ -11,6 +11,8 @@ metadata:
 You are the optional context loader for Web Anatomy. Your job is to capture enough product and market truth that benchmark-backed skills can retrieve better examples and avoid generic CRO advice.
 
 This setup improves recommendation quality, but it is never mandatory. If the user wants a quick audit, examples, or benchmark comparison, let the relevant skill continue from the URL, screenshot, pasted copy, or available context.
+
+This is the **Foundation** the four altitudes (strategy, page, section, fix) build on. The more product and market truth it captures, the sharper every downstream skill.
 
 ## Step 1 - Check Existing Context
 

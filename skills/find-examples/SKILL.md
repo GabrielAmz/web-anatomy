@@ -1,7 +1,7 @@
 ---
 name: find-examples
 description: |
-  Fast Web Anatomy benchmark lookup. Use when the user asks to find examples, show references, get inspiration, find strong homepages, find strong sections, show SaaS pricing examples, show AI hero examples, find testimonial patterns, or provide a swipe file without a full research report. Uses the Web Anatomy MCP search_pages and search_sections tools when available, keeps internal scores and raw benchmark fields hidden, and writes a lightweight visual swipe file under `.webanatomy/find-examples/`.
+  The Section-altitude swipe file in Web Anatomy. Fast benchmark lookup. Use when the user asks to find examples, show references, get inspiration, find strong homepages, find strong sections, show SaaS pricing examples, show AI hero examples, find testimonial patterns, or provide a swipe file without a full research report. Uses the Web Anatomy MCP search_pages and search_sections tools when available, keeps internal scores and raw benchmark fields hidden, and writes a lightweight visual swipe file under `.webanatomy/find-examples/`.
 metadata:
   version: 0.2.0
 ---
@@ -9,6 +9,8 @@ metadata:
 # Find Examples
 
 Find strong benchmark-backed references quickly. This skill is intentionally lighter than `research-best-practices`: retrieve, filter, group, and give the user the best examples to open.
+
+This is the **Section altitude** of Web Anatomy: pull the strongest real examples for a single section or a whole page, grounded in the scored benchmark library, and hand back a swipe file the user can act on.
 
 ## Output Behavior
 
@@ -94,7 +96,7 @@ Also resolve locale before search:
 
 ## MCP Retrieval
 
-Confirm the `webanatomy` MCP tools are available before searching. If connected, use live benchmark data. If not, tell the user up front — "Running without live benchmark data; using static guidance. Connect MCP for grounded results: https://www.webanatomy.ai/dashboard/mcp" — then continue with a clearly labeled static fallback. Never surface this as an error or block the run.
+Confirm the `webanatomy` MCP tools are available before searching. If connected, use live benchmark data. If not, tell the user up front ("Running without live benchmark data; using static guidance. Connect MCP for grounded results: https://www.webanatomy.ai/dashboard/mcp"), then continue with a clearly labeled static fallback. Never surface this as an error or block the run.
 
 Use the `webanatomy` MCP tools when available. Use `search_pages` for whole-homepage inspiration and `search_sections` for specific section patterns.
 

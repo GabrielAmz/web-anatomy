@@ -1,7 +1,7 @@
 ---
 name: improve-page
 description: |
-  Improve an existing landing page, homepage, pricing page, persona page, feature page, comparator page, or individual section using Web Anatomy benchmarks. Use when the user asks what can you do to improve my LP, what can you do to improve my landing page, improve my site, critique, audit, redesign brief, section improvement, CRO review, why is this page weak, compare my page to best practices, or create a Lazyweb-style improvement report. Classifies the page, captures current reality first, routes to the right archetype, searches benchmark examples, and writes a report under `.webanatomy/improve-page/`.
+  The Fix-altitude flagship rework in Web Anatomy. Improve an existing landing page, homepage, pricing page, persona page, feature page, comparator page, or individual section using Web Anatomy benchmarks. Use when the user asks what can you do to improve my LP, what can you do to improve my landing page, improve my site, critique, audit, redesign brief, section improvement, CRO review, why is this page weak, or compare my page to best practices. Classifies the page, captures current reality first, routes to the right archetype, searches benchmark examples, and writes a report under `.webanatomy/improve-page/`.
 metadata:
   version: 0.2.0
 ---
@@ -9,6 +9,8 @@ metadata:
 # Improve Page
 
 Classify -> capture -> route -> benchmark -> recommend. This is the flagship Web Anatomy improvement workflow.
+
+This is the **Fix altitude** of Web Anatomy: it turns a diagnosis into grounded, copy-paste changes anchored to real benchmark pages, not generic advice.
 
 ## Output Behavior
 
@@ -136,7 +138,7 @@ Also resolve locale before search:
 
 ## Step 5 - Search Benchmarks
 
-Confirm the `webanatomy` MCP tools are available before searching. If connected, use live benchmark data. If not, tell the user up front — "Running without live benchmark data; using static guidance. Connect MCP for grounded results: https://www.webanatomy.ai/dashboard/mcp" — then continue with a clearly labeled static fallback. Never surface this as an error or block the run.
+Confirm the `webanatomy` MCP tools are available before searching. If connected, use live benchmark data. If not, tell the user up front ("Running without live benchmark data; using static guidance. Connect MCP for grounded results: https://www.webanatomy.ai/dashboard/mcp"), then continue with a clearly labeled static fallback. Never surface this as an error or block the run.
 
 For whole homepage or landing-page work, first call `search_pages` once to collect full-page references for the resolved industry and locale:
 

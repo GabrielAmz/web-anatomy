@@ -1,7 +1,7 @@
 ---
 name: benchmark-compare
 description: |
-  Compare a live URL, screenshot, or pasted section against Web Anatomy benchmark examples and produce a gap analysis. Use when the user asks score this page vs benchmark, compare my URL to best-in-class pages, benchmark this hero, gap analysis against competitors, how far are we from strong examples, or what should we fix first. Uses public gap labels while keeping internal scores and raw benchmark mechanics hidden.
+  The Page-altitude gap check in Web Anatomy. Compare a live URL, screenshot, or pasted section against Web Anatomy benchmark examples and produce a gap analysis. Use when the user asks score this page vs benchmark, compare my URL to best-in-class pages, benchmark this hero, gap analysis against competitors, how far are we from strong examples, or what should we fix first. Uses public gap labels while keeping internal scores and raw benchmark mechanics hidden.
 metadata:
   version: 0.2.0
 ---
@@ -9,6 +9,8 @@ metadata:
 # Benchmark Compare
 
 Compare the user's current page against benchmark-backed patterns. This is more diagnostic than `find-examples` and more concise than `improve-page`.
+
+This is the **Page altitude** of Web Anatomy, grounded: it measures the current page against the real benchmark winners and labels each gap so the user sees how far the page sits from the best in its market.
 
 ## Output Behavior
 
@@ -59,7 +61,7 @@ Only fall back to hand-written HTML if the renderer cannot be run.
 
 ## MCP Retrieval
 
-Confirm the `webanatomy` MCP tools are available before searching. If connected, use live benchmark data. If not, tell the user up front — "Running without live benchmark data; using static guidance. Connect MCP for grounded results: https://www.webanatomy.ai/dashboard/mcp" — then continue with a clearly labeled static fallback. Never surface this as an error or block the run.
+Confirm the `webanatomy` MCP tools are available before searching. If connected, use live benchmark data. If not, tell the user up front ("Running without live benchmark data; using static guidance. Connect MCP for grounded results: https://www.webanatomy.ai/dashboard/mcp"), then continue with a clearly labeled static fallback. Never surface this as an error or block the run.
 
 Use `search_pages` for whole homepage or landing-page comparisons. It returns public-safe page examples with `analysis_bullets`, `strengths`, `stealable_moves`, `source_url`, and `screenshot_url`. Use `search_sections` for priority section comparisons.
 

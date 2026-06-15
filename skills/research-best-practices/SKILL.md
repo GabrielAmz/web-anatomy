@@ -1,7 +1,7 @@
 ---
 name: research-best-practices
 description: |
-  Deep Web Anatomy research report for a page archetype, section type, industry, competitor set, or conversion problem. Use when the user asks for best practices, market patterns, what top pages do, competitive research, a design research report, pricing page research, hero best practices, testimonial research, or benchmark-backed recommendations before building. Produces durable files under `.webanatomy/research-best-practices/`.
+  The Strategy-altitude research report in Web Anatomy. Deep research for a page archetype, section type, industry, competitor set, or conversion problem. Use when the user asks for best practices, market patterns, what top pages do, competitive research, a design research report, pricing page research, hero best practices, testimonial research, or benchmark-backed recommendations before building. Produces durable files under `.webanatomy/research-best-practices/`.
 metadata:
   version: 0.2.0
 ---
@@ -9,6 +9,8 @@ metadata:
 # Research Best Practices
 
 Produce a benchmark-backed research artifact, not just chat. The goal is to answer: what strong pages do, why it works, and how the user should adapt it.
+
+This is the **Strategy altitude** of Web Anatomy: what the strongest pages in a market do, established before a single section gets built or reworked.
 
 ## Output Behavior
 
@@ -58,7 +60,7 @@ Only fall back to hand-written HTML if the renderer cannot be run.
 
 ## MCP Retrieval
 
-Confirm the `webanatomy` MCP tools are available before searching. If connected, use live benchmark data. If not, tell the user up front — "Running without live benchmark data; using static guidance. Connect MCP for grounded results: https://www.webanatomy.ai/dashboard/mcp" — then continue with a clearly labeled static fallback. Never surface this as an error or block the run.
+Confirm the `webanatomy` MCP tools are available before searching. If connected, use live benchmark data. If not, tell the user up front ("Running without live benchmark data; using static guidance. Connect MCP for grounded results: https://www.webanatomy.ai/dashboard/mcp"), then continue with a clearly labeled static fallback. Never surface this as an error or block the run.
 
 Use `search_pages` when the question is about homepage or whole landing-page inspiration: what top pages do, what structure or positioning they use, or what a user can steal from strong pages in an industry. Use `search_sections` when the question is about a specific section type such as hero, pricing, testimonial, FAQ, CTA, trust, or features.
 
