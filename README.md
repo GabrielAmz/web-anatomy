@@ -46,7 +46,7 @@ The chat response should stay short: top findings, report path, and any screensh
 
 The skills work on their own — install them and start immediately. To ground recommendations in live benchmark data, connect the hosted Web Anatomy MCP. It needs a beta token and one config command per IDE:
 
-**Setup (token + per-IDE config) → https://webanatomy.ai/mcp-install**
+**Sign in at https://webanatomy.ai/mcp-install to get your token + per-IDE config.** You must be signed in — the page generates your personal token there.
 
 The skills use MCP tools such as `search_pages`, `get_page`, `search_sections`, and `get_section` when connected, and degrade gracefully to static guidance when not. Scores, thresholds, raw marker coordinates, and benchmark field names stay internal; user-facing reports translate them into plain-English patterns and gap labels.
 
