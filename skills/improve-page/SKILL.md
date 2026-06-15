@@ -136,7 +136,7 @@ Also resolve locale before search:
 
 ## Step 5 - Search Benchmarks
 
-Confirm the `webanatomy` MCP tools are available before searching. If connected, use live benchmark data. If not, tell the user up front — "Running without live benchmark data; using static guidance. Connect MCP for grounded results: https://webanatomy.ai/mcp-install" — then continue with a clearly labeled static fallback. Never surface this as an error or block the run.
+Confirm the `webanatomy` MCP tools are available before searching. If connected, use live benchmark data. If not, tell the user up front — "Running without live benchmark data; using static guidance. Connect MCP for grounded results: https://www.webanatomy.ai/dashboard/mcp" — then continue with a clearly labeled static fallback. Never surface this as an error or block the run.
 
 For whole homepage or landing-page work, first call `search_pages` once to collect full-page references for the resolved industry and locale:
 

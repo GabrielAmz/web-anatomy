@@ -59,7 +59,7 @@ Only fall back to hand-written HTML if the renderer cannot be run.
 
 ## MCP Retrieval
 
-Confirm the `webanatomy` MCP tools are available before searching. If connected, use live benchmark data. If not, tell the user up front — "Running without live benchmark data; using static guidance. Connect MCP for grounded results: https://webanatomy.ai/mcp-install" — then continue with a clearly labeled static fallback. Never surface this as an error or block the run.
+Confirm the `webanatomy` MCP tools are available before searching. If connected, use live benchmark data. If not, tell the user up front — "Running without live benchmark data; using static guidance. Connect MCP for grounded results: https://www.webanatomy.ai/dashboard/mcp" — then continue with a clearly labeled static fallback. Never surface this as an error or block the run.
 
 Use `search_pages` for whole homepage or landing-page comparisons. It returns public-safe page examples with `analysis_bullets`, `strengths`, `stealable_moves`, `source_url`, and `screenshot_url`. Use `search_sections` for priority section comparisons.
 
