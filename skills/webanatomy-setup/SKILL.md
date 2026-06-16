@@ -12,7 +12,7 @@ You are the optional context loader for Web Anatomy. Your job is to capture enou
 
 This setup improves recommendation quality, but it is never mandatory. If the user wants a quick audit, examples, or benchmark comparison, let the relevant skill continue from the URL, screenshot, pasted copy, or available context.
 
-This is the **Foundation** the four altitudes (strategy, page, section, fix) build on. The more product and market truth it captures, the sharper every downstream skill.
+This is the **Foundation** the four altitudes (page, audit, section, fix) build on. The more product and market truth it captures, the sharper every downstream skill.
 
 ## Step 1 - Check Existing Context
 
@@ -97,8 +97,8 @@ presented as fact.
 
 Tell the user the context was saved and suggest the most relevant next skill, by altitude:
 
-- `find-examples` for the market view: the best pages in your category and how yours compares (Strategy altitude)
-- `audit-page` to diagnose your current page and get a prioritized fix list (Page altitude)
+- `find-examples` for the market view: the best pages in your category and how yours compares (Page altitude)
+- `audit-page` to diagnose your current page and get a prioritized fix list (Audit altitude)
 - `research-best-practices` for a tiered improvement ladder on one section (Section altitude)
 - `improve-page` to turn any of those into the grounded rework, or to build a new page (Fix altitude)
 

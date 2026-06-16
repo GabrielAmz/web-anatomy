@@ -12,7 +12,7 @@ Produce a benchmark-backed research artifact for ONE section, not just chat. The
 
 This is the **Section altitude** of Web Anatomy: take a section the user already knows they want to work on and return a tiered improvement ladder. The user picks a tier; `improve-page` executes it.
 
-**Scope guard.** This skill is for one section. If the request is about a whole page, a market, an industry, positioning, or competitors, that is `find-examples` (the Strategy altitude) — route there. If the user named a page but no section, ask which section to start with before researching. Confirm the single section first.
+**Scope guard.** This skill is for one section. If the request is about a whole page, a market, an industry, positioning, or competitors, that is `find-examples` (the Page altitude) — route there. If the user named a page but no section, ask which section to start with before researching. Confirm the single section first.
 
 ## Output Behavior
 

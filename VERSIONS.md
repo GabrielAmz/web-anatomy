@@ -65,12 +65,12 @@ Reshapes the pack around the four altitudes so each skill owns one job, and reco
 
 - **Recovered.** v0.2.3 removed the `plugins/webanatomy` bundle believing it was a mirror, but it held the newer report-v2 bodies and the budget + grounding-floor renderer that `skills/` never received. Restored from history: `improve-page` Step 7.5 and paste-ready prompts, `audit-page` schema v2 with HIGH/MEDIUM/LOW, the v2 renderer across every skill.
 - **Merged.** `benchmark-compare` is deleted; its "how does my page compare to the market" job moves into `find-examples` as a compare mode (light HIGH/MEDIUM/LOW gap labels, enriched by a prior `audit-page` report when one exists). Its triggers move to `find-examples`.
-- **`find-examples` (0.4.0)** becomes the **Strategy** altitude: the market scan (top pages and sections, structure, positioning, copy) plus the optional vs-your-page compare.
+- **`find-examples` (0.4.0)** becomes the **Page** altitude: the market scan (top pages and sections, structure, positioning, copy) plus the optional vs-your-page compare.
 - **`research-best-practices` (0.4.0)** becomes the **Section** altitude: one section, returned as a tiered improvement ladder (foundational, competitive, best-in-class) the user picks from; page/market/competitor research routes to `find-examples`.
 - **`improve-page` (0.4.0)** is the **Fix** altitude executor: capture is optional, it runs in improve mode or build mode (a new page from a chosen structure), consumes an audit / tier / structure handoff, and applies a bundled `copywriting-rules.md` (anti-AI and copy rules) to copy fixes.
 - **`audit-page` (0.2.1)** hands off to `find-examples` or `improve-page`.
 - **`webanatomy-setup` (0.3.0)** records two capability flags (page access; MCP connected) in the context file.
-- Altitude labels swap to match the new jobs: `find-examples` Section to Strategy, `research-best-practices` Strategy to Section. `audit-page` stays Page, `improve-page` stays Fix.
+- Altitude labels are now page / audit / section / fix: `find-examples` is Page (was Section), `audit-page` is Audit (was Page), `research-best-practices` is Section (was Strategy), `improve-page` stays Fix.
 
 ## Roadmap
 

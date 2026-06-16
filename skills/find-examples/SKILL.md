@@ -1,7 +1,7 @@
 ---
 name: find-examples
 description: |
-  The Strategy-altitude benchmark scan in Web Anatomy. Pull the top-ranked pages and sections in a market and show their patterns, structure, positioning, and copy insights, and when the user shares their own page, how it compares and what to steal. Use when the user asks to find examples, show references, get inspiration, find strong homepages, find strong sections, show SaaS pricing examples, show AI hero examples, find testimonial patterns, a swipe file, what top pages do, market patterns, competitive research, score this page vs benchmark, compare my URL to best-in-class pages, gap analysis against competitors, or how far are we from strong examples. Uses the Web Anatomy MCP search_pages and search_sections tools when available, keeps internal scores hidden, and writes a visual report under `.webanatomy/find-examples/`.
+  The Page-altitude benchmark scan in Web Anatomy. Pull the top-ranked pages and sections in a market and show their patterns, structure, positioning, and copy insights, and when the user shares their own page, how it compares and what to steal. Use when the user asks to find examples, show references, get inspiration, find strong homepages, find strong sections, show SaaS pricing examples, show AI hero examples, find testimonial patterns, a swipe file, what top pages do, market patterns, competitive research, score this page vs benchmark, compare my URL to best-in-class pages, gap analysis against competitors, or how far are we from strong examples. Uses the Web Anatomy MCP search_pages and search_sections tools when available, keeps internal scores hidden, and writes a visual report under `.webanatomy/find-examples/`.
 metadata:
   version: 0.4.0
 ---
@@ -10,7 +10,7 @@ metadata:
 
 Pull the strongest real pages and sections in a market and hand back what to steal.
 
-This is the **Strategy altitude** of Web Anatomy: the market view. What the best pages in an industry do (structure, positioning, proof, copy), and how the user's own page compares when they share it.
+This is the **Page altitude** of Web Anatomy: the market view. What the best pages in an industry do (structure, positioning, proof, copy), and how the user's own page compares when they share it.
 
 ## Two modes
 
