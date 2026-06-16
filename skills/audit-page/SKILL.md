@@ -1,9 +1,9 @@
 ---
 name: audit-page
 description: |
-  The Page-altitude diagnosis in Web Anatomy. Audit the current state of a landing page, homepage, pricing page, feature page, or comparator page. Score it against a 49-point CRO rubric, diagnose it section by section, and return a PRIORITIZED list of what to fix first. Diagnosis and prioritization only, with no rewrites, no copy, and no benchmark data required. Use when the user asks to audit my page, what is wrong with my landing page, what should I fix first, review my homepage, critique this page, or shares a URL or a page in their codebase and wants direction before improving. Runs standalone with no MCP connection. Writes a handoff artifact that improve-page consumes so the grounded rewrite does not re-diagnose. For the grounded section rework use improve-page. To compare the page against the best in its industry use benchmark-compare. For real examples use find-examples.
+  The Page-altitude diagnosis in Web Anatomy. Audit the current state of a landing page, homepage, pricing page, feature page, or comparator page. Score it against a 49-point CRO rubric, diagnose it section by section, and return a PRIORITIZED list of what to fix first. Diagnosis and prioritization only, with no rewrites, no copy, and no benchmark data required. Use when the user asks to audit my page, what is wrong with my landing page, what should I fix first, review my homepage, critique this page, or shares a URL or a page in their codebase and wants direction before improving. Runs standalone with no MCP connection. Writes a handoff artifact that improve-page consumes so the grounded rewrite does not re-diagnose. For the grounded section rework use improve-page. To see the market and how the page compares use find-examples.
 metadata:
-  version: 0.2.0
+  version: 0.2.1
 ---
 
 # Audit Page
@@ -268,7 +268,7 @@ Rules for the opportunity list:
 
 State plainly that the score is directional and framework-based; the calibrated,
 benchmark-anchored view (how the page compares to real industry winners) comes
-from the grounded next step (benchmark-compare or improve-page) + the benchmark MCP.
+from the grounded next step (find-examples or improve-page) + the benchmark MCP.
 
 No copy. No rewrites. The deliverable is "which section, why, in what order".
 
@@ -305,11 +305,11 @@ The audit is the ungrounded on-ramp. The edge is grounding it in real benchmark
 data, and there are two grounded paths. They answer different questions, so do not
 choose for the user. Present both and ask which they want:
 
-1. **See what the best in the market are doing (page and industry level).** This is
-   `benchmark-compare`. It looks at the whole-page structure for the industry and
-   shows how the top pages in the market handle the flagged areas, with gap labels
-   and reference screenshots. Best when the user wants the market and structure
-   picture before changing anything.
+1. **See what the best in the market are doing (page and market level).** This is
+   `find-examples`. It pulls the top-ranked pages in the industry, shows how they
+   handle the flagged areas (structure, positioning, proof), and, because it has this
+   audit, layers a light gap read of the user's page on top. Best when the user wants
+   the market and structure picture before changing anything.
 2. **Get the sections plus copy to follow (section level).** This is
    `improve-page`. It picks up this `audit.json`, skips re-diagnosis, pulls the
    top-converting real `<startHere>` sections in the industry, and writes the
@@ -319,11 +319,11 @@ choose for the user. Present both and ask which they want:
 Ask it like this:
 
 > "The highest-leverage fix is the `<startHere>` section. Two grounded next steps,
-> which do you want? (a) benchmark-compare, to see how the best pages in
-> <industry> are structured and handle this, the market view. (b) improve-page, to
-> pull the top-converting real `<startHere>` sections in <industry> and get the
-> rework and copy to follow. Either way the benchmark grounding is the difference
-> between this audit and a generic CRO checklist."
+> which do you want? (a) find-examples, to see how the best pages in <industry> are
+> structured and handle this, the market view. (b) improve-page, to pull the
+> top-converting real `<startHere>` sections in <industry> and get the rework and
+> copy to follow. Either way the benchmark grounding is the difference between this
+> audit and a generic CRO checklist."
 
 If the user does not pick, default to `improve-page` on the `<startHere>` section:
 the audit already named the section to fix and improve-page consumes this handoff

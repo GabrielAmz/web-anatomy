@@ -59,9 +59,20 @@ Detail pass on the project and skill docs. No workflow changes.
 - Removes the "Lazyweb-style improvement report" trigger from `improve-page` (a competitor name in our own routing).
 - GitHub repo description updated to the umbrella framing (was still describing the removed v0.1 skills).
 
-## Roadmap
+## v0.3.0 — 2026-06-16 (skill suite consolidation)
 
-**v0.3** — MCP tool expansion. Add `classify_page_or_section` and `compare_url_to_benchmark` once the hosted server exposes them.
+Reshapes the pack around the four altitudes so each skill owns one job, and recovers the report-v2 work that v0.2.3 dropped. (Per-skill `metadata.version` is independent of this pack version.)
+
+- **Recovered.** v0.2.3 removed the `plugins/webanatomy` bundle believing it was a mirror, but it held the newer report-v2 bodies and the budget + grounding-floor renderer that `skills/` never received. Restored from history: `improve-page` Step 7.5 and paste-ready prompts, `audit-page` schema v2 with HIGH/MEDIUM/LOW, the v2 renderer across every skill.
+- **Merged.** `benchmark-compare` is deleted; its "how does my page compare to the market" job moves into `find-examples` as a compare mode (light HIGH/MEDIUM/LOW gap labels, enriched by a prior `audit-page` report when one exists). Its triggers move to `find-examples`.
+- **`find-examples` (0.4.0)** becomes the **Strategy** altitude: the market scan (top pages and sections, structure, positioning, copy) plus the optional vs-your-page compare.
+- **`research-best-practices` (0.4.0)** becomes the **Section** altitude: one section, returned as a tiered improvement ladder (foundational, competitive, best-in-class) the user picks from; page/market/competitor research routes to `find-examples`.
+- **`improve-page` (0.4.0)** is the **Fix** altitude executor: capture is optional, it runs in improve mode or build mode (a new page from a chosen structure), consumes an audit / tier / structure handoff, and applies a bundled `copywriting-rules.md` (anti-AI and copy rules) to copy fixes.
+- **`audit-page` (0.2.1)** hands off to `find-examples` or `improve-page`.
+- **`webanatomy-setup` (0.3.0)** records two capability flags (page access; MCP connected) in the context file.
+- Altitude labels swap to match the new jobs: `find-examples` Section to Strategy, `research-best-practices` Strategy to Section. `audit-page` stays Page, `improve-page` stays Fix.
+
+## Roadmap
 
 **v0.4** — port pipeline. Add `play-use-case-pages`, `play-best-x-category-pages`, `play-switching-motion`, `play-show-value-upfront` from the Web Anatomy strategy library. ~4 more skills.
 

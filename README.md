@@ -26,10 +26,10 @@ Web Anatomy works at four zoom levels. The altitude matches the question being a
 
 | Altitude | The question | Skill |
 |---|---|---|
-| **Strategy** | What should this page do, and what do the strongest pages in this market do? | `research-best-practices` |
-| **Page** | How does the whole page stack up, and what should change first? | `audit-page`, `benchmark-compare` |
-| **Section** | What does a strong hero, pricing table, or testimonial actually look like? | `find-examples` |
-| **Fix** | Rework the page or section with grounded evidence and copy-paste changes. | `improve-page` |
+| **Strategy** | What do the strongest pages in this market do, and how does mine compare? | `find-examples` |
+| **Page** | How does my whole page stack up, and what should I change first? | `audit-page` |
+| **Section** | How do I level up one section, from foundational to best-in-class? | `research-best-practices` |
+| **Fix** | Rework the page or section, or build a new one, with grounded copy-paste changes. | `improve-page` |
 
 Run `webanatomy-setup` once first. It captures product, ICP, industry, competitors, and proof assets into `.agents/webanatomy-context.md`, so every skill gives sharper, on-brand recommendations.
 
@@ -38,11 +38,10 @@ Run `webanatomy-setup` once first. It captures product, ICP, industry, competito
 | Skill | Altitude | What it does |
 |---|---|---|
 | `webanatomy-setup` | Foundation | Run once. Captures product, ICP, industry, competitors, proof assets, and priority pages into `.agents/webanatomy-context.md`. |
-| `research-best-practices` | Strategy | The deep research report. Pulls benchmark examples and live references, then writes a durable report on what strong pages do and how to adapt it. |
+| `find-examples` | Strategy | The market scan. Pulls the top-ranked pages and sections in a market, shows what to steal, and when you share your page, labels how it compares. Absorbs the old `benchmark-compare`. |
 | `audit-page` | Page | Scores the current page against a CRO rubric, diagnoses it section by section, and returns a prioritized fix list. Runs standalone, no MCP required. |
-| `benchmark-compare` | Page | Compares a URL, screenshot, or pasted section against benchmark winners and labels each gap `HIGH`, `MEDIUM`, or `LOW`. |
-| `find-examples` | Section | The fast benchmark lookup. Returns strong homepage or section examples grouped by repeatable pattern as a visual swipe file. |
-| `improve-page` | Fix | The flagship rework. Captures current reality, classifies the page, routes to section benchmarks, and writes a grounded gap-analysis report with copy-paste fixes. |
+| `research-best-practices` | Section | The section deep-dive. Takes one section and returns a tiered improvement ladder (foundational, competitive, best-in-class), each grounded in real benchmark sections. |
+| `improve-page` | Fix | The flagship executor. Turns a diagnosis, a tier, or a structure into grounded copy-paste fixes; improves an existing page or builds a new one. |
 
 ## Visual Reports
 
@@ -51,9 +50,9 @@ Web Anatomy does not rely on chat to render screenshots. The output skills write
 ```txt
 .webanatomy/
 ├── find-examples/
+├── audit-page/
 ├── research-best-practices/
-├── improve-page/
-└── benchmark-compare/
+└── improve-page/
     └── topic-date/
         ├── report.md
         ├── report.html

@@ -1,16 +1,23 @@
 ---
 name: find-examples
 description: |
-  The Section-altitude swipe file in Web Anatomy. Fast benchmark lookup. Use when the user asks to find examples, show references, get inspiration, find strong homepages, find strong sections, show SaaS pricing examples, show AI hero examples, find testimonial patterns, or provide a swipe file without a full research report. Uses the Web Anatomy MCP search_pages and search_sections tools when available, keeps internal scores and raw benchmark fields hidden, and writes a lightweight visual swipe file under `.webanatomy/find-examples/`.
+  The Strategy-altitude benchmark scan in Web Anatomy. Pull the top-ranked pages and sections in a market and show their patterns, structure, positioning, and copy insights, and when the user shares their own page, how it compares and what to steal. Use when the user asks to find examples, show references, get inspiration, find strong homepages, find strong sections, show SaaS pricing examples, show AI hero examples, find testimonial patterns, a swipe file, what top pages do, market patterns, competitive research, score this page vs benchmark, compare my URL to best-in-class pages, gap analysis against competitors, or how far are we from strong examples. Uses the Web Anatomy MCP search_pages and search_sections tools when available, keeps internal scores hidden, and writes a visual report under `.webanatomy/find-examples/`.
 metadata:
-  version: 0.3.0
+  version: 0.4.0
 ---
 
 # Find Examples
 
-Find strong benchmark-backed references quickly. This skill is intentionally lighter than `research-best-practices`: retrieve, filter, group, and give the user the best examples to open.
+Pull the strongest real pages and sections in a market and hand back what to steal.
 
-This is the **Section altitude** of Web Anatomy: pull the strongest real examples for a single section or a whole page, grounded in the scored benchmark library, and hand back a swipe file the user can act on.
+This is the **Strategy altitude** of Web Anatomy: the market view. What the best pages in an industry do (structure, positioning, proof, copy), and how the user's own page compares when they share it.
+
+## Two modes
+
+- **Discover (default).** The user wants inspiration or a swipe file. Retrieve, filter, group by pattern, and give them the best examples to open. No page of their own required.
+- **Compare.** The user shares their URL, screenshot, or page and wants to see how it stacks up. Do everything Discover does, then add a light gap read: how their page compares to the benchmark winners, labeled HIGH/MEDIUM/LOW, plus what is already working. If a recent `audit-page` report exists for that target, use its findings to make the comparison specific; if not, keep it lighter and more general. This is the merged home of the old benchmark-compare.
+
+Both modes stay lighter than `research-best-practices`, which goes deep on one section with a tiered ladder. This skill is the market scan; that one is the section deep-dive. For the grounded rework or the build, hand off to `improve-page`.
 
 ## Output Behavior
 
@@ -45,6 +52,9 @@ Use this report-data shape (v2):
 - `summary`: `string[]` of max 3 bullets (each max 140 chars) on what the examples show. The first bullet renders as the "TL;DR:" lead sentence of the blue callout under the title.
 - `recommendations` used as **patterns** (set `recommendationsHeading: "Patterns"`): `{ "title": "...", "why": "...", "how": ["..."], "refIds": ["..."] }[]` - one entry per plain-English pattern. `title` is the pattern name; `why` (max 220 chars) is what makes it work; `how` is 1-5 adaptation bullets, each max 160 chars; `refIds` lists the example references showing it (their screenshots render inline; 2-3 render as options A/B/C). Skip `priority`/`kind`/`prompt`; this is a swipe file, not an audit.
 - `references`: `{ "id": "...", "title": "...", "company": "...", "section": "...", "sourceUrl": "...", "screenshotUrl": "...", "caption": "...", "insight": "..." }[]` - `id` is a stable kebab-case slug; `insight` is the one-line what-to-notice, max 200 chars. References not claimed by a pattern render in an "All references" gallery at the bottom; for a flat ranked list, leave `recommendations` empty and let all references render in the gallery.
+- `gapAnalysis` (**compare mode only**): `{ "dimension": "...", "current": "...", "strongPattern": "...", "gap": "HIGH|MEDIUM|LOW" }[]`, max 6 rows, `current` and `strongPattern` max 90 chars each. The light read of the user's page against the benchmark winners. Omit in discover mode.
+- `currentSnapshot` (**compare mode only**): `{ "label": "...", "text": "..." }[]`, max 6 items, the user's current page facts; rendered collapsed at the bottom. Omit in discover mode.
+- `working` (**compare mode only**): `string[]` of 2-4 bullets, what the user's page already does well. Omit in discover mode.
 - optional `footer`
 - set `ungrounded: true` only on explicit no-MCP runs
 
@@ -74,6 +84,22 @@ If the request is for homepage or landing page examples, set scope to whole page
 - "CTA band" -> cta
 
 Ask one clarifying question only when the same request could map to different section types and the difference matters.
+
+## Compare Mode (when the user shares their own page)
+
+Trigger compare mode when the user gives a URL, screenshot, pasted copy, or local page and wants to know how it stacks up ("compare my page", "how far are we from the best", "gap analysis"). Discover mode runs first (find the market winners); then layer the comparison on top.
+
+1. **Capture the user's page.** If a URL, fetch or browse it before comparing. Capture a screenshot to `references/current.png` when browser tools are available; if only text is fetched, note the screenshot is unavailable. Extract headline, CTA, proof, and visible structure into `currentSnapshot`. Do not compare against an imagined page.
+2. **Reuse a prior audit if one exists.** Look for the most recent `.webanatomy/audit-page/{target}-*/audit.json` matching the page. If found, use its `recommendations` and `currentSnapshot` to make the gap read specific and aligned with the diagnosis, rather than re-judging from scratch. If none exists, keep the comparison lighter and more general.
+3. **Compare on the dimensions that matter for the visible sections** (do not over-audit low-impact sections when the hero, pricing, or proof is the real gap):
+   - Hero: category clarity, outcome specificity, CTA clarity, proof proximity, product visual, risk reduction, hierarchy
+   - Pricing: plan distinction, preferred plan, billing toggle, trial/demo path, objection handling, enterprise path
+   - Testimonial: named buyer, title/company, quantified outcome, before/after specificity, visual credibility
+   - Trust: logo relevance, proof density, security/compliance, social-proof proximity
+   - CTA: action specificity, motivation, risk reduction, prominence, next-step clarity
+   - Features: benefit translation, product evidence, use-case grouping, scanability
+   - FAQ: objection quality, answer specificity, docs links, pricing/migration/trust coverage
+4. **Label each gap** `HIGH`, `MEDIUM`, or `LOW` and put the rows in `gapAnalysis`; capture 2-4 `working` bullets. Keep it a light read, not a full rework. For the grounded rework or build, hand to `improve-page`.
 
 ## Industry Default
 
@@ -174,17 +200,21 @@ Do not expose marker JSON. If markers are available, translate them into visible
 
 Fill the v2 report-data shape and let the renderer produce both files. The report reads in this order:
 
-1. **TL;DR** (`summary`) - the blue callout, 3 bullets max on what the examples show.
+1. **TL;DR** (`summary`) - the blue callout, 3 bullets max. In compare mode, the first bullet is the verdict (how the page sits vs the market).
 2. **Patterns** (`recommendations` with `recommendationsHeading: "Patterns"`) - one numbered card per pattern, its example screenshots inline, adaptation steps as `how` bullets.
-3. **All references** - the remaining examples render automatically in the gallery.
+3. **Gap analysis** (`gapAnalysis`, compare mode only) - the user's page vs the strong pattern, labeled HIGH/MEDIUM/LOW.
+4. **What's working** (`working`, compare mode only) - 2-4 things to preserve.
+5. **All references** - the remaining examples render automatically in the gallery.
+6. **Current reality** (`currentSnapshot`, compare mode only) - collapsed at the bottom.
 
-When the user asks for a swipe file, group by pattern (one card per pattern, examples in `refIds`). When they ask for a flat ranked list, leave `recommendations` empty and let all references render in the gallery in rank order.
+When the user asks for a swipe file, group by pattern (one card per pattern, examples in `refIds`). When they ask for a flat ranked list, leave `recommendations` empty and let all references render in the gallery in rank order. In compare mode, always include the gap layer.
 
 After saving, respond in chat with:
 
-- the 2-3 strongest patterns
+- the 2-3 strongest patterns (discover) or the verdict + top 3 gaps (compare)
 - the report path
 - any corpus or screenshot limitations
+- in compare mode, offer the handoff: "Want `improve-page` to turn the top gap into the grounded rework?"
 
 ## Guardrails
 

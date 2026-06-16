@@ -17,7 +17,7 @@
         { "text": "Every recommendation is tagged with a section, a severity label, and a copy/design kind", "passed": null, "evidence": "" },
         { "text": "Output exposes no internal rubric item ids (no dotted tokens like hero.outcome_focus or conversion.cta_repetition) and no raw weights or thresholds", "passed": null, "evidence": "" },
         { "text": "Output contains no paste-ready copy or headline rewrites (diagnosis only)", "passed": null, "evidence": "" },
-        { "text": "Output ends by offering the two grounded next steps (benchmark-compare for the market view and improve-page for the section rework) and names the start-here section", "passed": null, "evidence": "" }
+        { "text": "Output ends by offering the two grounded next steps (find-examples for the market view and improve-page for the section rework) and names the start-here section", "passed": null, "evidence": "" }
       ]
     },
     {
@@ -33,7 +33,7 @@
         { "text": "Recommendations contain at most three items at severity HIGH", "passed": null, "evidence": "" },
         { "text": "section values use the taxonomy section types (e.g. hero, value-proposition, social-proof, pricing, faq), not freeform labels", "passed": null, "evidence": "" },
         { "text": "Output contains no paste-ready copy or headline rewrites (diagnosis only)", "passed": null, "evidence": "" },
-        { "text": "Output ends by offering the two grounded next steps (benchmark-compare for the market view and improve-page for the section rework) and names the start-here section", "passed": null, "evidence": "" }
+        { "text": "Output ends by offering the two grounded next steps (find-examples for the market view and improve-page for the section rework) and names the start-here section", "passed": null, "evidence": "" }
       ]
     },
     {
@@ -49,7 +49,7 @@
         { "text": "At least one recommendation addresses a pricing-page concern (plan clarity, recommended plan, objection handling, or path to checkout)", "passed": null, "evidence": "" },
         { "text": "Output exposes no internal rubric item IDs and no raw weights or thresholds", "passed": null, "evidence": "" },
         { "text": "Output contains no paste-ready copy or headline rewrites (diagnosis only)", "passed": null, "evidence": "" },
-        { "text": "Output ends by offering the two grounded next steps (benchmark-compare for the market view and improve-page for the section rework) and names the start-here section", "passed": null, "evidence": "" }
+        { "text": "Output ends by offering the two grounded next steps (find-examples for the market view and improve-page for the section rework) and names the start-here section", "passed": null, "evidence": "" }
       ]
     }
   ]

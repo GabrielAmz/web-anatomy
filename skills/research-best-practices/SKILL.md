@@ -1,16 +1,18 @@
 ---
 name: research-best-practices
 description: |
-  The Strategy-altitude research report in Web Anatomy. Deep research for a page archetype, section type, industry, competitor set, or conversion problem. Use when the user asks for best practices, market patterns, what top pages do, competitive research, a design research report, pricing page research, hero best practices, testimonial research, or benchmark-backed recommendations before building. Produces durable files under `.webanatomy/research-best-practices/`.
+  The Section-altitude research report in Web Anatomy. Deep research on a single section the user already knows they want to work on, returned as a tiered improvement ladder (foundational, competitive, best-in-class) grounded in real benchmark sections. Use when the user asks for hero best practices, pricing section research, testimonial research, how to level up my CTA, what makes a strong FAQ, or section-level benchmark recommendations before building or reworking. For whole-page, market, industry, positioning, or competitor research, use find-examples instead. Produces durable files under `.webanatomy/research-best-practices/`.
 metadata:
-  version: 0.3.0
+  version: 0.4.0
 ---
 
 # Research Best Practices
 
-Produce a benchmark-backed research artifact, not just chat. The goal is to answer: what strong pages do, why it works, and how the user should adapt it.
+Produce a benchmark-backed research artifact for ONE section, not just chat. The goal is to answer: for this section, what does strong look like, and what are the levels the user can climb to, each grounded in real benchmark sections.
 
-This is the **Strategy altitude** of Web Anatomy: what the strongest pages in a market do, established before a single section gets built or reworked.
+This is the **Section altitude** of Web Anatomy: take a section the user already knows they want to work on and return a tiered improvement ladder. The user picks a tier; `improve-page` executes it.
+
+**Scope guard.** This skill is for one section. If the request is about a whole page, a market, an industry, positioning, or competitors, that is `find-examples` (the Strategy altitude) — route there. If the user named a page but no section, ask which section to start with before researching. Confirm the single section first.
 
 ## Output Behavior
 
@@ -42,8 +44,9 @@ Use this report-data shape (v2):
 
 - `title`: plain and descriptive (`{Topic} - what strong pages do`), no editorial framing
 - optional `eyebrow`, `subtitle`, `target`
-- `summary`: `string[]` of max 3 bullets (each max 140 chars), the practical answer. The first bullet renders as the "TL;DR:" lead sentence of the blue callout under the title.
-- `recommendations`: `{ "title": "...", "why": "...", "how": ["..."], "refIds": ["..."], "priority": "HIGH|MEDIUM|LOW" }[]` - the findings, ordered. `why` (max 220 chars) ties the finding to benchmark evidence; `how` is 1-5 adaptation bullets, each max 160 chars; `refIds` lists the references showing the pattern (their screenshots render inline as "Inspired by"; 2-3 render as options A/B/C). `kind` and `prompt` are optional.
+- `summary`: `string[]` of max 3 bullets (each max 140 chars): the section, where strong sits, and the tier you would start at. The first bullet renders as the "TL;DR:" lead sentence of the blue callout under the title.
+- set `recommendationsHeading: "Improvement ladder"`.
+- `recommendations`: `{ "title": "...", "why": "...", "how": ["..."], "refIds": ["..."], "priority": "HIGH|MEDIUM|LOW" }[]` - **the ladder: exactly three tier cards, ordered Tier 1 -> 2 -> 3, each building on the one below.** Title each `Tier N - {label}: {one-line gist}` with labels `Foundational`, `Competitive`, `Best-in-class`. `why` (max 220 chars) says what this tier unlocks over the tier below, tied to benchmark evidence ("3 of 5 references do X"). `how` is 1-5 imperative moves at that tier, each max 160 chars. `refIds` lists the benchmark sections that show the tier (screenshots render inline; 2-3 render as options A/B/C). `priority` is optional - use it for the conversion impact of reaching the tier, or omit. Optionally add a fourth card titled `Avoid` whose `how` lists the anti-patterns that keep this section stuck.
 - `references`: `{ "id": "...", "title": "...", "company": "...", "section": "...", "sourceUrl": "...", "screenshotUrl": "...", "caption": "...", "insight": "..." }[]` - `id` is a stable kebab-case slug; `insight` is the one-line what-to-notice, max 200 chars. Label web-captured examples `[Web]` in the caption. References not claimed by any finding render in an "All references" gallery at the bottom.
 - optional `gapAnalysis` (max 6 rows, cells max 90 chars), `currentSnapshot` (max 6 items, collapsed at the bottom), `working`, `footer`
 - optional `ungrounded: true` - only for explicit no-MCP runs; lifts the floor of at least 3 findings carrying `refIds`
@@ -55,32 +58,19 @@ Only fall back to hand-written HTML if the renderer cannot be run.
 ## Workflow
 
 1. **Load context** - Read `.agents/webanatomy-context.md` when present.
-2. **Clarify scope** - Identify section type, page archetype, industry, platform, and target buyer.
+2. **Confirm the one section** - Apply the scope guard above. Identify the single `section_type` (hero, pricing, testimonial, cta, faq, features, trust, etc.), the industry, and the target buyer. If the request is page/market/industry/competitor, hand to `find-examples`.
 3. **Resolve industry and locale** - Always set an industry and locale before search: context first, explicit request second, fetched URL/page inference third, broad category fourth, `SaaS`/`B2B` and `en` fallbacks last.
-4. **Search benchmarks** - Use `search_pages` for whole-homepage/page-archetype research and `search_sections` for section-specific patterns. Run 3-5 angles: exact scope, adjacent section, same industry, broad market, competitor names if supported.
-5. **Inspect evidence** - Use screenshot URLs, strengths, and marker summaries to determine what is actually visible.
-6. **Supplement current web research** - If browse/WebFetch is available, capture recent public competitor examples. Label them as live web examples, not benchmark examples.
-7. **Synthesize patterns** - Group by repeatable pattern, not by company rank.
+4. **Search the section** - Use `search_sections` for that one section type. Run 3-5 angles: exact section in the industry, adjacent industry, broad market. Pull enough strong examples to span the range from table-stakes to standout.
+5. **Inspect evidence** - Use screenshot URLs, strengths, and marker summaries to determine what is actually visible in each example.
+6. **Build the ladder** - Sort the patterns into three tiers: **Tier 1 Foundational** (the table stakes this section must have to not lose), **Tier 2 Competitive** (what good pages add to win the click), **Tier 3 Best-in-class** (what the top sections do that most do not). Each tier is grounded in real benchmark sections; each builds on the tier below.
+7. **Supplement current web research** - If browse/WebFetch is available, capture recent public examples for a tier. Label them `[Web]`, not benchmark examples.
 8. **Write report and HTML** - Use relative image paths when references are downloaded.
 
 ## MCP Retrieval
 
 Confirm the `webanatomy` MCP tools are available before searching. If connected, use live benchmark data. If not, tell the user up front ("Running without live benchmark data; using static guidance. Connect MCP for grounded results: https://www.webanatomy.ai/dashboard/mcp"), then continue with a clearly labeled static fallback. Never surface this as an error or block the run.
 
-Use `search_pages` when the question is about homepage or whole landing-page inspiration: what top pages do, what structure or positioning they use, or what a user can steal from strong pages in an industry. Use `search_sections` when the question is about a specific section type such as hero, pricing, testimonial, FAQ, CTA, trust, or features.
-
-For page research, call:
-
-```json
-{
-  "industry": "<resolved primary industry>",
-  "locale": "<resolved locale>",
-  "min_score": 60,
-  "limit": 8
-}
-```
-
-For section research, call:
+This skill works at the section altitude, so `search_sections` is the primary call. Run it for the one section type, across a few angles, with a high quality floor so the ladder spans real range:
 
 ```json
 {
@@ -92,7 +82,7 @@ For section research, call:
 }
 ```
 
-Use page result fields `analysis_bullets`, `strengths`, and `stealable_moves` as qualitative evidence. Use section result fields `strengths` and `pattern_notes` as section evidence. Keep scores, thresholds, raw summary IDs, and marker data internal.
+Use `search_pages` only for light context (how this section sits inside a strong page); never make whole-page or market patterns the deliverable - that is `find-examples`. Use section result fields `strengths` and `pattern_notes` as section evidence. Keep scores, thresholds, raw summary IDs, and marker data internal.
 
 ## Screenshot Handling
 
@@ -149,18 +139,19 @@ Skip examples when:
 
 Fill the v2 report-data shape and let the renderer produce both files. The report reads in this order:
 
-1. **TL;DR** (`summary`) - the practical answer as the blue callout, 3 bullets max.
-2. **Findings** (`recommendations`, heading via `recommendationsHeading`, for example "What strong pricing pages do") - numbered, strongest first, each pattern shown through its reference screenshots inline. Anti-patterns are findings too: name what fails and what to do instead.
-3. **All references** - examples no finding claimed render automatically in the gallery, with `[Web]`/benchmark labels in their captions.
+1. **TL;DR** (`summary`) - the section, where strong sits, and the tier to start at, 3 bullets max.
+2. **Improvement ladder** (`recommendations` with `recommendationsHeading: "Improvement ladder"`) - the three tier cards in order (Tier 1 -> 2 -> 3), each shown through its benchmark section screenshots inline, plus the optional `Avoid` card.
+3. **All references** - examples no tier claimed render automatically in the gallery, with `[Web]`/benchmark labels in their captions.
 4. **Sources and corpus limits** go in `footer`.
 
-Write to be skimmed: every `why` is 2 lines max tied to evidence ("4 of 6 references do X"), every `how` is imperative bullets, one idea per sentence. No prevalence adjectives without a count.
+Each tier must build on the one below: Tier 2 assumes Tier 1 is done, Tier 3 assumes Tier 2. Do not repeat a Tier 1 move inside Tier 2. Write to be skimmed: every `why` is 2 lines max tied to evidence ("4 of 6 references do X"), every `how` is imperative bullets, one idea per sentence. No prevalence adjectives without a count.
 
 After saving, respond in chat with:
 
-- the top 3 findings
+- the three tiers in one line each, and which tier you would start at for this user
 - the report path
 - any corpus, screenshot, or MCP limitations
+- offer the handoff: "Want `improve-page` to apply a tier to the section?"
 
 ## Guardrails
 

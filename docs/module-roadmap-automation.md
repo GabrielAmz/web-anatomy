@@ -97,7 +97,7 @@ Impact, Effort and P0-P4 were assigned by hand. The repo already has the right p
 | Composition baseline | Section prevalence across benchmark pages of the archetype/industry | `search_pages` returns page examples but not their section composition | MCP gap + new method |
 | Map the target page | Segment one page into sections, DOM verify, capture, judge state, Revamp/Create | `audit-page` has the capture rules but no per-section artifact or composition diff | New skill |
 | Prioritize | Ponderation: prevalence x conversion weight x state gap x effort → P0-P4 | Nothing (audit-page severities are per-finding, not per-section) | New deterministic script |
-| Per-section report | Benchmarks + best practices + recos per section | `improve-page` / `benchmark-compare` do exactly this for ONE target | Fleet orchestration + the 5-part template |
+| Per-section report | Benchmarks + best practices + recos per section | `improve-page` / `find-examples` do exactly this for ONE target | Fleet orchestration + the 5-part template |
 | Publish | Notion DB + child pages (or local HTML index) | Renderers output local md/html only | New output adapter |
 | Corpus write-back | Add missing section types / benchmark examples to supabase | Nothing (done by hand via REST for problem/resources) | New script + reference |
 

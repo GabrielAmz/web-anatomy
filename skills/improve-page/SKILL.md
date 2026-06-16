@@ -1,16 +1,25 @@
 ---
 name: improve-page
 description: |
-  The Fix-altitude flagship rework in Web Anatomy. Improve an existing landing page, homepage, pricing page, persona page, feature page, comparator page, or individual section using Web Anatomy benchmarks. Use when the user asks what can you do to improve my LP, what can you do to improve my landing page, improve my site, critique, audit, redesign brief, section improvement, CRO review, why is this page weak, compare my page to best practices. Classifies the page, captures current reality first, routes to the right archetype, searches benchmark examples, and writes a report under `.webanatomy/improve-page/`.
+  The Fix-altitude executor in Web Anatomy. Improve an existing landing page, homepage, pricing page, persona page, feature page, comparator page, or individual section using Web Anatomy benchmarks, or build a new page or section from a chosen structure and direction. Use when the user asks what can you do to improve my LP, what can you do to improve my landing page, improve my site, critique, audit, redesign brief, section improvement, CRO review, why is this page weak, compare my page to best practices, write the rework, apply the fixes, or build this page or section. Runs in improve mode (captures current reality, gaps it against benchmarks) or build mode (no current page; writes the sections from the chosen spec). Consumes a prior audit-page, research-best-practices, or find-examples handoff when present, and writes a report under `.webanatomy/improve-page/`.
 metadata:
-  version: 0.3.0
+  version: 0.4.0
 ---
 
 # Improve Page
 
 Classify -> capture -> route -> benchmark -> recommend. This is the flagship Web Anatomy improvement workflow.
 
-This is the **Fix altitude** of Web Anatomy: it turns a diagnosis into grounded, copy-paste changes anchored to real benchmark pages, not generic advice.
+This is the **Fix altitude** of Web Anatomy: it turns a direction into grounded, copy-paste changes anchored to real benchmark pages, not generic advice. It is the executor the other skills hand off to.
+
+## Two modes
+
+This skill runs in one of two modes. Detect which from the request and the available inputs:
+
+- **Improve mode (default).** An existing page or section. Capture its current reality, gap it against the benchmark, and write the fixes. This is the path when the user has a live URL, a screenshot, pasted copy, or a page in their codebase.
+- **Build mode.** A new page or section that does not exist yet (the create lane). There is no current reality to capture and no gap to measure. Instead, take the chosen page structure (from `find-examples`) and the chosen section direction or tier (from `research-best-practices`) as the build spec, and write the sections from scratch, grounded in the same benchmarks. Skip the current-reality capture (Step 2) and the gap-vs-current framing; everything else (benchmark grounding, copy/design shaping, the report) is the same.
+
+Most of the steps below are written for improve mode. Where build mode differs, it is called out inline. The skill is the executor either way: it does not invent the direction, it executes the diagnosis or spec it is given.
 
 ## Output Behavior
 
@@ -73,9 +82,19 @@ Offer to help apply the config once they have the token. Only continue without M
 
 Read `.agents/webanatomy-context.md` if it exists. If it does not, continue with conservative assumptions. Offer `webanatomy-setup` as an optional preflight only when missing ICP, industry, competitors, conversion goal, or proof assets would materially change the recommendation. Do not block quick audits or URL-based feedback on setup.
 
-## Step 1.5 - Use A Prior Audit If One Exists (orchestration)
+## Step 1.5 - Use A Prior Report If One Exists (orchestration)
 
-Before re-diagnosing, check whether `audit-page` already diagnosed this target. Look for the most recent `.webanatomy/audit-page/{target}-*/audit.json` whose `target` matches the page in this request.
+This skill is the executor: another Web Anatomy skill usually decided the direction first, and re-deriving it wastes the user's tokens and risks contradicting the earlier read. Before re-diagnosing, check for an upstream brief, in this order:
+
+1. **An `audit-page` diagnosis** (improve mode) — the most common handoff. See below.
+2. **A `research-best-practices` tiered report** — when the user picked a tier for a section ("apply Tier 2 to the hero"), treat the chosen tier's `how` bullets and its `refIds` as the brief: benchmark-ground and write exactly that tier, do not re-research the section. Reuse its `industry`/`locale`.
+3. **A `find-examples` structure** (build mode) — when the user validated a page structure to build, treat the chosen structure as the section sequence to write, and benchmark each section.
+
+In every case the brief comes from upstream; your job is to ground it and write the fix, not to re-pick the direction. The shared product truth is always `.agents/webanatomy-context.md` (Step 1); the report above only adds the per-task direction.
+
+### When the brief is an audit-page diagnosis
+
+Look for the most recent `.webanatomy/audit-page/{target}-*/audit.json` whose `target` matches the page in this request.
 
 If a matching `audit.json` is found (schema `webanatomy.audit-page.v2`, or `v1`
 from older audits; in `v1` the severities are P-levels, map P0/P1 to HIGH, P2 to
@@ -89,11 +108,11 @@ or `design` yourself):
 - Still capture a fresh current screenshot for the report when browser tools are available.
 - Note in the report TL;DR: "Built on the audit-page diagnosis from {date}."
 
-If no matching audit is found, proceed with Steps 2-4 as normal. This skill must still run fully standalone when no prior audit exists.
+If no matching report is found, proceed with Steps 2-4 as normal. This skill must still run fully standalone when no prior report exists.
 
 ## Step 2 - Capture Current Reality
 
-(Skip if a prior audit was loaded in Step 1.5; reuse its `currentSnapshot`.)
+(Skip if a prior audit was loaded in Step 1.5; reuse its `currentSnapshot`. **Skip entirely in build mode** — a page being created has no current reality; go to Step 3 with the chosen structure as the spec.)
 
 If the user provides a URL, screenshot, pasted copy, or local page:
 
@@ -237,14 +256,15 @@ Never expose benchmark scores, angle counts, thresholds, or raw criteria fields.
 Every recommendation is typed `copy` or `design` (from the audit handoff, or
 classify it yourself), and the type decides the deliverable:
 
-- **`copy`** - the fix is wording. Deliver 3-4 rewrite alternatives with genuinely
-  different angles (for example outcome-led, pain-led, proof-led, category-led),
-  never a single version. Do this for the hero headline and for each content CTA
-  the recommendation touches. The words come from the page, the context file, and
-  the voice, not from the MCP - but the section still gets visual grounding: a
-  hero copy fix carries 2-3 hero references in `refIds` showing what an
-  audience-explicit, proof-backed fold looks like, so the reader sees the
-  destination, not just the new words.
+- **`copy`** - the fix is wording. Read `references/copywriting-rules.md` and follow
+  it: deliver 3-4 rewrite alternatives with genuinely different angles (outcome-led,
+  pain-led, proof-led, category-led), never a single version, and strip the anti-AI
+  tells it lists. Do this for the hero headline and for each content CTA the
+  recommendation touches. The words come from the page, the context file, and the
+  voice, not from the MCP - but the section still gets visual grounding: a hero copy
+  fix carries 2-3 hero references in `refIds` showing what an audience-explicit,
+  proof-backed fold looks like, so the reader sees the destination, not just the new
+  words.
 - **`design`** - the fix is structure, layout, hierarchy, or visual proof. Ground
   it in the benchmark: recommend the section pattern to follow with the reference
   screenshot and what makes it work.
@@ -294,7 +314,7 @@ Then hand the user the report explicitly. Users do not know an HTML file exists 
 
 1. Say the visual report is ready and give the full path to `report.html`.
 2. Offer to open it for them, and do it on yes: `open <path>` (macOS), `xdg-open <path>` (Linux), `start <path>` (Windows).
-3. Propose the concrete next move so the report leads to action, in this order: "Want me to implement the top fix?", "Want 3-4 copy alternatives for the [weakest section] with different angles?", or `benchmark-compare` for the market view. Default suggestion is implementing the top fix.
+3. Propose the concrete next move so the report leads to action, in this order: "Want me to implement the top fix?", "Want 3-4 copy alternatives for the [weakest section] with different angles?", or `find-examples` for the market view (how the best pages in the industry handle this). Default suggestion is implementing the top fix.
 
 ## Use The Audit Method
 
