@@ -1,9 +1,9 @@
 ---
 name: audit-page
 description: |
-  The Page-altitude diagnosis in Web Anatomy. Audit the current state of a landing page, homepage, pricing page, feature page, or comparator page. Score it against a 49-point CRO rubric, diagnose it section by section, and return a PRIORITIZED list of what to fix first. Diagnosis and prioritization only, with no rewrites, no copy, and no benchmark data required. Use when the user asks to audit my page, what is wrong with my landing page, what should I fix first, review my homepage, critique this page, or shares a URL or a page in their codebase and wants direction before improving. Runs standalone with no MCP connection. Writes a handoff artifact that improve-page consumes so the grounded rewrite does not re-diagnose. For the grounded section rework use improve-page. To compare the page against the best in its industry use benchmark-compare. For real examples use find-examples.
+  The Audit-altitude diagnosis in Web Anatomy. Audit the current state of a landing page, homepage, pricing page, feature page, or comparator page. Score it against a 49-point CRO rubric, diagnose it section by section, and return a PRIORITIZED list of what to fix first. Diagnosis and prioritization only, with no rewrites, no copy, and no benchmark data required. Use when the user asks to audit my page, what is wrong with my landing page, what should I fix first, review my homepage, critique this page, or shares a URL or a page in their codebase and wants direction before improving. Runs standalone with no MCP connection. Writes a handoff artifact that improve-page consumes so the grounded rewrite does not re-diagnose. For the grounded section rework use improve-page. To see the market and how the page compares use find-examples.
 metadata:
-  version: 0.1.0
+  version: 0.2.1
 ---
 
 # Audit Page
@@ -12,7 +12,7 @@ Diagnose the current state of a page, section by section, and tell the user whic
 sections to revamp first and why. Apply a proven CRO framework as the lens, but
 organize the audit by SECTION so the output routes straight into the fix.
 
-This is the **Page altitude** of Web Anatomy: a whole-page diagnosis that runs standalone, with no benchmark data required. It feeds the grounded rework in `improve-page`.
+This is the **Audit altitude** of Web Anatomy: a whole-page diagnosis that runs standalone, with no benchmark data required. It feeds the grounded rework in `improve-page`.
 
 You do NOT write copy, headlines, or rewrites here, and you do NOT need benchmark
 data. Output is problem framing and prioritization: where conversion leaks and
@@ -35,7 +35,7 @@ not hand-edit those numbers. Use this exact shape:
 
 ```json
 {
-  "schema": "webanatomy.audit-page.v1",
+  "schema": "webanatomy.audit-page.v2",
   "target": "<url or page name>",
   "industry": "<resolved or inferred industry>",
   "locale": "en|fr",
@@ -54,7 +54,8 @@ not hand-edit those numbers. Use this exact shape:
   "recommendations": [
     {
       "section": "hero",
-      "severity": "P0",
+      "severity": "HIGH",
+      "kind": "copy",
       "opportunity": "Lead the H1 with the outcome, not the product name",
       "why": "what it unlocks, tied to the real page",
       "failedItemIds": ["hero.outcome_focus"]
@@ -186,43 +187,49 @@ higher-ROI moves. The bar is a strong teardown (see the cro-audit lens), not a
 checklist readout.
 
 - One recommendation per distinct issue; do not bundle; be comprehensive.
-- Prioritize by conversion impact — P0 (blocks comprehension/trust/conversion),
-  P1, P2, P3 — not by the score. At most one or two P0s; name the single
-  highest-leverage fix as `startHere`.
+- Prioritize by conversion impact — HIGH (blocks comprehension/trust/conversion),
+  MEDIUM (meaningful lift), LOW (polish) — not by the score. At most two or three
+  HIGHs; name the single highest-leverage fix as `startHere`.
+- Type every recommendation by the kind of fix it needs: `copy` (wording, message,
+  angle; the fix is rewrite alternatives, no benchmark data needed) or `design`
+  (structure, layout, hierarchy, visual proof; the fix is grounded in benchmark
+  sections via improve-page). This typing drives what the next skill delivers.
 - Each is a concrete move tied to the real page, section-tagged, plain language
   (no item IDs). Frame as opportunities, not complaints.
+- Write to be skimmed; improve-page renders these under hard budgets downstream.
+  Keep each `opportunity` to one imperative line and each `why` to 2 lines max
+  (under ~220 chars). One idea per sentence. Banned openers: "The page reads as",
+  "It's worth noting", "This is a great opportunity to", restating the move inside
+  the `why`.
 
 Record the recommendations in `audit.json` under `recommendations` (each:
-`section`, `severity`, the `opportunity` move, `why`, and optional `failedItemIds`
-when the move maps cleanly to rubric items), plus `pageLevel` and `sectorSpecific`.
-These are the brief improve-page consumes.
+`section`, `severity`, `kind`, the `opportunity` move, `why`, and optional
+`failedItemIds` when the move maps cleanly to rubric items), plus `pageLevel` and
+`sectorSpecific`. These are the brief improve-page consumes.
 
 ## Step 5 — Output
 
-The score and scorecard sit at the TOP as the overview — they give the read at a
-glance and prove the page needs a revamp. They are the hook, not the substance.
-The opportunities below are the substance.
+The recommendations are the deliverable, so they sit at the TOP. The one-line
+score is the hook; the detailed scorecard is supporting evidence and goes BELOW
+the opportunities. Do not narrate the current state of the page: the reader knows
+their page, they want the moves.
 
 ```
 PAGE AUDIT — <url or page name>
 Score: <overall>/100 (band <lo>-<hi>)   ·   <one line on where conversion leaks most>
 <only when coverage < 1: "Scored on the copy and structure; visual items not evaluated (no render).">
 
-SCORECARD
-Hero <n> · Value Proposition <n> · Copywriting <n> · Trust & Credibility <n>
-Conversion <n> · Design & UX <n>
-
 OPPORTUNITIES (priority order)
 
-P0 — Critical
-- **[Critical] (<section>) <the move to make>.** <what it unlocks, tied to the real page>
+HIGH
+- **[Copy] (<section>) <the move to make>.** <what it unlocks, tied to the real page>
+- **[Design] (<section>) <the move>.** <why>
 
-P1 — High
-- **[High] (<section>) <the move>.** <why>
-- **[High] (<section>) <the move>.** <why>
+MEDIUM
+- **[Design] (<section>) <the move>.** <why>
 
-P2 — Medium
-- **[Medium] (<section>) <the move>.** <why>
+LOW
+- **[Copy] (<section>) <the move>.** <why>
 
 PAGE-LEVEL
 - **(page) <global move>.** <why>
@@ -231,7 +238,17 @@ SECTOR-SPECIFIC
 - **(<section>) <move>.** <why> (judgment, not the rubric)
 
 START HERE → <the single highest-leverage section>
+
+SCORECARD
+Hero <n> · Value Proposition <n> · Copywriting <n> · Trust & Credibility <n>
+Conversion <n> · Design & UX <n>
 ```
+
+The `[Copy]` / `[Design]` tag tells the user (and improve-page) what the fix will
+look like: copy moves get 3-4 rewrite alternatives with different angles and need
+no benchmark data; design moves get grounded in real benchmark sections, and when
+several design findings cluster on one section, improve-page presents about 3
+relevant benchmark variations of that section with why each works.
 
 Rules for the opportunity list:
 
@@ -244,14 +261,14 @@ Rules for the opportunity list:
   `hero.outcome_focus`, no raw weights, scores, thresholds) in this output. The
   reader sees plain-language opportunities.
 - Write each as an OPPORTUNITY (the move + what it unlocks), not a complaint. Tag
-  the section, use the severity label, order by conversion impact (Step 4). At
-  most one or two P0s.
+  the section, the severity label, and the `[Copy]`/`[Design]` kind, order by
+  conversion impact (Step 4). At most two or three HIGHs.
 - Include sector-specific opportunities even when NOT in the rubric (e.g. a
   capital-loss risk notice on a regulated finance page), flagged as judgment.
 
 State plainly that the score is directional and framework-based; the calibrated,
 benchmark-anchored view (how the page compares to real industry winners) comes
-from the grounded next step (benchmark-compare or improve-page) + the benchmark MCP.
+from the grounded next step (find-examples or improve-page) + the benchmark MCP.
 
 No copy. No rewrites. The deliverable is "which section, why, in what order".
 
@@ -264,17 +281,16 @@ new analysis. Fix any mismatch silently; never show the reconciliation.
 
 Check, and reconcile if any fails:
 
-- **Score band vs priority mix.** A low overall score (under ~55) with no P0 or P1
-  is incoherent: either the score is too harsh or you under-prioritized. A high
-  overall score (~75+) while you list a true P0 (a comprehension, trust, or
-  conversion blocker) is also incoherent: a real P0 should pull the score down.
-  Re-judge whichever track is wrong.
-- **Weak categories vs where the P0/P1 cluster.** The lowest-scoring categories
-  should be where the highest-severity opportunities land. If your P0 is in the
-  hero but the Hero category scored well, one of the two reads is off. Resolve it.
+- **Score band vs priority mix.** A low overall score (under ~55) with no HIGH is
+  incoherent: either the score is too harsh or you under-prioritized. A high
+  overall score (~75+) while you list a true HIGH (a comprehension, trust, or
+  conversion blocker) is also incoherent: a real blocker should pull the score
+  down. Re-judge whichever track is wrong.
+- **Weak categories vs where the HIGHs cluster.** The lowest-scoring categories
+  should be where the highest-severity opportunities land. If your top HIGH is in
+  the hero but the Hero category scored well, one of the two reads is off. Resolve it.
 - **`startHere` consistency.** `startHere` must be the single highest-leverage fix,
-  and it must appear as a P0 (or the top P1 if there is genuinely no P0). It cannot
-  point at a section you scored as fine.
+  and it must appear as a HIGH. It cannot point at a section you scored as fine.
 - **No internal contradictions.** A section cannot be both a listed strength and the
   top failure. A "missing X" finding cannot stand for an element you could not
   verify in the DOM (Step 2): downgrade it to "could not verify". A page-level move
@@ -289,11 +305,11 @@ The audit is the ungrounded on-ramp. The edge is grounding it in real benchmark
 data, and there are two grounded paths. They answer different questions, so do not
 choose for the user. Present both and ask which they want:
 
-1. **See what the best in the market are doing (page and industry level).** This is
-   `benchmark-compare`. It looks at the whole-page structure for the industry and
-   shows how the top pages in the market handle the flagged areas, with gap labels
-   and reference screenshots. Best when the user wants the market and structure
-   picture before changing anything.
+1. **See what the best in the market are doing (page and market level).** This is
+   `find-examples`. It pulls the top-ranked pages in the industry, shows how they
+   handle the flagged areas (structure, positioning, proof), and, because it has this
+   audit, layers a light gap read of the user's page on top. Best when the user wants
+   the market and structure picture before changing anything.
 2. **Get the sections plus copy to follow (section level).** This is
    `improve-page`. It picks up this `audit.json`, skips re-diagnosis, pulls the
    top-converting real `<startHere>` sections in the industry, and writes the
@@ -303,11 +319,11 @@ choose for the user. Present both and ask which they want:
 Ask it like this:
 
 > "The highest-leverage fix is the `<startHere>` section. Two grounded next steps,
-> which do you want? (a) benchmark-compare, to see how the best pages in
-> <industry> are structured and handle this, the market view. (b) improve-page, to
-> pull the top-converting real `<startHere>` sections in <industry> and get the
-> rework and copy to follow. Either way the benchmark grounding is the difference
-> between this audit and a generic CRO checklist."
+> which do you want? (a) find-examples, to see how the best pages in <industry> are
+> structured and handle this, the market view. (b) improve-page, to pull the
+> top-converting real `<startHere>` sections in <industry> and get the rework and
+> copy to follow. Either way the benchmark grounding is the difference between this
+> audit and a generic CRO checklist."
 
 If the user does not pick, default to `improve-page` on the `<startHere>` section:
 the audit already named the section to fix and improve-page consumes this handoff
@@ -322,8 +338,10 @@ explained where it first appears, so treat them as a checklist, not new rules.
   fix (Step 5).
 - Diagnose and prioritize only. No paste-ready copy or rewrites; the grounded
   rewrite is improve-page's job (Step 4).
-- Keep a real priority gradient, at most one or two P0s, so "start here" actually
-  points somewhere (Step 4).
+- Keep a real priority gradient, at most two or three HIGHs, so "start here"
+  actually points somewhere (Step 4).
+- Type every recommendation `copy` or `design`, so the next skill knows whether to
+  deliver rewrite alternatives or benchmark variations (Step 4).
 - Audit the rendered page, not raw HTML, so the visual items reflect what a visitor
   sees (Step 2).
 - Use the taxonomy section types verbatim, otherwise improve-page cannot match the

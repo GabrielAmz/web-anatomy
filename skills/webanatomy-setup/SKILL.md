@@ -1,9 +1,9 @@
 ---
 name: webanatomy-setup
 description: |
-  The foundation step for the whole Web Anatomy pack. Optional context setup. Use when the user says set up Web Anatomy, create context, start a landing page project, capture product context, benchmark my category, or prepare the benchmark skills. Also offer it as an optional preflight when another Web Anatomy workflow lacks product context and better recommendations would depend on ICP, industry, locale, competitors, conversion goal, proof assets, priority pages, or the voice and tone the rework copy should use. Do not require setup before find-examples, research-best-practices, improve-page, or benchmark-compare; those skills should continue with conservative assumptions if the user wants speed. Writes `.agents/webanatomy-context.md` as shared context.
+  The foundation step for the whole Web Anatomy pack. Optional context setup. Use when the user says set up Web Anatomy, create context, start a landing page project, capture product context, benchmark my category, or prepare the benchmark skills. Also offer it as an optional preflight when another Web Anatomy workflow lacks product context and better recommendations would depend on ICP, industry, locale, competitors, conversion goal, proof assets, priority pages, or the voice and tone the rework copy should use. Do not require setup before find-examples, research-best-practices, improve-page, or audit-page; those skills should continue with conservative assumptions if the user wants speed. Writes `.agents/webanatomy-context.md` as shared context.
 metadata:
-  version: 0.2.0
+  version: 0.3.0
 ---
 
 # Web Anatomy Setup
@@ -12,7 +12,7 @@ You are the optional context loader for Web Anatomy. Your job is to capture enou
 
 This setup improves recommendation quality, but it is never mandatory. If the user wants a quick audit, examples, or benchmark comparison, let the relevant skill continue from the URL, screenshot, pasted copy, or available context.
 
-This is the **Foundation** the four altitudes (strategy, page, section, fix) build on. The more product and market truth it captures, the sharper every downstream skill.
+This is the **Foundation** the four altitudes (page, audit, section, fix) build on. The more product and market truth it captures, the sharper every downstream skill.
 
 ## Step 1 - Check Existing Context
 
@@ -52,6 +52,8 @@ Ask one question at a time. Do not batch.
 9. **Locale** - What language is the site in, `en` or `fr`? This decides which benchmark locale to search and which language the rework copy is written in. Infer from the URL or copy if the user does not say.
 10. **Voice and tone** - How should copy sound? Capture 2-4 words (for example "direct, technical, no hype" or "warm, plain, reassuring") and one line to avoid (for example "no buzzwords, no exclamation marks"). This is the one field that shapes the copy the grounded skills write, so it is worth getting. Leave blank only if the user truly has no preference.
 11. **Constraints** - Anything off-limits in the output? Competitors not to name, claims that are not allowed (regulated industries), sensitive topics to avoid.
+12. **Page access** - How can I see your page when we work on it? Codebase, a live URL, I browse it, or screenshots only. This sets how reliably the downstream skills can capture the current page.
+13. **Benchmark MCP** - Is the Web Anatomy MCP connected? It supplies the live benchmark examples the grounded skills use. If unknown, I can check, or point you to https://www.webanatomy.ai/dashboard/mcp to connect.
 
 Push back once on vague answers. "AI platform for teams" is not enough. "AI analyst that turns customer calls into churn-risk alerts for B2B SaaS CS leaders" is enough.
 
@@ -77,6 +79,8 @@ Create `.agents/webanatomy-context.md` with this exact shape:
 - **Voice and tone**: ... (and one line to avoid)
 - **Constraints**: ... (off-limits competitors, claims, topics; "none" if so)
 - **Tech stack**: ...
+- **Page access**: codebase | live URL | browse | screenshots only
+- **MCP**: connected | not connected | unknown
 - **Benchmark notes**: ...
 - **Confidence and gaps**: which fields are confirmed vs inferred, and what is still unknown
 
@@ -91,12 +95,12 @@ presented as fact.
 
 ## Step 4 - Confirm The Next Move
 
-Tell the user the context was saved and suggest the most relevant next skill:
+Tell the user the context was saved and suggest the most relevant next skill, by altitude:
 
-- `find-examples` for fast benchmark references
-- `research-best-practices` for a deeper pattern report
-- `improve-page` for an existing URL or screenshot
-- `benchmark-compare` for a live URL gap analysis
+- `find-examples` for the market view: the best pages in your category and how yours compares (Page altitude)
+- `audit-page` to diagnose your current page and get a prioritized fix list (Audit altitude)
+- `research-best-practices` for a tiered improvement ladder on one section (Section altitude)
+- `improve-page` to turn any of those into the grounded rework, or to build a new page (Fix altitude)
 
 ## Guardrails
 

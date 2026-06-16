@@ -9,15 +9,15 @@ After install, every skill is available as a slash command in Claude Code:
 ```
 /webanatomy-setup
 /find-examples
+/audit-page
 /research-best-practices
 /improve-page
-/benchmark-compare
 ```
 
 ## First-run order
 
 1. Run `/webanatomy-setup` once to capture product, ICP, industry, competitors, proof assets, and priority pages. This writes `.agents/webanatomy-context.md`.
-2. Then run the benchmark-backed workflows: `/find-examples`, `/research-best-practices`, `/improve-page`, or `/benchmark-compare`.
+2. Then run the benchmark-backed workflows: `/find-examples` (market view), `/audit-page` (diagnose your page), `/research-best-practices` (tiered ladder for one section), or `/improve-page` (the grounded rework or a new build).
 
 ## Visual Output
 
