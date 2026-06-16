@@ -1,6 +1,6 @@
 # AGENTS.md — Web Anatomy
 
-This file tells AI coding agents how to use the Web Anatomy skills pack. It works with any agent that reads `.agents/skills/` per the [Agent Skills spec](https://agentskills.io/specification.md), and with plugin-aware agents through `plugins/webanatomy`.
+This file tells AI coding agents how to use the Web Anatomy skills pack. It works with any agent that reads `.agents/skills/` per the [Agent Skills spec](https://agentskills.io/specification.md).
 
 ## Install
 
@@ -17,7 +17,7 @@ This copies every skill in this repo into `.agents/skills/` in your project. The
 
 A skill named `improve-page` installs to `.agents/skills/improve-page/SKILL.md` regardless of which agent loads it.
 
-For plugin installs, use the repo marketplace at `.agents/plugins/marketplace.json`. The plugin bundle lives at `plugins/webanatomy` and includes the skills. `.mcp.example.json` documents the future hosted MCP connection.
+Connecting the hosted Web Anatomy MCP for live benchmark data is optional — sign in at https://www.webanatomy.ai/dashboard/mcp to get your token + per-IDE config. The skills run fully without it.
 
 ## How to invoke a skill
 

@@ -54,18 +54,9 @@ The `description:` field is loaded into context at agent startup. The body is lo
 
 Each skill must cite at least one **Reference pattern** — benchmark-backed when available, otherwise a real company doing this section well, with a URL. Don't make these up. Use companies you've seen the pattern on. If your reference is paywalled or gone, replace it.
 
-## Plugin bundle
+## Before opening a PR
 
-`skills/` is the source of truth. Keep `plugins/webanatomy/skills/` in sync before publishing a plugin release.
-
-The plugin bundle must include:
-
-- `plugins/webanatomy/.codex-plugin/plugin.json`
-- `plugins/webanatomy/.claude-plugin/plugin.json`
-- `plugins/webanatomy/.mcp.example.json`
-- `plugins/webanatomy/skills/`
-
-Run `./validate-skills.sh` before opening a PR.
+`skills/` is the source of truth and the only thing installed by `npx skills add`. Run `./validate-skills.sh` before opening a PR.
 
 Best sources for references:
 - Ramp, Wiz, Webflow, Linear, Stripe, Vercel, Figma, Notion, Lovable, Mercury, Lemlist, Brex

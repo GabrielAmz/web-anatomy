@@ -1,7 +1,7 @@
 ---
 name: audit-page
 description: |
-  Audit the current state of a landing page, homepage, pricing page, feature page, or comparator page. Score it against a 49-point CRO rubric, diagnose it section by section, and return a PRIORITIZED list of what to fix first. Diagnosis and prioritization only, with no rewrites, no copy, and no benchmark data required. Use when the user asks to audit my page, what is wrong with my landing page, what should I fix first, review my homepage, critique this page, or shares a URL or a page in their codebase and wants direction before improving. Runs standalone with no MCP connection. Writes a handoff artifact that improve-page consumes so the grounded rewrite does not re-diagnose. For the grounded section rework use improve-page. To compare the page against the best in its industry use benchmark-compare. For real examples use find-examples.
+  The Page-altitude diagnosis in Web Anatomy. Audit the current state of a landing page, homepage, pricing page, feature page, or comparator page. Score it against a 49-point CRO rubric, diagnose it section by section, and return a PRIORITIZED list of what to fix first. Diagnosis and prioritization only, with no rewrites, no copy, and no benchmark data required. Use when the user asks to audit my page, what is wrong with my landing page, what should I fix first, review my homepage, critique this page, or shares a URL or a page in their codebase and wants direction before improving. Runs standalone with no MCP connection. Writes a handoff artifact that improve-page consumes so the grounded rewrite does not re-diagnose. For the grounded section rework use improve-page. To compare the page against the best in its industry use benchmark-compare. For real examples use find-examples.
 metadata:
   version: 0.1.0
 ---
@@ -11,6 +11,8 @@ metadata:
 Diagnose the current state of a page, section by section, and tell the user which
 sections to revamp first and why. Apply a proven CRO framework as the lens, but
 organize the audit by SECTION so the output routes straight into the fix.
+
+This is the **Page altitude** of Web Anatomy: a whole-page diagnosis that runs standalone, with no benchmark data required. It feeds the grounded rework in `improve-page`.
 
 You do NOT write copy, headlines, or rewrites here, and you do NOT need benchmark
 data. Output is problem framing and prioritization: where conversion leaks and
