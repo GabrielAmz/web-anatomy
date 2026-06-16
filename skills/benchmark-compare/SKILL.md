@@ -3,7 +3,7 @@ name: benchmark-compare
 description: |
   The Page-altitude gap check in Web Anatomy. Compare a live URL, screenshot, or pasted section against Web Anatomy benchmark examples and produce a gap analysis. Use when the user asks score this page vs benchmark, compare my URL to best-in-class pages, benchmark this hero, gap analysis against competitors, how far are we from strong examples, or what should we fix first. Uses public gap labels while keeping internal scores and raw benchmark mechanics hidden.
 metadata:
-  version: 0.2.0
+  version: 0.3.0
 ---
 
 # Benchmark Compare
@@ -38,14 +38,19 @@ node <skill-dir>/scripts/render-report.mjs --input=.webanatomy/benchmark-compare
 
 Resolve `<skill-dir>` relative to this `SKILL.md`. The renderer validates the report data, downloads every `screenshotUrl` into `references/`, writes `report.md`, writes `report.html`, and renders "screenshot unavailable" when no screenshot exists.
 
-Use this report-data shape:
+Use this report-data shape (v2):
 
-- `title`, `summary`, optional `eyebrow`, `subtitle`, `target`
-- `currentSnapshot`: `{ "label": "...", "text": "..." }[]`
-- `references`: `{ "title": "...", "company": "...", "section": "...", "sourceUrl": "...", "screenshotUrl": "...", "caption": "...", "insight": "..." }[]`
-- `recommendations`: `{ "title": "...", "why": "...", "how": "..." }[]`
-- `gapAnalysis`: `{ "dimension": "...", "current": "...", "strongPattern": "...", "gap": "HIGH|MEDIUM|LOW" }[]`
-- optional `weekActions`, `quarterActions`, `footer`
+- `title`: plain and descriptive (`{Target} vs the market - {topic}`), no editorial framing
+- optional `eyebrow`, `subtitle`, `target`
+- `summary`: `string[]` of max 3 bullets (each max 140 chars). The first bullet renders as the "TL;DR:" lead sentence of the blue callout under the title.
+- `recommendations`: `{ "title": "...", "why": "...", "how": ["..."], "refIds": ["..."], "priority": "HIGH|MEDIUM|LOW", "kind": "copy|design", "prompt": "..." }[]` - the priority gaps, ordered. `why` max 220 chars; `how` is 3-5 imperative bullets, each max 160 chars; `refIds` points at the benchmark references that ground the gap (the renderer shows their screenshots inline as "Inspired by"; 2-3 render as options A/B/C); `prompt` is an optional ready-to-paste agent prompt.
+- `references`: `{ "id": "...", "title": "...", "company": "...", "section": "...", "sourceUrl": "...", "screenshotUrl": "...", "caption": "...", "insight": "..." }[]` - `id` is a stable kebab-case slug (`malt-testimonial`); `insight` is the one-line what-to-notice, max 200 chars. References not claimed by any recommendation render in an "All references" gallery at the bottom.
+- `gapAnalysis`: `{ "dimension": "...", "current": "...", "strongPattern": "...", "gap": "HIGH|MEDIUM|LOW" }[]`, max 6 rows, `current` and `strongPattern` max 90 chars each
+- `currentSnapshot`: `{ "label": "...", "text": "..." }[]`, max 6 items; rendered collapsed at the bottom
+- optional `working` (2-4 bullets of what the target already does well), `footer`
+- optional `ungrounded: true` - only for explicit no-MCP runs; lifts the floor of at least 3 recommendations carrying `refIds`
+
+The renderer enforces the budgets and the grounding floor, and fails loudly with the exact overruns. When it fails, rewrite the content shorter; never pad, never bypass the renderer with hand-written HTML.
 
 Only fall back to hand-written HTML if the renderer cannot be run.
 
@@ -147,37 +152,16 @@ Use dimensions that match the section:
 
 ## Output Shape
 
-```markdown
-# Benchmark Compare: [Target]
+Fill the v2 report-data shape and let the renderer produce both files. The report reads in this order:
 
-## Verdict
-[Plain-English summary. No internal score.]
+1. **TL;DR** (`summary`) - the verdict as the blue callout, 3 bullets max. No internal score.
+2. **Priority gaps** (`recommendations`, heading via `recommendationsHeading: "Priority gaps"`) - numbered, severity order, each grounded by its benchmark matches inline through `refIds`.
+3. **What's working** (`working`, optional) - what the target already does at benchmark level.
+4. **Gap analysis** (`gapAnalysis`) - the dimension table, max 6 rows.
+5. **All references** - rendered automatically from references no gap claimed.
+6. **Current reality** (`currentSnapshot`) - collapsed at the bottom; put assumptions and corpus limits in `footer`.
 
-![Current target](references/current.png)
-
-## Priority Gaps
-
-| Gap | Severity | Why It Matters | Fix |
-|---|---|---|---|
-| ... | HIGH | ... | ... |
-
-## Best Benchmark Matches
-![Benchmark match](references/company-section.png)
-**[Company] [Section or Homepage]** - [what to notice]
-
-![Benchmark match](references/company-section-2.png)
-**[Company] [Section]** - [what to notice]
-
-## Recommended Fix Order
-1. [fix]
-2. [fix]
-3. [fix]
-
-## Notes
-[Assumptions, missing inputs, or corpus limits.]
-```
-
-Generate `report.html` alongside the Markdown. Use inline CSS, system fonts, a max-width around 1000px, image cards, clean tables, and relative image paths.
+Write to be skimmed: every `why` is 2 lines max, every `how` is imperative bullets starting with a verb, one idea per sentence. Banned openers: "The page reads as", "It's worth noting", "This is a great opportunity to".
 
 After saving, respond in chat with:
 
