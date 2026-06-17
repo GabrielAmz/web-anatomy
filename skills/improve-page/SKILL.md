@@ -3,7 +3,7 @@ name: improve-page
 description: |
   The Fix-altitude executor in Web Anatomy. Improve an existing landing page, homepage, pricing page, persona page, feature page, comparator page, or individual section using Web Anatomy benchmarks, or build a new page or section from a chosen structure and direction. Use when the user asks what can you do to improve my LP, what can you do to improve my landing page, improve my site, critique, audit, redesign brief, section improvement, CRO review, why is this page weak, compare my page to best practices, write the rework, apply the fixes, or build this page or section. Runs in improve mode (captures current reality, gaps it against benchmarks) or build mode (no current page; writes the sections from the chosen spec). Consumes a prior audit-page, research-best-practices, or find-examples handoff when present, and writes a report under `.webanatomy/improve-page/`.
 metadata:
-  version: 0.4.0
+  version: 0.4.1
 ---
 
 # Improve Page
@@ -116,9 +116,10 @@ If no matching report is found, proceed with Steps 2-4 as normal. This skill mus
 
 If the user provides a URL, screenshot, pasted copy, or local page:
 
-- fetch or browse the URL before making recommendations
+- **Render the live page, do not just text-fetch it.** Browse the URL in a real browser (or read the page source in the codebase) before making recommendations. A plain text fetch or a "reader" extraction silently drops interactive markup: forms, input fields, and iframe-embedded widgets vanish from the text, so the page's primary CTA can disappear from your input entirely. When you only have a text fetch, say so and treat the capture as incomplete rather than confident.
 - capture or save a current screenshot when browser tools are available
 - extract headline, subheadline, CTA, proof, product visual, visual hierarchy, and visible friction
+- **extract forms and interactive elements: inputs, embedded or iframe forms, multi-step forms, and the fields they ask for.** On a lead-gen page the form is the primary conversion element, not a detail. Never write a gap analysis that critiques the page while ignoring its main CTA. If the page is form-first and the capture did not surface a form, treat that as a capture failure and re-inspect (render the DOM, scroll, expand) before concluding the form is absent.
 - extract category clues from page text: nav labels, hero headline, meta title, services, customer segments, and footer
 
 Do not write a gap analysis against an imagined page.
