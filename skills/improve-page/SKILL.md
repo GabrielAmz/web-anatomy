@@ -3,7 +3,7 @@ name: improve-page
 description: |
   The Fix-altitude executor in Web Anatomy. Improve an existing landing page, homepage, pricing page, persona page, feature page, comparator page, or individual section using Web Anatomy benchmarks, or build a new page or section from a chosen structure and direction. Use when the user asks what can you do to improve my LP, what can you do to improve my landing page, improve my site, critique, audit, redesign brief, section improvement, CRO review, why is this page weak, compare my page to best practices, write the rework, apply the fixes, or build this page or section. Runs in improve mode (captures current reality, gaps it against benchmarks) or build mode (no current page; writes the sections from the chosen spec). Consumes a prior audit-page, research-best-practices, or find-examples handoff when present, and writes a report under `.webanatomy/improve-page/`.
 metadata:
-  version: 0.5.0
+  version: 0.5.1
 ---
 
 # Improve Page
@@ -101,7 +101,7 @@ from older audits; in `v1` the severities are P-levels, map P0/P1 to HIGH, P2 to
 MEDIUM, P3 to LOW, and recommendations carry no `kind`, so classify each as `copy`
 or `design` yourself):
 
-- Reuse its `industry`, `locale`, `currentSnapshot`, the `score` block, and `recommendations` instead of re-capturing, re-classifying, and re-prioritizing. Skip Steps 2, 3, and 4. The audit's `score.overall` is the framework-relative baseline (facts); the `recommendations` are the free CRO read; your contribution is the benchmark-relative view (how the page compares to real winners) plus the grounded fix.
+- Reuse its `industry`, `locale`, `currentSnapshot`, the `score` block, `strengths` (populate the report's `working` block from these), and `recommendations` instead of re-capturing, re-classifying, and re-prioritizing. Skip Steps 2, 3, and 4. The audit's `score.overall` is the framework-relative baseline (facts); the `recommendations` are the free CRO read; your contribution is the benchmark-relative view (how the page compares to real winners) plus the grounded fix.
 - Benchmark (Step 5) the sections the recommendations name, `startHere` first, then the remaining HIGH recommendations. Do not re-rank.
 - The hero rule still applies: if no reused recommendation touches the hero, benchmark the hero anyway and either add a hero recommendation or a "What's working" line saying why the hero should not change.
 - Treat each recommendation's `opportunity` as the brief: search and recommend against exactly that move. When a recommendation carries `failedItemIds`, use them to target the exact gap.
@@ -290,11 +290,11 @@ classify it yourself), and the type decides the deliverable:
 
 ## Step 8 - Write Report
 
-Fill the v2 report-data shape and let the renderer produce both files. The report reads in this order (reverse pyramid: what to do first, evidence beside the claim):
+Fill the v2 report-data shape and let the renderer produce both files. The report opens with a short strengths block, then the prioritized fixes (lead with what works so a pure-criticism read does not land badly on an owner attached to the page), and stays a reverse pyramid from there (what to do first, evidence beside the claim):
 
 1. **TL;DR** (`summary`) - the blue callout right under the title. The first bullet renders as the "TL;DR:" lead sentence; bullets 2-3 follow as a short list. 3 bullets max.
-2. **Recommendations** (`recommendations`) - numbered, priority order, recommendation #1 is the start-here pick. Each carries its own evidence via `refIds`; there is no separate "Benchmark Matches" section. Copy fixes carry their 3-4 angle alternatives inside `how`; design fixes carry their benchmark variations as options A/B/C.
-3. **What's working** (`working`) - 2-4 things NOT to change. Include the hero here when it needs no fix.
+2. **What's working** (`working`) - 2-4 things NOT to change, in a short block right under the TL;DR and above the fixes. Include the hero here when it needs no fix. Keep it tight: this is the cushion before the fixes, not the body of the report. When a prior audit supplied `strengths`, reuse them here.
+3. **Recommendations** (`recommendations`) - numbered, priority order, recommendation #1 is the start-here pick. Each carries its own evidence via `refIds`; there is no separate "Benchmark Matches" section. Copy fixes carry their 3-4 angle alternatives inside `how`; design fixes carry their benchmark variations as options A/B/C.
 4. **Gap analysis** (`gapAnalysis`) - max 6 rows.
 5. **All references** - rendered automatically from references no recommendation claimed.
 6. **Current reality** (`currentSnapshot`) - collapsed at the bottom, context not content.

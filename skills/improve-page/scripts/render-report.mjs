@@ -373,8 +373,8 @@ th{background:#f6f8fa;font-weight:700;font-size:12px;text-transform:uppercase;le
 </style></head><body><div class="wrap">
 <header><div class="eyebrow">${html(data.eyebrow || "Web Anatomy")}</div><h1>${html(data.title)}</h1>${data.subtitle ? `<div class="meta">${html(data.subtitle)}</div>` : ""}${data.target?.url ? `<div class="meta"><a href="${attr(data.target.url)}">${html(data.target.name || data.target.url)}</a></div>` : ""}</header>
 ${summary}
-${recs ? `<h2>${html(data.recommendationsHeading || "Recommendations")}</h2>${recs}` : ""}
 ${working}
+${recs ? `<h2>${html(data.recommendationsHeading || "Recommendations")}</h2>${recs}` : ""}
 ${gaps ? `<h2>${html(data.gapAnalysisHeading || "Gap analysis")}</h2><table><thead><tr><th>Dimension</th><th>Current</th><th>Strong pattern</th><th>Gap</th></tr></thead><tbody>${gaps}</tbody></table>` : ""}
 ${galleryHtml}
 ${snapshot ? `<details class="snapshot"><summary>Current reality (context)</summary><ul>${snapshot}</ul></details>` : ""}

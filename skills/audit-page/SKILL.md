@@ -3,7 +3,7 @@ name: audit-page
 description: |
   The Audit-altitude diagnosis in Web Anatomy. Audit the current state of a landing page, homepage, pricing page, feature page, or comparator page. Score it against a 49-point CRO rubric, diagnose it section by section, and return a PRIORITIZED list of what to fix first. Diagnosis and prioritization only, with no rewrites, no copy, and no benchmark data required. Use when the user asks to audit my page, what is wrong with my landing page, what should I fix first, review my homepage, critique this page, or shares a URL or a page in their codebase and wants direction before improving. Runs standalone with no MCP connection. Writes a handoff artifact that improve-page consumes so the grounded rewrite does not re-diagnose. For the grounded section rework use improve-page. To see the market and how the page compares use find-examples.
 metadata:
-  version: 0.2.1
+  version: 0.3.0
 ---
 
 # Audit Page
@@ -51,6 +51,9 @@ not hand-edit those numbers. Use this exact shape:
     ]
   },
   "currentSnapshot": [{ "label": "Headline", "text": "..." }],
+  "strengths": [
+    { "section": "trust", "what": "Recognizable customer logos sit above the fold", "why": "fast credibility for a cold visitor; keep it" }
+  ],
   "recommendations": [
     {
       "section": "hero",
@@ -207,17 +210,31 @@ Record the recommendations in `audit.json` under `recommendations` (each:
 `failedItemIds` when the move maps cleanly to rubric items), plus `pageLevel` and
 `sectorSpecific`. These are the brief improve-page consumes.
 
+Also record 2-4 `strengths` (each `{ section, what, why }`): the strongest things
+the page already does right and should keep through the rework (a clear value prop,
+real proof, a clean fold, a dominant primary CTA). Frame each as a genuine asset to
+preserve, not faint praise, and never the mere inverse of a recommendation. A
+section that is a top failure cannot also be a strength (Step 5.5). These lead the
+output (Step 5) so the read is not pure criticism, and improve-page reuses them as
+its "what's working" block.
+
 ## Step 5 — Output
 
-The recommendations are the deliverable, so they sit at the TOP. The one-line
-score is the hook; the detailed scorecard is supporting evidence and goes BELOW
-the opportunities. Do not narrate the current state of the page: the reader knows
-their page, they want the moves.
+The recommendations are the deliverable. The one-line score is the hook; then a
+short WHAT'S WORKING block (2-4 keeps) leads, so the read is not pure criticism for
+an owner attached to the page; then the opportunities, the substance; and the
+detailed scorecard is supporting evidence BELOW them. Keep the strengths tight and
+do not otherwise narrate the current state of the page: the reader knows their
+page, they want the keeps and the moves.
 
 ```
 PAGE AUDIT — <url or page name>
 Score: <overall>/100 (band <lo>-<hi>)   ·   <one line on where conversion leaks most>
 <only when coverage < 1: "Scored on the copy and structure; visual items not evaluated (no render).">
+
+WHAT'S WORKING (keep these)
+- **(<section>) <the asset the page already nails>.** <why it helps; keep it through the rework>
+- **(<section>) <asset>.** <why>
 
 OPPORTUNITIES (priority order)
 
