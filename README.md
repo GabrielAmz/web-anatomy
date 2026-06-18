@@ -112,14 +112,14 @@ npx skills add GabrielAmz/web-anatomy
 npx skills update GabrielAmz/web-anatomy
 ```
 
-**Option 2 — Claude Code plugin (managed updates):**
+**Option 2 — Claude Code plugin (version-aware updates):**
 
 ```text
 /plugin marketplace add GabrielAmz/web-anatomy
 /plugin install web-anatomy
 ```
 
-Claude Code tracks the installed version and surfaces updates through its plugin system, so you do not have to remember to re-run anything.
+Claude Code knows the installed version and when a newer one ships. Update with `/plugin marketplace update web-anatomy` then `/plugin update web-anatomy`, or turn on auto-update for the marketplace to make it hands-off. Skills install namespaced: `/web-anatomy:write-page`, `/web-anatomy:build-page`, and so on.
 
 **Option 3 — clone and copy manually:**
 
