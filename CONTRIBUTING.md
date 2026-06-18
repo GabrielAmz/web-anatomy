@@ -56,11 +56,15 @@ Each skill must cite at least one **Reference pattern** — benchmark-backed whe
 
 ## Releasing
 
-`npx skills add/update` pulls the default branch (`main`), so merging is what ships. The GitHub Release tag is for the version badge, pinning, and the in-skill update check. On each release:
+`npx skills add/update` pulls the default branch (`main`), so merging is what ships. The Claude Code plugin and the GitHub Release tag carry the version (for managed updates, pinning, and the in-skill update check). Three files hold the version and must stay in sync: `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, and `skills/webanatomy-setup/references/pack-version.txt`. Do not edit them by hand.
 
-1. Add the `VERSIONS.md` entry.
-2. Bump `skills/webanatomy-setup/references/pack-version.txt` to the new version (this is what `webanatomy-setup` Step 0 compares against the latest release to nudge users to update — a stale value breaks the check).
-3. Tag and publish: `gh release create vX.Y.Z --target main`.
+On each release:
+
+1. Bump all three at once: `./bump-version.sh X.Y.Z`.
+2. Add the `VERSIONS.md` entry.
+3. Commit, then tag and publish: `git tag vX.Y.Z && git push --tags && gh release create vX.Y.Z --target main`.
+
+A stale `pack-version.txt` silently breaks the `webanatomy-setup` update nudge, which is why the script bumps everything together.
 
 ## Before opening a PR
 
