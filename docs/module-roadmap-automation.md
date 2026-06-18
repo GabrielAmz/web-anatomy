@@ -29,7 +29,7 @@ One Notion page (or local HTML equivalent) containing:
    - `✅ 4. Bonnes pratiques` · tagged bullets `[COPY]` `[DESIGN-UX]` `[VISUEL]` `[PREUVE]`, each citing the companies that show it
    - `🎯 5. Recos` · concrete moves for this client, one bullet per element (title, CTA, proof, visual)
 
-This is effectively a **fleet version of improve-page**: same grounding logic, but run across every section of a page, with a corpus-derived composition baseline, a prioritization layer, and a Notion publishing target.
+This is effectively a **fleet version of write-page**: same grounding logic, but run across every section of a page, with a corpus-derived composition baseline, a prioritization layer, and a Notion publishing target.
 
 ## 2. Learnings from doing it manually
 
@@ -97,7 +97,7 @@ Impact, Effort and P0-P4 were assigned by hand. The repo already has the right p
 | Composition baseline | Section prevalence across benchmark pages of the archetype/industry | `search_pages` returns page examples but not their section composition | MCP gap + new method |
 | Map the target page | Segment one page into sections, DOM verify, capture, judge state, Revamp/Create | `audit-page` has the capture rules but no per-section artifact or composition diff | New skill |
 | Prioritize | Ponderation: prevalence x conversion weight x state gap x effort → P0-P4 | Nothing (audit-page severities are per-finding, not per-section) | New deterministic script |
-| Per-section report | Benchmarks + best practices + recos per section | `improve-page` / `find-examples` do exactly this for ONE target | Fleet orchestration + the 5-part template |
+| Per-section report | Benchmarks + best practices + recos per section | `write-page` / `find-examples` do exactly this for ONE target | Fleet orchestration + the 5-part template |
 | Publish | Notion DB + child pages (or local HTML index) | Renderers output local md/html only | New output adapter |
 | Corpus write-back | Add missing section types / benchmark examples to supabase | Nothing (done by hand via REST for problem/resources) | New script + reference |
 
@@ -163,10 +163,10 @@ Output `roadmap.json`: sections sorted by score, each with computed `priority`, 
 
 Steps:
 
-0. MCP check (same gate as improve-page).
+0. MCP check (same gate as write-page).
 1. Resolve archetype/industry/locale (existing resolution rules). Build or load `baseline.json` (§4.1), then `composition.json` (§4.2, run `map-sections` if missing or stale).
 2. Run `prioritize.mjs` → `roadmap.json`.
-3. Per section (parallelizable, priority order): `search_sections` (locale + en merge), select 3-4 references with the caption-quality bar (§2.4), write the 5-part report content as structured data. Reuse improve-page's copy/design typing, cluster rule, missing-module rule, and writing budgets verbatim. For `Create` rows, the benchmarks ARE the spec: the recos describe the section to build, anchored on 2-3 corpus variations (options A/B/C).
+3. Per section (parallelizable, priority order): `search_sections` (locale + en merge), select 3-4 references with the caption-quality bar (§2.4), write the 5-part report content as structured data. Reuse write-page's copy/design typing, cluster rule, missing-module rule, and writing budgets verbatim. For `Create` rows, the benchmarks ARE the spec: the recos describe the section to build, anchored on 2-3 corpus variations (options A/B/C).
 4. Render. Two adapters from the same `roadmap-data.json`:
    - **Local (default)**: `index.html` (the DB as a sortable table, thumbnails, priority badges) + one `sections/{type}.html` per section. Extend the shared `render-report.mjs` pattern with a `scripts/render-roadmap.mjs`.
    - **Notion (optional)**: `scripts/publish-notion.mjs` + `references/notion-publishing.md` encoding §2.7 (DB creation, file-upload 3-step, external benchmark images, real heading/divider blocks). Token via env/MCP config; idempotent (update existing rows by Module title rather than duplicating).

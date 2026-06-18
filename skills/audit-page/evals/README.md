@@ -17,7 +17,7 @@ objectively gradeable. The assertions here target only those verifiable parts:
 - section tags come from the taxonomy,
 - the output leaks no internal item IDs, weights, or thresholds, and contains no
   copy rewrites,
-- the run hands off to improve-page.
+- the run hands off to write-page.
 
 The **recommendations themselves are subjective** (is this the highest-leverage
 fix?). Judge those qualitatively in the skill-creator review viewer, not with

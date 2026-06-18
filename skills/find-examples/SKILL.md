@@ -17,7 +17,7 @@ This is the **Page altitude** of Web Anatomy: the market view. What the best pag
 - **Discover (default).** The user wants inspiration or a swipe file. Retrieve, filter, group by pattern, and give them the best examples to open. No page of their own required.
 - **Compare.** The user shares their URL, screenshot, or page and wants to see how it stacks up. Do everything Discover does, then add a light gap read: how their page compares to the benchmark winners, labeled HIGH/MEDIUM/LOW, plus what is already working. If a recent `audit-page` report exists for that target, use its findings to make the comparison specific; if not, keep it lighter and more general. This is the merged home of the old benchmark-compare.
 
-Both modes stay lighter than `research-best-practices`, which goes deep on one section with a tiered ladder. This skill is the market scan; that one is the section deep-dive. For the grounded rework or the build, hand off to `improve-page`.
+Both modes stay lighter than `research-best-practices`, which goes deep on one section with a tiered ladder. This skill is the market scan; that one is the section deep-dive. For the grounded rework or the build, hand off to `write-page`.
 
 ## Output Behavior
 
@@ -99,7 +99,7 @@ Trigger compare mode when the user gives a URL, screenshot, pasted copy, or loca
    - CTA: action specificity, motivation, risk reduction, prominence, next-step clarity
    - Features: benefit translation, product evidence, use-case grouping, scanability
    - FAQ: objection quality, answer specificity, docs links, pricing/migration/trust coverage
-4. **Label each gap** `HIGH`, `MEDIUM`, or `LOW` and put the rows in `gapAnalysis`; capture 2-4 `working` bullets. Keep it a light read, not a full rework. For the grounded rework or build, hand to `improve-page`.
+4. **Label each gap** `HIGH`, `MEDIUM`, or `LOW` and put the rows in `gapAnalysis`; capture 2-4 `working` bullets. Keep it a light read, not a full rework. For the grounded rework or build, hand to `write-page`.
 
 ## Industry Default
 
@@ -214,7 +214,7 @@ After saving, respond in chat with:
 - the 2-3 strongest patterns (discover) or the verdict + top 3 gaps (compare)
 - the report path
 - any corpus or screenshot limitations
-- in compare mode, offer the handoff: "Want `improve-page` to turn the top gap into the grounded rework?"
+- in compare mode, offer the handoff: "Want `write-page` to turn the top gap into the grounded rework?"
 
 ## Guardrails
 

@@ -1,23 +1,33 @@
 ---
-name: improve-page
+name: write-page
 description: |
-  The Fix-altitude executor in Web Anatomy. Improve an existing landing page, homepage, pricing page, persona page, feature page, comparator page, or individual section using Web Anatomy benchmarks, or build a new page or section from a chosen structure and direction. Use when the user asks what can you do to improve my LP, what can you do to improve my landing page, improve my site, critique, audit, redesign brief, section improvement, CRO review, why is this page weak, compare my page to best practices, write the rework, apply the fixes, or build this page or section. Runs in improve mode (captures current reality, gaps it against benchmarks) or build mode (no current page; writes the sections from the chosen spec). Consumes a prior audit-page, research-best-practices, or find-examples handoff when present, and writes a report under `.webanatomy/improve-page/`.
+  The Fix-altitude executor in Web Anatomy. Improve an existing landing page, homepage, pricing page, persona page, feature page, comparator page, or individual section using Web Anatomy benchmarks, or build a new page or section from a chosen structure and direction. Use when the user asks what can you do to improve my LP, what can you do to improve my landing page, improve my site, critique, audit, redesign brief, section improvement, CRO review, why is this page weak, compare my page to best practices, write the rework, apply the fixes, or build this page or section. Runs in improve mode (captures current reality, gaps it against benchmarks) or build mode (no current page; writes the sections from the chosen spec). Consumes a prior audit-page, research-best-practices, or find-examples handoff when present, and writes a report under `.webanatomy/write-page/`.
 metadata:
   version: 0.5.1
 ---
 
-# Improve Page
+# Write Page
 
-Classify -> capture -> route -> benchmark -> recommend. This is the flagship Web Anatomy improvement workflow.
+Classify -> capture -> route -> benchmark -> write. The flagship Web Anatomy copy engine: it writes the grounded words for a page, whether reworking an existing one (improve) or building a new one (build).
 
-This is the **Fix altitude** of Web Anatomy: it turns a direction into grounded, copy-paste changes anchored to real benchmark pages, not generic advice. It is the executor the other skills hand off to.
+This is the **Fix altitude** of Web Anatomy: it turns a direction into grounded, copy-paste changes anchored to real benchmark pages, not generic advice. It is the executor the other skills hand off to. For a new page, `build-page` assembles what this skill writes into a shareable wireframe.
 
 ## Two modes
 
 This skill runs in one of two modes. Detect which from the request and the available inputs:
 
 - **Improve mode (default).** An existing page or section. Capture its current reality, gap it against the benchmark, and write the fixes. This is the path when the user has a live URL, a screenshot, pasted copy, or a page in their codebase.
-- **Build mode.** A new page or section that does not exist yet (the create lane). There is no current reality to capture and no gap to measure. Instead, take the chosen page structure (from `find-examples`) and the chosen section direction or tier (from `research-best-practices`) as the build spec, and write the sections from scratch, grounded in the same benchmarks. Skip the current-reality capture (Step 2) and the gap-vs-current framing; everything else (benchmark grounding, copy/design shaping, the report) is the same.
+- **Build mode.** A new page or section that does not exist yet (the create lane). There is no current reality to capture and no gap to measure. Take the chosen structure (a user-picked section list, a `find-examples` structure, or a `research-best-practices` tier) as the build spec, and write the sections from scratch, grounded in the same benchmarks. Skip the current-reality capture (Step 2) and the gap-vs-current framing; everything else (benchmark grounding, copy/design shaping, the report) is the same. If no structure exists yet, resolve it first with the light outline below. After the copy is written, the natural next step is `build-page`, which assembles the structure + this copy into a shareable wireframe.
+
+### Build-mode structure (the light outline)
+
+The benchmark exposes section examples and page scores, but no page-level section list or order. So when build mode has no upstream structure, resolve one cheaply, do not over-build it:
+
+1. **Pick one exemplar homepage.** Use `find-examples` / `search_pages` for the resolved industry and let the user pick the one whose layout they want to follow. That single exemplar carries the section order (read it off the screenshot) and later drives the design in `build-page`.
+2. **Adopt its section order**, falling back to a sensible archetype default when unclear (hero -> problem -> value_proposition -> how_it_works -> features -> social proof / testimonial -> pricing -> faq -> cta).
+3. **Confirm the section list with the user** (let them add, drop, reorder). That confirmed list is the build spec.
+
+This is a short step, not a separate skill. Do not search the benchmark for "the winning structure"; it is not there.
 
 Most of the steps below are written for improve mode. Where build mode differs, it is called out inline. The skill is the executor either way: it does not invent the direction, it executes the diagnosis or spec it is given.
 
@@ -25,9 +35,9 @@ Most of the steps below are written for improve mode. Where build mode differs, 
 
 Always write:
 
-- `.webanatomy/improve-page/{page-or-section}-{YYYY-MM-DD}/report.md`
-- `.webanatomy/improve-page/{page-or-section}-{YYYY-MM-DD}/report.html`
-- `.webanatomy/improve-page/{page-or-section}-{YYYY-MM-DD}/references/`
+- `.webanatomy/write-page/{page-or-section}-{YYYY-MM-DD}/report.md`
+- `.webanatomy/write-page/{page-or-section}-{YYYY-MM-DD}/report.html`
+- `.webanatomy/write-page/{page-or-section}-{YYYY-MM-DD}/references/`
 
 The HTML report is the primary visual output. Chat is only a short summary and pointer to the saved files.
 
@@ -37,12 +47,12 @@ If the user only wants a quick chat answer, keep the report shorter but still sa
 
 When file access is available, do not hand-write the final HTML. Write structured report data first:
 
-- `.webanatomy/improve-page/{page-or-section}-{YYYY-MM-DD}/report-data.json`
+- `.webanatomy/write-page/{page-or-section}-{YYYY-MM-DD}/report-data.json`
 
 Then run the shared renderer from this skill pack:
 
 ```bash
-node <skill-dir>/scripts/render-report.mjs --input=.webanatomy/improve-page/{page-or-section}-{YYYY-MM-DD}/report-data.json
+node <skill-dir>/scripts/render-report.mjs --input=.webanatomy/write-page/{page-or-section}-{YYYY-MM-DD}/report-data.json
 ```
 
 Resolve `<skill-dir>` relative to this `SKILL.md`. The renderer validates the report data, downloads every `screenshotUrl` into `references/`, writes `report.md`, writes `report.html`, and renders "screenshot unavailable" when no screenshot exists.
@@ -89,6 +99,7 @@ This skill is the executor: another Web Anatomy skill usually decided the direct
 1. **An `audit-page` diagnosis** (improve mode) — the most common handoff. See below.
 2. **A `research-best-practices` tiered report** — when the user picked a tier for a section ("apply Tier 2 to the hero"), treat the chosen tier's `how` bullets and its `refIds` as the brief: benchmark-ground and write exactly that tier, do not re-research the section. Reuse its `industry`/`locale`.
 3. **A `find-examples` structure** (build mode) — when the user validated a page structure to build, treat the chosen structure as the section sequence to write, and benchmark each section.
+4. **A user-chosen section list** (build mode, the create flow) — when the user picked the sections directly, treat that list (ordered per the light outline above) as the section sequence to write, and benchmark each section.
 
 In every case the brief comes from upstream; your job is to ground it and write the fix, not to re-pick the direction. The shared product truth is always `.agents/webanatomy-context.md` (Step 1); the report above only adds the per-task direction.
 
@@ -111,7 +122,7 @@ or `design` yourself):
 If no matching report is found, do not silently re-diagnose and run end to end. This skill is the **executor**, and the diagnosis is its prerequisite, not its job:
 
 - **Improve mode (existing page): run `audit-page` on this target first**, then execute its diagnosis. audit-page captures and verifies the page in the DOM (forms, CTAs, sections), scores it, and prioritizes the fixes, producing `.webanatomy/audit-page/{target}-{date}/audit.json`. Load that handoff and continue as above (reuse its `currentSnapshot`/`industry`/`locale`/`recommendations`, skip Steps 2-4, go to Step 5). Do this without asking; the chain `setup -> audit -> improve` is the intended flow.
-- **Build mode (new page): there is nothing to audit.** The brief is the chosen structure (`find-examples`) or tier (`research-best-practices`); skip the audit, go to Step 3 with that spec.
+- **Build mode (new page): there is nothing to audit.** The brief is the chosen structure — a user-picked section list (the create flow), a `find-examples` structure, or a `research-best-practices` tier; skip the audit, go to Step 3 with that spec. If no structure exists yet, resolve it first with the light outline (see Two modes).
 - **Foundation check:** if `.agents/webanatomy-context.md` is missing (Step 1), offer `webanatomy-setup` once before the audit, but do not block on it. Proceed with conservative assumptions if the user declines.
 - **Only** fall back to a standalone re-diagnosis (Steps 2-4 inline) if `audit-page` genuinely cannot run and there is no upstream brief. When you do, say so in the report TL;DR.
 
@@ -229,6 +240,8 @@ If a secondary industry was inferred, run a second page search and/or section se
 
 Broaden only if results are thin. Use internal scores and criteria only for selection. Translate them into plain-English practices in the report.
 
+**Build-mode call budget.** Build mode fires one `search_sections` per section, so a whole new page can mean many calls. The MCP rate-limits bursts (rapid calls return "Too many MCP requests"). Cap the benchmarked set at ~6-7 sections, space the calls (do not fire them all at once), and reuse one `search_pages` result for page-level positioning rather than re-querying. When a section returns `score_floor_relaxed: true` or too few results, broaden the industry or note the thin coverage in the report; do not silently present a weak example as a top one.
+
 ## Step 6 - Save Screenshots
 
 For the current page:
@@ -320,7 +333,9 @@ Then hand the user the report explicitly. Users do not know an HTML file exists 
 
 1. Say the visual report is ready and give the full path to `report.html`.
 2. Offer to open it for them, and do it on yes: `open <path>` (macOS), `xdg-open <path>` (Linux), `start <path>` (Windows).
-3. Propose the concrete next move so the report leads to action, in this order: "Want me to implement the top fix?", "Want 3-4 copy alternatives for the [weakest section] with different angles?", or `find-examples` for the market view (how the best pages in the industry handle this). Default suggestion is implementing the top fix.
+3. Propose the concrete next move so the report leads to action:
+   - **Build mode (create flow):** default to `build-page` — "Want me to assemble this into a shareable wireframe?" It takes this copy + the structure + the chosen exemplar's look and produces the page you can show someone.
+   - **Improve mode:** "Want me to implement the top fix?", "Want 3-4 copy alternatives for the [weakest section] with different angles?", or `build-page` to see the improved page assembled as a shareable wireframe (exemplar = the current page's own look). Default to implementing the top fix.
 
 ## Use The Audit Method
 

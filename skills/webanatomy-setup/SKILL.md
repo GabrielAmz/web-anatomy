@@ -1,7 +1,7 @@
 ---
 name: webanatomy-setup
 description: |
-  The foundation step for the whole Web Anatomy pack. Optional context setup. Use when the user says set up Web Anatomy, create context, start a landing page project, capture product context, benchmark my category, or prepare the benchmark skills. Also offer it as an optional preflight when another Web Anatomy workflow lacks product context and better recommendations would depend on ICP, industry, locale, competitors, conversion goal, proof assets, priority pages, or the voice and tone the rework copy should use. Do not require setup before find-examples, research-best-practices, improve-page, or audit-page; those skills should continue with conservative assumptions if the user wants speed. Writes `.agents/webanatomy-context.md` as shared context.
+  The foundation step for the whole Web Anatomy pack. Optional context setup. Use when the user says set up Web Anatomy, create context, start a landing page project, capture product context, benchmark my category, or prepare the benchmark skills. Also offer it as an optional preflight when another Web Anatomy workflow lacks product context and better recommendations would depend on ICP, industry, locale, competitors, conversion goal, proof assets, priority pages, or the voice and tone the rework copy should use. Do not require setup before find-examples, research-best-practices, write-page, or audit-page; those skills should continue with conservative assumptions if the user wants speed. Writes `.agents/webanatomy-context.md` as shared context.
 metadata:
   version: 0.3.0
 ---
@@ -100,7 +100,7 @@ Tell the user the context was saved and suggest the most relevant next skill, by
 - `find-examples` for the market view: the best pages in your category and how yours compares (Page altitude)
 - `audit-page` to diagnose your current page and get a prioritized fix list (Audit altitude)
 - `research-best-practices` for a tiered improvement ladder on one section (Section altitude)
-- `improve-page` to turn any of those into the grounded rework, or to build a new page (Fix altitude)
+- `write-page` to turn any of those into the grounded rework, or to build a new page (Fix altitude)
 
 ## Guardrails
 

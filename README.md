@@ -29,7 +29,7 @@ Web Anatomy works at four zoom levels. The altitude matches the question being a
 | **Page** | What do the strongest pages in this market do, and how does mine compare? | `find-examples` |
 | **Audit** | How does my whole page stack up, and what should I change first? | `audit-page` |
 | **Section** | How do I level up one section, from foundational to best-in-class? | `research-best-practices` |
-| **Fix** | Rework the page or section, or build a new one, with grounded copy-paste changes. | `improve-page` |
+| **Fix** | Rework the page or section, or build a new one, with grounded copy-paste changes. | `write-page` |
 
 Run `webanatomy-setup` once first. It captures product, ICP, industry, competitors, and proof assets into `.agents/webanatomy-context.md`, so every skill gives sharper, on-brand recommendations.
 
@@ -41,7 +41,7 @@ Run `webanatomy-setup` once first. It captures product, ICP, industry, competito
 | `find-examples` | Page | The market scan. Pulls the top-ranked pages and sections in a market, shows what to steal, and when you share your page, labels how it compares. Absorbs the old `benchmark-compare`. |
 | `audit-page` | Audit | Scores the current page against a CRO rubric, diagnoses it section by section, and returns a prioritized fix list. Runs standalone, no MCP required. |
 | `research-best-practices` | Section | The section deep-dive. Takes one section and returns a tiered improvement ladder (foundational, competitive, best-in-class), each grounded in real benchmark sections. |
-| `improve-page` | Fix | The flagship executor. Turns a diagnosis, a tier, or a structure into grounded copy-paste fixes; improves an existing page or builds a new one. |
+| `write-page` | Fix | The flagship executor. Turns a diagnosis, a tier, or a structure into grounded copy-paste fixes; improves an existing page or builds a new one. |
 
 ## Visual Reports
 
@@ -52,7 +52,7 @@ Web Anatomy does not rely on chat to render screenshots. The output skills write
 ├── find-examples/
 ├── audit-page/
 ├── research-best-practices/
-└── improve-page/
+└── write-page/
     └── topic-date/
         ├── report.md
         ├── report.html

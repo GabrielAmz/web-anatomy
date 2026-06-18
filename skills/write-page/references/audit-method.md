@@ -41,7 +41,7 @@ mapped to a section). Do not restate or invent a separate dimension list here.
   per section.
 
 This keeps each criterion (e.g. what makes a strong hero) defined once, so
-audit-page and improve-page diagnose the same page consistently.
+audit-page and write-page diagnose the same page consistently.
 
 ## 4. Use Public Gap Labels
 
