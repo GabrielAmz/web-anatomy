@@ -54,6 +54,14 @@ The `description:` field is loaded into context at agent startup. The body is lo
 
 Each skill must cite at least one **Reference pattern** — benchmark-backed when available, otherwise a real company doing this section well, with a URL. Don't make these up. Use companies you've seen the pattern on. If your reference is paywalled or gone, replace it.
 
+## Releasing
+
+`npx skills add/update` pulls the default branch (`main`), so merging is what ships. The GitHub Release tag is for the version badge, pinning, and the in-skill update check. On each release:
+
+1. Add the `VERSIONS.md` entry.
+2. Bump `skills/webanatomy-setup/references/pack-version.txt` to the new version (this is what `webanatomy-setup` Step 0 compares against the latest release to nudge users to update — a stale value breaks the check).
+3. Tag and publish: `gh release create vX.Y.Z --target main`.
+
 ## Before opening a PR
 
 `skills/` is the source of truth and the only thing installed by `npx skills add`. Run `./validate-skills.sh` before opening a PR.

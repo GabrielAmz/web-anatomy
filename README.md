@@ -84,6 +84,8 @@ The skills work on their own, so install them and start immediately. Connecting 
 
 The skills use MCP tools such as `search_pages`, `get_page`, `search_sections`, and `get_section` when connected, and degrade gracefully to static guidance when not. Scores, thresholds, raw marker coordinates, and benchmark field names stay internal; user-facing reports translate them into plain-English patterns and gap labels.
 
+**Want to see the benchmark first?** Browse the public scored sections gallery at https://www.webanatomy.ai/best-landing-pages/sections — real landing-page sections, scored, with what makes each one work. It is the same library the MCP serves to your agent, so you can explore it before connecting anything.
+
 ## Why "Anatomy"
 
 Most AI-agent skill packs frame pages as a job (CRO, copywriting, SEO). Web Anatomy frames them as a structure: hero, proof, problem, solution, pricing, FAQ, CTA. Every section has known patterns, known anti-patterns, and known reference companies.

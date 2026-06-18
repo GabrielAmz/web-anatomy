@@ -3,7 +3,7 @@ name: webanatomy-setup
 description: |
   The foundation step for the whole Web Anatomy pack. Optional context setup. Use when the user says set up Web Anatomy, create context, start a landing page project, capture product context, benchmark my category, or prepare the benchmark skills. Also offer it as an optional preflight when another Web Anatomy workflow lacks product context and better recommendations would depend on ICP, industry, locale, competitors, conversion goal, proof assets, priority pages, or the voice and tone the rework copy should use. Do not require setup before find-examples, research-best-practices, write-page, or audit-page; those skills should continue with conservative assumptions if the user wants speed. Writes `.agents/webanatomy-context.md` as shared context.
 metadata:
-  version: 0.3.0
+  version: 0.4.0
 ---
 
 # Web Anatomy Setup
@@ -13,6 +13,18 @@ You are the optional context loader for Web Anatomy. Your job is to capture enou
 This setup improves recommendation quality, but it is never mandatory. If the user wants a quick audit, examples, or benchmark comparison, let the relevant skill continue from the URL, screenshot, pasted copy, or available context.
 
 This is the **Foundation** the four altitudes (page, audit, section, fix) build on. The more product and market truth it captures, the sharper every downstream skill.
+
+## Step 0 - Check For Updates (best-effort, non-blocking)
+
+Skill packs do not auto-update: a user who installed a while ago is running an old copy until they re-install. Since setup is the natural entry point, do a quick version check here. Keep it best-effort, never block setup on it.
+
+1. Read the installed pack version from `references/pack-version.txt` (resolve relative to this `SKILL.md`).
+2. Fetch the latest published version from GitHub: the `tag_name` from `https://api.github.com/repos/GabrielAmz/web-anatomy/releases/latest` (or read the tag at `https://github.com/GabrielAmz/web-anatomy/releases/latest`). Strip a leading `v`.
+3. Compare as semver. If the published version is newer than the installed one, tell the user once:
+
+   > Your Web Anatomy skills are v{installed}; v{latest} is out. Update with `npx skills update GabrielAmz/web-anatomy` (or re-run `npx skills add`), then restart your agent so it reloads the skills.
+
+4. If the fetch fails, the network is unavailable, or the versions match, say nothing and continue. Never error, never block. Do this check at most once per setup run.
 
 ## Step 1 - Check Existing Context
 
