@@ -1,9 +1,9 @@
 ---
 name: find-examples
 description: |
-  The Page-altitude benchmark scan in Web Anatomy. Pull the top-ranked pages and sections in a market and show their patterns, structure, positioning, and copy insights, and when the user shares their own page, how it compares and what to steal. Use when the user asks to find examples, show references, get inspiration, find strong homepages, find strong sections, show SaaS pricing examples, show AI hero examples, find testimonial patterns, a swipe file, what top pages do, market patterns, competitive research, score this page vs benchmark, compare my URL to best-in-class pages, gap analysis against competitors, or how far are we from strong examples. Uses the Web Anatomy MCP search_pages and search_sections tools when available, keeps internal scores hidden, and writes a visual report under `.webanatomy/find-examples/`.
+  The Page-altitude benchmark scan in Web Anatomy. Pull the top-ranked WHOLE pages and section patterns in a market and show their structure, positioning, and copy insights, and when the user shares their own page, how it compares and what to steal. Use when the user asks to find examples, show references, get inspiration, find strong homepages, find strong sections, show SaaS pricing examples, show AI hero examples, find testimonial patterns, a swipe file, what top pages do, market patterns, competitive research, score this page vs benchmark, compare my URL to best-in-class pages, gap analysis against competitors, or how far are we from strong examples. For DEEP work on a single section (a tiered improvement ladder), use research-best-practices instead. When the user is building a new page, this is also where they pick one exemplar homepage whose structure and look the build will follow. Uses the Web Anatomy MCP search_pages and search_sections tools when available, keeps internal scores hidden, and writes a visual report under `.webanatomy/find-examples/`.
 metadata:
-  version: 0.4.0
+  version: 0.5.0
 ---
 
 # Find Examples
@@ -18,6 +18,8 @@ This is the **Page altitude** of Web Anatomy: the market view. What the best pag
 - **Compare.** The user shares their URL, screenshot, or page and wants to see how it stacks up. Do everything Discover does, then add a light gap read: how their page compares to the benchmark winners, labeled HIGH/MEDIUM/LOW, plus what is already working. If a recent `audit-page` report exists for that target, use its findings to make the comparison specific; if not, keep it lighter and more general. This is the merged home of the old benchmark-compare.
 
 Both modes stay lighter than `research-best-practices`, which goes deep on one section with a tiered ladder. This skill is the market scan; that one is the section deep-dive. For the grounded rework or the build, hand off to `write-page`.
+
+**Building a new page?** This is where the user picks the exemplar. Surface the top homepages for the industry, let them choose ONE whose layout they want to follow, and hand off: its section order seeds the structure for `write-page` build mode, and the same exemplar drives the design in `build-page`. One pick, used twice (structure, then look). The benchmark has no stored page structure, so the exemplar's own section order is the source.
 
 ## Output Behavior
 
