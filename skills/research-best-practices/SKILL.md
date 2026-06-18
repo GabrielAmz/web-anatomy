@@ -10,7 +10,7 @@ metadata:
 
 Produce a benchmark-backed research artifact for ONE section, not just chat. The goal is to answer: for this section, what does strong look like, and what are the levels the user can climb to, each grounded in real benchmark sections.
 
-This is the **Section altitude** of Web Anatomy: take a section the user already knows they want to work on and return a tiered improvement ladder. The user picks a tier; `improve-page` executes it.
+This is the **Section altitude** of Web Anatomy: take a section the user already knows they want to work on and return a tiered improvement ladder. The user picks a tier; `write-page` executes it.
 
 **Scope guard.** This skill is for one section. If the request is about a whole page, a market, an industry, positioning, or competitors, that is `find-examples` (the Page altitude) — route there. If the user named a page but no section, ask which section to start with before researching. Confirm the single section first.
 
@@ -151,7 +151,7 @@ After saving, respond in chat with:
 - the three tiers in one line each, and which tier you would start at for this user
 - the report path
 - any corpus, screenshot, or MCP limitations
-- offer the handoff: "Want `improve-page` to apply a tier to the section?"
+- offer the handoff: "Want `write-page` to apply a tier to the section?"
 
 ## Guardrails
 

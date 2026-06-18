@@ -17,7 +17,7 @@ PRs welcome. The bar is high but the recipe is short.
 
 ## The 5-step recipe for a new skill
 
-1. **Name it** — use clear workflow names for benchmark-backed verbs and page-level skills (e.g., `find-examples`, `improve-page`, `hero-revamp`), or `play-<strategy-slug>` for strategic plays (e.g., `play-roi-calculator`).
+1. **Name it** — use clear workflow names for benchmark-backed verbs and page-level skills (e.g., `find-examples`, `write-page`, `hero-revamp`), or `play-<strategy-slug>` for strategic plays (e.g., `play-roi-calculator`).
 2. **Create the directory** — `skills/<name>/` with `SKILL.md` inside. The directory name must exactly match the `name:` field in front matter.
 3. **Write the front matter**:
    ```yaml

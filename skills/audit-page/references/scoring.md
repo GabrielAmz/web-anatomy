@@ -6,7 +6,7 @@ no benchmark data are required.
 
 This score is **framework-relative** (how the page does against proven CRO
 criteria). It is directional. The **benchmark-relative** score — how the page
-compares to the real top-converting pages in its industry — is the `improve-page`
+compares to the real top-converting pages in its industry — is the `write-page`
 + MCP upgrade, and is not computed here.
 
 ## Method (status_weighted, deterministic)

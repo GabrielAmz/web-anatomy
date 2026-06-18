@@ -1,7 +1,7 @@
 ---
 name: audit-page
 description: |
-  The Audit-altitude diagnosis in Web Anatomy. Audit the current state of a landing page, homepage, pricing page, feature page, or comparator page. Score it against a 49-point CRO rubric, diagnose it section by section, and return a PRIORITIZED list of what to fix first. Diagnosis and prioritization only, with no rewrites, no copy, and no benchmark data required. Use when the user asks to audit my page, what is wrong with my landing page, what should I fix first, review my homepage, critique this page, or shares a URL or a page in their codebase and wants direction before improving. Runs standalone with no MCP connection. Writes a handoff artifact that improve-page consumes so the grounded rewrite does not re-diagnose. For the grounded section rework use improve-page. To see the market and how the page compares use find-examples.
+  The Audit-altitude diagnosis in Web Anatomy. Audit the current state of a landing page, homepage, pricing page, feature page, or comparator page. Score it against a 49-point CRO rubric, diagnose it section by section, and return a PRIORITIZED list of what to fix first. Diagnosis and prioritization only, with no rewrites, no copy, and no benchmark data required. Use when the user asks to audit my page, what is wrong with my landing page, what should I fix first, review my homepage, critique this page, or shares a URL or a page in their codebase and wants direction before improving. Runs standalone with no MCP connection. Writes a handoff artifact that write-page consumes so the grounded rewrite does not re-diagnose. For the grounded section rework use write-page. To see the market and how the page compares use find-examples.
 metadata:
   version: 0.3.0
 ---
@@ -12,7 +12,7 @@ Diagnose the current state of a page, section by section, and tell the user whic
 sections to revamp first and why. Apply a proven CRO framework as the lens, but
 organize the audit by SECTION so the output routes straight into the fix.
 
-This is the **Audit altitude** of Web Anatomy: a whole-page diagnosis that runs standalone, with no benchmark data required. It feeds the grounded rework in `improve-page`.
+This is the **Audit altitude** of Web Anatomy: a whole-page diagnosis that runs standalone, with no benchmark data required. It feeds the grounded rework in `write-page`.
 
 You do NOT write copy, headlines, or rewrites here, and you do NOT need benchmark
 data. Output is problem framing and prioritization: where conversion leaks and
@@ -29,7 +29,7 @@ When file access is available, always write the orchestration handoff:
 - `.webanatomy/audit-page/{page-or-section}-{YYYY-MM-DD}/audit.json`
 - `.webanatomy/audit-page/{page-or-section}-{YYYY-MM-DD}/report.md`
 
-`audit.json` is the machine handoff that improve-page reads so it does not
+`audit.json` is the machine handoff that write-page reads so it does not
 re-diagnose. The `score` block is copied verbatim from `score.json` (Step 3); do
 not hand-edit those numbers. Use this exact shape:
 
@@ -78,7 +78,7 @@ not hand-edit those numbers. Use this exact shape:
 Note the split: the `score` block comes from the rubric and the scorer (Step 3,
 facts). `recommendations` come from the free CRO audit (Step 4, judgment) and are
 NOT derived from which rubric items failed. The optional `failedItemIds` on a
-recommendation is a cross-reference only (so improve-page can target exact gaps),
+recommendation is a cross-reference only (so write-page can target exact gaps),
 not the source of the recommendation. Attach the rubric items a recommendation
 relates to when there is a clean match; leave it off for judgment or sector moves
 that the rubric does not cover.
@@ -175,7 +175,7 @@ scorecard, and the confidence figures, as the factual overview and the proof the
 page needs a revamp. It does NOT generate the recommendations (Step 4 does,
 separately). The score is framework-relative and directional, and its band and
 coverage say how solid it is; the calibrated, benchmark-anchored view is the
-improve-page + MCP upgrade. Never expose item IDs, weights, or thresholds; the
+write-page + MCP upgrade. Never expose item IDs, weights, or thresholds; the
 overall score, the scorecard, the band, and a one-line coverage note are fine.
 
 ## Step 4 — Recommend (free CRO audit, the substance)
@@ -196,10 +196,10 @@ checklist readout.
 - Type every recommendation by the kind of fix it needs: `copy` (wording, message,
   angle; the fix is rewrite alternatives, no benchmark data needed) or `design`
   (structure, layout, hierarchy, visual proof; the fix is grounded in benchmark
-  sections via improve-page). This typing drives what the next skill delivers.
+  sections via write-page). This typing drives what the next skill delivers.
 - Each is a concrete move tied to the real page, section-tagged, plain language
   (no item IDs). Frame as opportunities, not complaints.
-- Write to be skimmed; improve-page renders these under hard budgets downstream.
+- Write to be skimmed; write-page renders these under hard budgets downstream.
   Keep each `opportunity` to one imperative line and each `why` to 2 lines max
   (under ~220 chars). One idea per sentence. Banned openers: "The page reads as",
   "It's worth noting", "This is a great opportunity to", restating the move inside
@@ -208,14 +208,14 @@ checklist readout.
 Record the recommendations in `audit.json` under `recommendations` (each:
 `section`, `severity`, `kind`, the `opportunity` move, `why`, and optional
 `failedItemIds` when the move maps cleanly to rubric items), plus `pageLevel` and
-`sectorSpecific`. These are the brief improve-page consumes.
+`sectorSpecific`. These are the brief write-page consumes.
 
 Also record 2-4 `strengths` (each `{ section, what, why }`): the strongest things
 the page already does right and should keep through the rework (a clear value prop,
 real proof, a clean fold, a dominant primary CTA). Frame each as a genuine asset to
 preserve, not faint praise, and never the mere inverse of a recommendation. A
 section that is a top failure cannot also be a strength (Step 5.5). These lead the
-output (Step 5) so the read is not pure criticism, and improve-page reuses them as
+output (Step 5) so the read is not pure criticism, and write-page reuses them as
 its "what's working" block.
 
 ## Step 5 — Output
@@ -261,10 +261,10 @@ Hero <n> · Value Proposition <n> · Copywriting <n> · Trust & Credibility <n>
 Conversion <n> · Design & UX <n>
 ```
 
-The `[Copy]` / `[Design]` tag tells the user (and improve-page) what the fix will
+The `[Copy]` / `[Design]` tag tells the user (and write-page) what the fix will
 look like: copy moves get 3-4 rewrite alternatives with different angles and need
 no benchmark data; design moves get grounded in real benchmark sections, and when
-several design findings cluster on one section, improve-page presents about 3
+several design findings cluster on one section, write-page presents about 3
 relevant benchmark variations of that section with why each works.
 
 Rules for the opportunity list:
@@ -285,7 +285,7 @@ Rules for the opportunity list:
 
 State plainly that the score is directional and framework-based; the calibrated,
 benchmark-anchored view (how the page compares to real industry winners) comes
-from the grounded next step (find-examples or improve-page) + the benchmark MCP.
+from the grounded next step (find-examples or write-page) + the benchmark MCP.
 
 No copy. No rewrites. The deliverable is "which section, why, in what order".
 
@@ -328,7 +328,7 @@ choose for the user. Present both and ask which they want:
    audit, layers a light gap read of the user's page on top. Best when the user wants
    the market and structure picture before changing anything.
 2. **Get the sections plus copy to follow (section level).** This is
-   `improve-page`. It picks up this `audit.json`, skips re-diagnosis, pulls the
+   `write-page`. It picks up this `audit.json`, skips re-diagnosis, pulls the
    top-converting real `<startHere>` sections in the industry, and writes the
    grounded rework the user can apply. Best when the user wants concrete sections
    and copy to follow now.
@@ -337,13 +337,13 @@ Ask it like this:
 
 > "The highest-leverage fix is the `<startHere>` section. Two grounded next steps,
 > which do you want? (a) find-examples, to see how the best pages in <industry> are
-> structured and handle this, the market view. (b) improve-page, to pull the
+> structured and handle this, the market view. (b) write-page, to pull the
 > top-converting real `<startHere>` sections in <industry> and get the rework and
 > copy to follow. Either way the benchmark grounding is the difference between this
 > audit and a generic CRO checklist."
 
-If the user does not pick, default to `improve-page` on the `<startHere>` section:
-the audit already named the section to fix and improve-page consumes this handoff
+If the user does not pick, default to `write-page` on the `<startHere>` section:
+the audit already named the section to fix and write-page consumes this handoff
 directly, so it is the most direct continuation.
 
 ## Hard rules (a recap; the reasoning is in the steps above)
@@ -354,14 +354,14 @@ explained where it first appears, so treat them as a checklist, not new rules.
 - Organize by section, not by dimension, so every finding routes straight into the
   fix (Step 5).
 - Diagnose and prioritize only. No paste-ready copy or rewrites; the grounded
-  rewrite is improve-page's job (Step 4).
+  rewrite is write-page's job (Step 4).
 - Keep a real priority gradient, at most two or three HIGHs, so "start here"
   actually points somewhere (Step 4).
 - Type every recommendation `copy` or `design`, so the next skill knows whether to
   deliver rewrite alternatives or benchmark variations (Step 4).
 - Audit the rendered page, not raw HTML, so the visual items reflect what a visitor
   sees (Step 2).
-- Use the taxonomy section types verbatim, otherwise improve-page cannot match the
+- Use the taxonomy section types verbatim, otherwise write-page cannot match the
   handoff to its benchmark sections (Step 4).
 - Keep findings in plain language; item IDs, weights, and thresholds are framework
   internals the reader does not need (Step 3).

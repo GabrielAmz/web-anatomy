@@ -5,7 +5,7 @@
       "id": 1,
       "name": "paid-landing-url-french",
       "prompt": "my google ads landing page just isn't converting and i can't tell where the drop-off is. can you audit it and tell me the one thing to fix first before i touch anything? it's https://info.planity.com/ — it's in french, for salon and barbershop owners.",
-      "expected_output": "A page audit: an overall score plus the six-category scorecard at the top, then a priority-ordered list of section-tagged opportunities (at most two or three HIGHs), a page-level and a sector-specific note, and a single start-here section. No copy rewrites. An audit.json + report.md handoff written under .webanatomy/audit-page/. Ends by handing off to improve-page.",
+      "expected_output": "A page audit: an overall score plus the six-category scorecard at the top, then a priority-ordered list of section-tagged opportunities (at most two or three HIGHs), a page-level and a sector-specific note, and a single start-here section. No copy rewrites. An audit.json + report.md handoff written under .webanatomy/audit-page/. Ends by handing off to write-page.",
       "files": [],
       "assertions": [
         { "text": "Writes an audit.json under .webanatomy/audit-page/ that parses as valid JSON", "passed": null, "evidence": "" },
@@ -17,7 +17,7 @@
         { "text": "Every recommendation is tagged with a section, a severity label, and a copy/design kind", "passed": null, "evidence": "" },
         { "text": "Output exposes no internal rubric item ids (no dotted tokens like hero.outcome_focus or conversion.cta_repetition) and no raw weights or thresholds", "passed": null, "evidence": "" },
         { "text": "Output contains no paste-ready copy or headline rewrites (diagnosis only)", "passed": null, "evidence": "" },
-        { "text": "Output ends by offering the two grounded next steps (find-examples for the market view and improve-page for the section rework) and names the start-here section", "passed": null, "evidence": "" }
+        { "text": "Output ends by offering the two grounded next steps (find-examples for the market view and write-page for the section rework) and names the start-here section", "passed": null, "evidence": "" }
       ]
     },
     {
@@ -33,7 +33,7 @@
         { "text": "Recommendations contain at most three items at severity HIGH", "passed": null, "evidence": "" },
         { "text": "section values use the taxonomy section types (e.g. hero, value-proposition, social-proof, pricing, faq), not freeform labels", "passed": null, "evidence": "" },
         { "text": "Output contains no paste-ready copy or headline rewrites (diagnosis only)", "passed": null, "evidence": "" },
-        { "text": "Output ends by offering the two grounded next steps (find-examples for the market view and improve-page for the section rework) and names the start-here section", "passed": null, "evidence": "" }
+        { "text": "Output ends by offering the two grounded next steps (find-examples for the market view and write-page for the section rework) and names the start-here section", "passed": null, "evidence": "" }
       ]
     },
     {
@@ -49,7 +49,7 @@
         { "text": "At least one recommendation addresses a pricing-page concern (plan clarity, recommended plan, objection handling, or path to checkout)", "passed": null, "evidence": "" },
         { "text": "Output exposes no internal rubric item IDs and no raw weights or thresholds", "passed": null, "evidence": "" },
         { "text": "Output contains no paste-ready copy or headline rewrites (diagnosis only)", "passed": null, "evidence": "" },
-        { "text": "Output ends by offering the two grounded next steps (find-examples for the market view and improve-page for the section rework) and names the start-here section", "passed": null, "evidence": "" }
+        { "text": "Output ends by offering the two grounded next steps (find-examples for the market view and write-page for the section rework) and names the start-here section", "passed": null, "evidence": "" }
       ]
     }
   ]

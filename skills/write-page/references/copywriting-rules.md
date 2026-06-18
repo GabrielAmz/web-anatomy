@@ -1,6 +1,6 @@
 # Copywriting and Anti-AI Rules
 
-The rules improve-page applies when it writes the actual copy for a `copy` fix:
+The rules write-page applies when it writes the actual copy for a `copy` fix:
 headlines, subheads, CTAs, section body. The benchmark grounds the structure; these
 rules govern the words. When `.agents/webanatomy-context.md` records a Voice and tone
 or a Locale, those win over the defaults here.
