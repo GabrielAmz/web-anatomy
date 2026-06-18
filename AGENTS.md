@@ -17,6 +17,13 @@ This copies every skill in this repo into `.agents/skills/` in your project. The
 
 A skill named `write-page` installs to `.agents/skills/write-page/SKILL.md` regardless of which agent loads it.
 
+On Claude Code you can also install as a plugin, which gives you managed updates through Claude Code's plugin system:
+
+```text
+/plugin marketplace add GabrielAmz/web-anatomy
+/plugin install web-anatomy
+```
+
 Connecting the hosted Web Anatomy MCP for live benchmark data is optional: sign in at https://www.webanatomy.ai/dashboard/mcp to get your token + per-IDE config. The skills run fully without it. To browse the benchmark itself, the public scored sections gallery is at https://www.webanatomy.ai/best-landing-pages/sections.
 
 ## How to invoke a skill
