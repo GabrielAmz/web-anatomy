@@ -72,13 +72,38 @@ Reshapes the pack around the four altitudes so each skill owns one job, and reco
 - **`webanatomy-setup` (0.3.0)** records two capability flags (page access; MCP connected) in the context file.
 - Altitude labels are now page / audit / section / fix: `find-examples` is Page (was Section), `audit-page` is Audit (was Page), `research-best-practices` is Section (was Strategy), `improve-page` stays Fix.
 
+## v0.4.0 — 2026-06-18 (create flow + write-page rename)
+
+Makes the create branch a first-class flow and clarifies the engine. Grounded in a
+live MCP dry run; the full reasoning is in `docs/skill-orchestration.md`.
+
+- **Renamed `improve-page` -> `write-page`.** The Fix-altitude skill also builds new
+  pages, so the old name hid half its job. `write-page` is the copy engine: it writes
+  the grounded words for a page, existing (improve) or new (build). Cross-references
+  updated across the pack; the `.webanatomy/improve-page/` output dir is now
+  `.webanatomy/write-page/`.
+- **Added `build-page`** — the terminal assembler on both branches. Takes a structure +
+  its copy and assembles a shareable wireframe with a coherent design system derived
+  from a SINGLE exemplar (a benchmark page for a new page, the user's own page when
+  improving). Reuses `write-page`'s copy and references; never re-queries for copy,
+  never blends designs across companies.
+- **`write-page` build mode gained a light outline step.** The benchmark stores no
+  page-level section order, so build mode resolves structure cheaply: pick one exemplar
+  homepage (via `find-examples`), adopt its section order plus an archetype default,
+  confirm the list with the user. Not a separate skill. A user-chosen section list is
+  now a recognized build-mode brief source, and MCP call-budget guardrails were added
+  (cap ~6-7 sections, space the `search_sections` calls, handle thin results).
+- **`find-examples` (0.5.0)** sharpened against `research-best-practices` in its
+  description, and is now the place a new-page build picks its single exemplar (used
+  twice downstream: structure for `write-page`, look for `build-page`).
+
 ## Roadmap
 
-**v0.4** — port pipeline. Add `play-use-case-pages`, `play-best-x-category-pages`, `play-switching-motion`, `play-show-value-upfront` from the Web Anatomy strategy library. ~4 more skills.
+**v0.5** — port pipeline. Add `play-use-case-pages`, `play-best-x-category-pages`, `play-switching-motion`, `play-show-value-upfront` from the Web Anatomy strategy library. ~4 more skills.
 
-**v0.5** — section revamps. `hero-revamp`, `pricing-table-revamp`, `feature-grid-revamp`, `faq-revamp`. ~4 more skills.
+**v0.6** — section revamps. `hero-revamp`, `pricing-table-revamp`, `feature-grid-revamp`, `faq-revamp`. ~4 more skills.
 
-**v0.6** — teardown skills. `landing-page-teardown`, `pricing-page-teardown`, `comparator-teardown`. ~4 more skills.
+**v0.7** — teardown skills. `landing-page-teardown`, `pricing-page-teardown`, `comparator-teardown`. ~4 more skills.
 
 **v1.0** — big launch. ~30 skills total. Full landing page, coordinated HN/PH/X/Discord drop.
 
