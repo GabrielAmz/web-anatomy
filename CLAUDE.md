@@ -12,12 +12,22 @@ After install, every skill is available as a slash command in Claude Code:
 /audit-page
 /research-best-practices
 /write-page
+/build-page
 ```
 
 ## First-run order
 
 1. Run `/webanatomy-setup` once to capture product, ICP, industry, competitors, proof assets, and priority pages. This writes `.agents/webanatomy-context.md`.
-2. Then run the benchmark-backed workflows: `/find-examples` (market view), `/audit-page` (diagnose your page), `/research-best-practices` (tiered ladder for one section), or `/write-page` (the grounded rework or a new build).
+2. Then run the benchmark-backed workflows: `/find-examples` (market view), `/audit-page` (diagnose your page), `/research-best-practices` (tiered ladder for one section), `/write-page` (the grounded rework or a new build), or `/build-page` (assemble structure + copy into a shareable wireframe).
+
+## The two flows
+
+Both end in a shareable wireframe:
+
+- **Improve:** `/audit-page` → `/write-page` → `/build-page` (optional, in your page's own look).
+- **Create:** `/find-examples` (pick one exemplar) → `/write-page` build mode (light outline adopts the exemplar's section order, then writes copy) → `/build-page` (assemble in the exemplar's look).
+
+`write-page` is the copy engine; `build-page` is the terminal assembler. The single chosen exemplar drives both structure and design.
 
 ## Visual Output
 

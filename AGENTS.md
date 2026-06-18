@@ -33,6 +33,12 @@ Just describe what you want. The agent matches your phrasing against the `descri
 "Research how top AI tools handle testimonial sections."
 → loads research-best-practices
 
+"Build me a new pricing page."
+→ loads find-examples (pick an exemplar) → write-page build mode (outline + copy)
+
+"Assemble this into a wireframe I can share."
+→ loads build-page
+
 "Help me set up Web Anatomy for my project."
 → loads webanatomy-setup
 ```
@@ -45,16 +51,26 @@ Or invoke by slug directly:
 /audit-page
 /research-best-practices
 /write-page
+/build-page
 ```
+
+## The two flows
+
+Skills chain into two end-to-end flows, both ending in a shareable wireframe:
+
+- **Improve an existing page:** `audit-page` (diagnose) → `write-page` (rewrite the weak sections) → `build-page` (optional: assemble the improved page as a wireframe, in your page's own look).
+- **Create a new page:** `find-examples` (pick one exemplar homepage) → `write-page` build mode (a light outline adopts the exemplar's section order, then writes the copy) → `build-page` (assemble the wireframe in the exemplar's look).
+
+`write-page` is the copy engine; `build-page` is the terminal assembler. The single chosen exemplar drives both structure (its section order) and design (its look). The benchmark stores no page structure, so the exemplar is the source.
 
 ## Skill Conventions
 
-- **Workflow skills**: use clear verbs: `find-examples`, `audit-page`, `research-best-practices`, `write-page`.
+- **Workflow skills**: use clear verbs: `find-examples`, `audit-page`, `research-best-practices`, `write-page`, `build-page`.
 - **Strategic plays**: prefix `play-<strategy-slug>` when those return, e.g. `play-roi-calculator`.
 - **Foundation**: `webanatomy-setup` writes `.agents/webanatomy-context.md` (product, ICP, industry, locale, voice and tone, constraints).
 - **House style**: the shared output canon (copy rules, severity and gap vocabularies, no exposed internals, honesty rules) lives once in `webanatomy-setup/references/house-style.md`. Every skill follows it; do not restate it per skill.
 - **Benchmark evidence**: workflow skills use the Web Anatomy MCP when available. Use `search_pages` for whole-homepage inspiration and `search_sections` for section patterns. Keep internal scores, thresholds, raw marker coordinates, and field names hidden.
-- **Visual reports**: `find-examples`, `audit-page`, `research-best-practices`, and `write-page` write `report.md`, `report.html`, and `references/` under `.webanatomy/`. Chat should summarize and point to the report, not dump the whole artifact.
+- **Visual reports**: `find-examples`, `audit-page`, `research-best-practices`, and `write-page` write `report.md`, `report.html`, and `references/` under `.webanatomy/`. `build-page` writes `wireframe.html` + `design-system.md`. Chat should summarize and point to the artifact, not dump it.
 
 ## File layout in your project after install
 
@@ -67,7 +83,8 @@ your-project/
 │       ├── find-examples/SKILL.md
 │       ├── audit-page/SKILL.md
 │       ├── research-best-practices/SKILL.md
-│       └── write-page/SKILL.md
+│       ├── write-page/SKILL.md
+│       └── build-page/SKILL.md
 └── (your code)
 ```
 
