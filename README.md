@@ -102,14 +102,28 @@ Every Web Anatomy skill turns a page into parts: hero, proof, problem, solution,
 
 ## Install options
 
+**Option 1 — CLI (any agent):**
+
 ```bash
-# Recommended: installs the whole pack to .agents/skills/
+# Installs the whole pack to .agents/skills/
 npx skills add GabrielAmz/web-anatomy
 
 # Update later (or just re-run the command above, it's idempotent)
 npx skills update GabrielAmz/web-anatomy
+```
 
-# Or clone and copy manually
+**Option 2 — Claude Code plugin (version-aware updates):**
+
+```text
+/plugin marketplace add GabrielAmz/web-anatomy
+/plugin install web-anatomy
+```
+
+Claude Code knows the installed version and when a newer one ships. Update with `/plugin marketplace update web-anatomy` then `/plugin update web-anatomy`, or turn on auto-update for the marketplace to make it hands-off. Skills install namespaced: `/web-anatomy:write-page`, `/web-anatomy:build-page`, and so on.
+
+**Option 3 — clone and copy manually:**
+
+```bash
 git clone https://github.com/GabrielAmz/web-anatomy
 cp -r web-anatomy/skills/* .agents/skills/
 ```
