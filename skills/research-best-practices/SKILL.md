@@ -68,7 +68,7 @@ Only fall back to hand-written HTML if the renderer cannot be run.
 
 ## MCP Retrieval
 
-Confirm the `webanatomy` MCP tools are available before searching. If connected, use live benchmark data. If not, tell the user up front ("Running without live benchmark data; using static guidance. Connect MCP for grounded results: https://www.webanatomy.ai/dashboard/mcp"), then continue with a clearly labeled static fallback. Never surface this as an error or block the run.
+Confirm the `webanatomy` MCP tools are available before searching. If connected, use live benchmark data. If not, tell the user up front ("Running without live benchmark data; using static guidance. Connect MCP for grounded results: https://docs.webanatomy.ai/quickstart"), then continue with a clearly labeled static fallback. Never surface this as an error or block the run.
 
 This skill works at the section altitude, so `search_sections` is the primary call. Run it for the one section type, across a few angles, with a high quality floor so the ladder spans real range:
 

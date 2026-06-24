@@ -65,7 +65,7 @@ Ask one question at a time. Do not batch.
 10. **Voice and tone** - How should copy sound? Capture 2-4 words (for example "direct, technical, no hype" or "warm, plain, reassuring") and one line to avoid (for example "no buzzwords, no exclamation marks"). This is the one field that shapes the copy the grounded skills write, so it is worth getting. Leave blank only if the user truly has no preference.
 11. **Constraints** - Anything off-limits in the output? Competitors not to name, claims that are not allowed (regulated industries), sensitive topics to avoid.
 12. **Page access** - How can I see your page when we work on it? Codebase, a live URL, I browse it, or screenshots only. This sets how reliably the downstream skills can capture the current page.
-13. **Benchmark MCP** - Is the Web Anatomy MCP connected? It supplies the live benchmark examples the grounded skills use. If unknown, I can check, or point you to https://www.webanatomy.ai/dashboard/mcp to connect.
+13. **Benchmark MCP** - Is the Web Anatomy MCP connected? It supplies the live benchmark examples the grounded skills use. If unknown, I can check, or point you to https://docs.webanatomy.ai/quickstart to connect.
 
 Push back once on vague answers. "AI platform for teams" is not enough. "AI analyst that turns customer calls into churn-risk alerts for B2B SaaS CS leaders" is enough.
 
