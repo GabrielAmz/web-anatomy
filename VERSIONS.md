@@ -97,6 +97,14 @@ live MCP dry run; the full reasoning is in `docs/skill-orchestration.md`.
   description, and is now the place a new-page build picks its single exemplar (used
   twice downstream: structure for `write-page`, look for `build-page`).
 
+## v0.4.1 — 2026-06-16 (moodboard skill)
+
+Adds the page-level visual moodboard on top of the consolidated five-skill suite.
+
+- `moodboard` (0.1.0) — section-by-section visual board for a whole page. Each section renders the current state large with the problems identified beside it, a grid of benchmark screenshots captioned with the practice each shows, the discipline-tagged best practices (`COPY`, `DESIGN-UX`, `VISUEL`, `PREUVE`), and the recommendation for the brand. Page altitude, visual-first: where `find-examples` shows what to steal, `moodboard` composes the whole page as a reference you build from.
+- Deterministic `render-report.mjs` on schema `webanatomy.moodboard.v1`. Materializes both hosted benchmark images (`screenshotUrl`) and local current-state captures (`screenshotPath`) into `references/`, then rewrites the JSON with `localImage` paths so the report folder is self-contained.
+- Sources content from an existing module audit (for example a Notion database) or from the MCP `search_sections` per section type. Carries audit content faithfully rather than re-diagnosing.
+
 ## Roadmap
 
 **v0.5** — port pipeline. Add `play-use-case-pages`, `play-best-x-category-pages`, `play-switching-motion`, `play-show-value-upfront` from the Web Anatomy strategy library. ~4 more skills.
