@@ -84,7 +84,7 @@ This workflow is benchmark-backed: without the Web Anatomy MCP it loses the real
 
 If it is not connected, stop and tell the user plainly, and walk them through the setup:
 
-> The Web Anatomy MCP is not connected, so this report would run without real benchmark examples and the quality drops a lot. To connect it (about 2 minutes): go to https://www.webanatomy.ai/dashboard/mcp, create an account if you do not have one, request beta access, generate your token, then copy the ready-made config for your IDE. Or tell me to continue without benchmarks.
+> The Web Anatomy MCP is not connected, so this report would run without real benchmark examples and the quality drops a lot. To connect it (about 2 minutes): go to https://docs.webanatomy.ai/quickstart, create an account if you do not have one, request beta access, generate your token, then copy the ready-made config for your IDE. Or tell me to continue without benchmarks.
 
 Offer to help apply the config once they have the token. Only continue without MCP if the user explicitly says so, and label the report as ungrounded in the TL;DR.
 
