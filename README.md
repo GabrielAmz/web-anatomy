@@ -50,6 +50,7 @@ Run `webanatomy-setup` once first. It captures product, ICP, industry, competito
 | `research-best-practices` | Section | The section deep-dive. Takes one section and returns a tiered improvement ladder (foundational, competitive, best-in-class), each grounded in real benchmark sections. |
 | `write-page` | Fix | The copy engine. Turns a diagnosis, a tier, or a chosen structure into grounded copy-paste sections; reworks an existing page or writes a new one. |
 | `build-page` | Assemble | The terminal assembler. Takes a structure + its copy and lays them out as a shareable wireframe with a single-exemplar design system (a benchmark page for a new page, your own page when improving). |
+| `moodboard` | Page | The section-by-section visual board. Captures the live page section by section and pulls benchmarks from the MCP, then composes each section as current-state-large + problems + a benchmark screenshot grid + discipline-tagged practices + recommendation. Where `find-examples` shows what to steal, `moodboard` composes the whole page as a visual reference you build from. |
 
 ## Visual Reports
 
@@ -60,6 +61,11 @@ Web Anatomy does not rely on chat to render screenshots. The output skills write
 ├── find-examples/
 ├── audit-page/
 ├── research-best-practices/
+├── moodboard/
+│   └── page-date/
+│       ├── report.md
+│       ├── report.html
+│       └── references/
 ├── write-page/
 │   └── topic-date/
 │       ├── report.md
