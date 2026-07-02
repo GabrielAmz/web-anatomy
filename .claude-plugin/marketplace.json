@@ -6,13 +6,13 @@
   },
   "metadata": {
     "description": "Skills for your AI agent to audit, rewrite, and build landing pages that convert, grounded in a scored benchmark of real pages.",
-    "version": "0.4.0",
+    "version": "0.5.0",
     "repository": "https://github.com/GabrielAmz/web-anatomy"
   },
   "plugins": [
     {
       "name": "web-anatomy",
-      "description": "Six skills for landing pages: webanatomy-setup, find-examples, audit-page, research-best-practices, write-page, build-page. Read a page as a structure, ground every move in a scored benchmark library, and assemble a shareable wireframe.",
+      "description": "Eight skills for landing pages: webanatomy-setup, persona, find-examples, audit-page, research-best-practices, write-page, build-page, moodboard. Read a page as a structure, ground every move in a scored benchmark library, challenge the draft as your real reader, and assemble a shareable wireframe.",
       "source": "./"
     }
   ]

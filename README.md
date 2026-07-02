@@ -35,16 +35,21 @@ After the copy is written, **`build-page`** assembles the structure + copy into 
 
 Run `webanatomy-setup` once first. It captures product, ICP, industry, competitors, and proof assets into `.agents/webanatomy-context.md`, so every skill gives sharper, on-brand recommendations.
 
+### The demand side: persona
+
+Everything above works the supply side (what good pages look like, what your page looks like). **`persona`** owns the demand side: a sourced model of the reader — their ranked objections with evidence tags, the words they actually use, the proof that convinces them, and a competitor claims map. Build it once and three things get sharper: `audit-page` checks whether the page answers the reader's real objections, `write-page` labels every copy angle with the objection it answers, and **challenge mode** cold-reads any draft as that reader (five-second test, scroll narrative, objection ledger, click decision) and hands `write-page` a surgical pass/fail brief.
+
 ### Two flows
 
-- **Improve an existing page:** `audit-page` (diagnose) -> `write-page` (rewrite the weak sections) -> `build-page` (optional: assemble the improved page as a shareable wireframe, in your page's own look).
-- **Create a new page:** `find-examples` (pick one exemplar homepage) -> `write-page` build mode (a light outline adopts the exemplar's section order, then writes the copy) -> `build-page` (assemble the wireframe in the exemplar's look).
+- **Improve an existing page:** `audit-page` (diagnose) -> `write-page` (rewrite the weak sections) -> `persona` challenge (optional: the reader cold-reads the draft; a FAIL loops back to `write-page`) -> `build-page` (optional: assemble the improved page as a shareable wireframe, in your page's own look).
+- **Create a new page:** `find-examples` (pick one exemplar homepage) -> `write-page` build mode (a light outline adopts the exemplar's section order, then writes the copy) -> `persona` challenge (optional) -> `build-page` (assemble the wireframe in the exemplar's look).
 
 ## The skills
 
 | Skill | Altitude | What it does |
 |---|---|---|
 | `webanatomy-setup` | Foundation | Run once. Captures product, ICP, industry, competitors, proof assets, and priority pages into `.agents/webanatomy-context.md`. |
+| `persona` | Foundation | The demand side. Build mode researches a sourced reader model (ranked objections with source tags, vocabulary, proof preferences, competitor claims map) into `.agents/webanatomy-persona.md`; challenge mode cold-reads any page or draft as that reader and writes a pass/fail handoff `write-page` consumes. |
 | `find-examples` | Page | The market scan. Pulls the top-ranked pages and sections in a market, shows what to steal, and when you share your page, labels how it compares. Absorbs the old `benchmark-compare`. |
 | `audit-page` | Audit | Scores the current page against a CRO rubric, diagnoses it section by section, and returns a prioritized fix list. Runs standalone, no MCP required. |
 | `research-best-practices` | Section | The section deep-dive. Takes one section and returns a tiered improvement ladder (foundational, competitive, best-in-class), each grounded in real benchmark sections. |
@@ -66,6 +71,10 @@ Web Anatomy does not rely on chat to render screenshots. The output skills write
 │       ├── report.md
 │       ├── report.html
 │       └── references/
+├── persona/
+│   └── target-date/
+│       ├── challenge.md
+│       └── challenge.json
 ├── write-page/
 │   └── topic-date/
 │       ├── report.md

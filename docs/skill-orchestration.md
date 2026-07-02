@@ -1,8 +1,10 @@
 # Skill orchestration
 
 The canonical model for how the Web Anatomy skills fit together. Read this before
-changing how skills route, hand off, or chain. Part 1 describes how the pack works
-today. Part 2 is the proposed target model (not yet built) that fixes the weaknesses.
+changing how skills route, hand off, or chain. Part 1 describes how the pack worked
+at v0.3. Part 2 is the target model that fixed its weaknesses (shipped in v0.4:
+write-page rename, build-page, the light outline). Part 3 is the demand-side layer
+(shipped in v0.5: the persona skill and its wires).
 
 ---
 
@@ -367,3 +369,88 @@ find-examples (pick ONE exemplar homepage)
 - **Thin-result handling.** Define the fallback when a section returns
   `score_floor_relaxed: true` or too few examples (broaden industry, lower floor, or note
   the gap in the output).
+
+---
+
+# Part 3: The demand side — persona (v0.5, BUILT)
+
+Every layer above works the supply side: what good pages look like (benchmark), what
+this page looks like (audit), how to write (copy rules). Nothing represented the
+reader. The `persona` skill adds the demand side as a second Foundation artifact plus
+a post-engine quality gate.
+
+## The information test (why one persona, not a judge panel)
+
+A judge agent is worth building only when it carries information the writer does not
+already have. Five hats on the same model with the same context is theater: the model
+argues with itself using identical priors. Applying the test to the popular
+"copy tournament" panel (8 versions, 5 judges — skeptical CFO, conversion copywriter,
+ideal customer, competitor):
+
+- **Ideal customer** — the reader's real objections, trigger, vocabulary are NOT in
+  the writer's context. The one true persona. Built.
+- **Skeptical CFO** — the economic buyer's objections; a facet of the persona's
+  buying committee, captured only when the purchase actually needs more than one yes.
+  Not a separate skill.
+- **Competitor** — real value, but it is a research artifact (the competitor claims
+  map inside the persona file), not an adversarial roleplay.
+- **Conversion copywriter** — already the writer itself (`copywriting-rules.md` + the
+  audit rubric + benchmark grounding). Redundant as a judge.
+- **8 versions, merge winners** — `write-page` already produces 3-4 labeled angle
+  alternatives; beyond ~4 you get paraphrases. Merging winners produces the
+  incoherent page. The persona picks among the existing angles instead, with reasons.
+
+Net: one sourced persona pass gives most of the panel's value at a fraction of the
+cost, and the sourcing (not more judges) is where quality comes from. An invented
+persona politely agrees with the copy it judges; a sourced one does not.
+
+## The artifact and the wires
+
+`persona` build mode researches `.agents/webanatomy-persona.md` (sourcing ladder:
+user's own data > review mining > competitor FAQs > community language > labeled
+inference; every objection carries a source tag). It plugs into the existing pipeline
+at three points — no parallel pipeline:
+
+1. **`audit-page` Step 4.5 — objection coverage.** When the persona file exists:
+   for each ranked objection, `answered` / `weak` / `unanswered` + where. Recorded in
+   `audit.json` under the optional `objectionCoverage` block (schema stays v2). An
+   unanswered top-3 objection is a HIGH recommendation candidate.
+2. **`write-page` — objection-led writing.** Section priorities follow the ranked
+   objections, each copy alternative is labeled with the objection it answers, the
+   persona Vocabulary feeds the customer-language rule, and the claims map powers the
+   claims-parity check (never lead with a table-stakes claim).
+3. **`persona` challenge mode — the quality gate.** One agent, one cold read of a
+   draft or live page (five-second read, scroll narrative, objection ledger,
+   credibility flags, click decision). Writes
+   `.webanatomy/persona/{target}-{date}/challenge.json`
+   (schema `webanatomy.persona-challenge.v1`), the third machine handoff after
+   `audit.json` and the write-page report data. On FAIL, `write-page` treats it as
+   its highest-precedence brief (Step 1.5) and rewrites ONLY the failing items.
+   Loop capped at two; a third FAIL means the problem is upstream (positioning or
+   proof), not words.
+
+## Updated target model
+
+```
+webanatomy-setup (product truth)        persona build (reader truth)
+        \                                /
+         v                              v
+                 IMPROVE                         CREATE
+   audit-page (+ objection coverage)      light outline (in write-page)
+            |                                      |
+            v                                      v
+   write-page (objection-led copy)         write-page (objection-led copy)
+            |                                      |
+            +---------> persona challenge <--------+
+            |     (optional gate; FAIL loops       |
+            |      back to write-page, max 2)      |
+            v                                      v
+   build-page (your page's look)           build-page (exemplar's look)
+```
+
+## Deliberately not built
+
+- A standalone CFO / competitor / copywriter judge skill (fails the information test).
+- The N-version tournament and any merge step.
+- A multi-judge panel inside challenge mode (explicit guardrail in the skill). If a
+  challenge feels thin, the fix is better sourcing in build mode, not more judges.
