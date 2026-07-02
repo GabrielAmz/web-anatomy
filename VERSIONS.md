@@ -105,13 +105,47 @@ Adds the page-level visual moodboard on top of the consolidated five-skill suite
 - Deterministic `render-report.mjs` on schema `webanatomy.moodboard.v1`. Materializes both hosted benchmark images (`screenshotUrl`) and local current-state captures (`screenshotPath`) into `references/`, then rewrites the JSON with `localImage` paths so the report folder is self-contained.
 - Sources content from an existing module audit (for example a Notion database) or from the MCP `search_sections` per section type. Carries audit content faithfully rather than re-diagnosing.
 
+## v0.5.0 — 2026-07-02 (persona: the demand side)
+
+Adds the reader to a pack that until now only modeled the supply side (what good
+pages look like, what your page looks like, how to write). Full reasoning in
+`docs/skill-orchestration.md` Part 3, including why this is one sourced persona and
+not a five-judge copy tournament (the information test: a judge is worth building
+only when it carries information the writer does not already have).
+
+- **`persona` (0.1.0)** — new Foundation skill, two modes.
+  - **Build** researches `.agents/webanatomy-persona.md`: ranked objections with
+    source tags (`user-stated` > `review-mined` > `inferred`, never invented), the
+    reader's vocabulary and bounce words, proof preferences, the trigger, an optional
+    buying committee (where the "skeptical CFO" lives, only when the purchase needs
+    more than one yes), and a competitor claims map. Sourcing ladder: the user's own
+    data, review mining (3-star reviews are the densest source), competitor FAQs,
+    community language. Method in `references/persona-method.md`.
+  - **Challenge** cold-reads a live page, write-page draft, or build-page wireframe
+    as the persona: five-second read, scroll narrative, objection ledger
+    (answered/weak/unanswered), credibility flags, click decision. Writes
+    `challenge.md` + `challenge.json` (schema `webanatomy.persona-challenge.v1`),
+    the pack's third machine handoff. The persona judges, never rewrites.
+- **`audit-page` (0.4.0)** — new Step 4.5 objection coverage when the persona file
+  exists: each ranked objection judged answered/weak/unanswered against the captured
+  DOM, recorded in `audit.json` under the optional `objectionCoverage` block (schema
+  stays v2). An unanswered top-3 objection is a HIGH recommendation candidate.
+- **`write-page` (0.6.0)** — reads the persona file: copy alternatives labeled with
+  the objection they answer, persona vocabulary feeds the customer-language rule,
+  claims-parity check (never lead with a table-stakes claim from the claims map).
+  A FAIL `challenge.json` is now the highest-precedence brief (Step 1.5): rewrite
+  only the failing items, keep what the persona believed, max two loops.
+- **`webanatomy-setup` (0.4.1)** — suggests `persona` as the next move after setup.
+- README, AGENTS.md, CLAUDE.md updated: both flows gain the optional persona
+  challenge gate between write-page and build-page.
+
 ## Roadmap
 
-**v0.5** — port pipeline. Add `play-use-case-pages`, `play-best-x-category-pages`, `play-switching-motion`, `play-show-value-upfront` from the Web Anatomy strategy library. ~4 more skills.
+**v0.6** — port pipeline. Add `play-use-case-pages`, `play-best-x-category-pages`, `play-switching-motion`, `play-show-value-upfront` from the Web Anatomy strategy library. ~4 more skills.
 
-**v0.6** — section revamps. `hero-revamp`, `pricing-table-revamp`, `feature-grid-revamp`, `faq-revamp`. ~4 more skills.
+**v0.7** — section revamps. `hero-revamp`, `pricing-table-revamp`, `feature-grid-revamp`, `faq-revamp`. ~4 more skills.
 
-**v0.7** — teardown skills. `landing-page-teardown`, `pricing-page-teardown`, `comparator-teardown`. ~4 more skills.
+**v0.8** — teardown skills. `landing-page-teardown`, `pricing-page-teardown`, `comparator-teardown`. ~4 more skills.
 
 **v1.0** — big launch. ~30 skills total. Full landing page, coordinated HN/PH/X/Discord drop.
 

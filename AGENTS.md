@@ -48,12 +48,19 @@ Just describe what you want. The agent matches your phrasing against the `descri
 
 "Help me set up Web Anatomy for my project."
 → loads webanatomy-setup
+
+"Build a persona from my customers' real objections."
+→ loads persona (build mode)
+
+"Read this draft as my ideal customer and tell me where you stop believing it."
+→ loads persona (challenge mode)
 ```
 
 Or invoke by slug directly:
 
 ```
 /webanatomy-setup
+/persona
 /find-examples
 /audit-page
 /research-best-practices
@@ -65,16 +72,16 @@ Or invoke by slug directly:
 
 Skills chain into two end-to-end flows, both ending in a shareable wireframe:
 
-- **Improve an existing page:** `audit-page` (diagnose) → `write-page` (rewrite the weak sections) → `build-page` (optional: assemble the improved page as a wireframe, in your page's own look).
-- **Create a new page:** `find-examples` (pick one exemplar homepage) → `write-page` build mode (a light outline adopts the exemplar's section order, then writes the copy) → `build-page` (assemble the wireframe in the exemplar's look).
+- **Improve an existing page:** `audit-page` (diagnose) → `write-page` (rewrite the weak sections) → `persona` challenge (optional: the reader cold-reads the draft, a FAIL loops back to `write-page`) → `build-page` (optional: assemble the improved page as a wireframe, in your page's own look).
+- **Create a new page:** `find-examples` (pick one exemplar homepage) → `write-page` build mode (a light outline adopts the exemplar's section order, then writes the copy) → `persona` challenge (optional) → `build-page` (assemble the wireframe in the exemplar's look).
 
-`write-page` is the copy engine; `build-page` is the terminal assembler. The single chosen exemplar drives both structure (its section order) and design (its look). The benchmark stores no page structure, so the exemplar is the source.
+`write-page` is the copy engine; `build-page` is the terminal assembler. The single chosen exemplar drives both structure (its section order) and design (its look). The benchmark stores no page structure, so the exemplar is the source. `persona` is the demand side: when `.agents/webanatomy-persona.md` exists, `audit-page` checks objection coverage and `write-page` labels each copy angle with the objection it answers.
 
 ## Skill Conventions
 
 - **Workflow skills**: use clear verbs: `find-examples`, `audit-page`, `research-best-practices`, `write-page`, `build-page`.
 - **Strategic plays**: prefix `play-<strategy-slug>` when those return, e.g. `play-roi-calculator`.
-- **Foundation**: `webanatomy-setup` writes `.agents/webanatomy-context.md` (product, ICP, industry, locale, voice and tone, constraints).
+- **Foundation**: `webanatomy-setup` writes `.agents/webanatomy-context.md` (product, ICP, industry, locale, voice and tone, constraints). `persona` writes `.agents/webanatomy-persona.md` (the reader: ranked source-tagged objections, vocabulary, proof preferences, competitor claims map).
 - **House style**: the shared output canon (copy rules, severity and gap vocabularies, no exposed internals, honesty rules) lives once in `webanatomy-setup/references/house-style.md`. Every skill follows it; do not restate it per skill.
 - **Benchmark evidence**: workflow skills use the Web Anatomy MCP when available. Use `search_pages` for whole-homepage inspiration and `search_sections` for section patterns. Keep internal scores, thresholds, raw marker coordinates, and field names hidden.
 - **Visual reports**: `find-examples`, `audit-page`, `research-best-practices`, and `write-page` write `report.md`, `report.html`, and `references/` under `.webanatomy/`. `build-page` writes `wireframe.html` + `design-system.md`. Chat should summarize and point to the artifact, not dump it.
@@ -85,8 +92,10 @@ Skills chain into two end-to-end flows, both ending in a shareable wireframe:
 your-project/
 ├── .agents/
 │   ├── webanatomy-context.md     ← created on first run of webanatomy-setup
+│   ├── webanatomy-persona.md     ← created on first run of persona (build mode)
 │   └── skills/
 │       ├── webanatomy-setup/SKILL.md
+│       ├── persona/SKILL.md
 │       ├── find-examples/SKILL.md
 │       ├── audit-page/SKILL.md
 │       ├── research-best-practices/SKILL.md

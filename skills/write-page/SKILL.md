@@ -3,7 +3,7 @@ name: write-page
 description: |
   The Fix-altitude executor in Web Anatomy. Improve an existing landing page, homepage, pricing page, persona page, feature page, comparator page, or individual section using Web Anatomy benchmarks, or build a new page or section from a chosen structure and direction. Use when the user asks what can you do to improve my LP, what can you do to improve my landing page, improve my site, critique, audit, redesign brief, section improvement, CRO review, why is this page weak, compare my page to best practices, write the rework, apply the fixes, or build this page or section. Runs in improve mode (captures current reality, gaps it against benchmarks) or build mode (no current page; writes the sections from the chosen spec). Consumes a prior audit-page, research-best-practices, or find-examples handoff when present, and writes a report under `.webanatomy/write-page/`.
 metadata:
-  version: 0.5.1
+  version: 0.6.0
 ---
 
 # Write Page
@@ -92,16 +92,40 @@ Offer to help apply the config once they have the token. Only continue without M
 
 Read `.agents/webanatomy-context.md` if it exists. If it does not, continue with conservative assumptions. Offer `webanatomy-setup` as an optional preflight only when missing ICP, industry, competitors, conversion goal, or proof assets would materially change the recommendation. Do not block quick audits or URL-based feedback on setup.
 
+Also read `.agents/webanatomy-persona.md` if it exists (written by the `persona` skill). It changes three things downstream: section priorities follow the reader's ranked objections (an objection-heavy topic earns its section a higher slot), every copy alternative is labeled with the objection it answers (Step 7.5), and the copy uses the persona's Vocabulary verbatim while avoiding its bounce words. Its Competitor claims map powers the claims-parity check. Missing persona file means none of this applies; never block on it.
+
 ## Step 1.5 - Use A Prior Report If One Exists (orchestration)
 
 This skill is the executor: another Web Anatomy skill usually decided the direction first, and re-deriving it wastes the user's tokens and risks contradicting the earlier read. Before re-diagnosing, check for an upstream brief, in this order:
 
-1. **An `audit-page` diagnosis** (improve mode) — the most common handoff. See below.
-2. **A `research-best-practices` tiered report** — when the user picked a tier for a section ("apply Tier 2 to the hero"), treat the chosen tier's `how` bullets and its `refIds` as the brief: benchmark-ground and write exactly that tier, do not re-research the section. Reuse its `industry`/`locale`.
-3. **A `find-examples` structure** (build mode) — when the user validated a page structure to build, treat the chosen structure as the section sequence to write, and benchmark each section.
-4. **A user-chosen section list** (build mode, the create flow) — when the user picked the sections directly, treat that list (ordered per the light outline above) as the section sequence to write, and benchmark each section.
+1. **A `persona` challenge handoff (the loop-back)** — when the most recent `.webanatomy/persona/{target}-*/challenge.json` matches this page and its `verdict` is `FAIL`, this outranks everything: the draft already exists and the challenge says exactly what failed. See below.
+2. **An `audit-page` diagnosis** (improve mode) — the most common handoff. See below.
+3. **A `research-best-practices` tiered report** — when the user picked a tier for a section ("apply Tier 2 to the hero"), treat the chosen tier's `how` bullets and its `refIds` as the brief: benchmark-ground and write exactly that tier, do not re-research the section. Reuse its `industry`/`locale`.
+4. **A `find-examples` structure** (build mode) — when the user validated a page structure to build, treat the chosen structure as the section sequence to write, and benchmark each section.
+5. **A user-chosen section list** (build mode, the create flow) — when the user picked the sections directly, treat that list (ordered per the light outline above) as the section sequence to write, and benchmark each section.
 
 In every case the brief comes from upstream; your job is to ground it and write the fix, not to re-pick the direction. The shared product truth is always `.agents/webanatomy-context.md` (Step 1); the report above only adds the per-task direction.
+
+### When the brief is a persona challenge (the loop-back)
+
+The challenge is a surgical brief, not a re-run. The draft it judged came from a
+prior `write-page` pass (or is the live page), and the persona already said what
+convinced it and what did not:
+
+- Rewrite ONLY the failing items: each objection marked `unanswered` or `weak`
+  (its `fix` field says what the rewrite must achieve, its `failingLine` says
+  where) and each credibility flag with `loadBearing: true`. Everything the
+  challenge passed stays verbatim; do not "improve" copy the persona already
+  believed.
+- Reuse the prior `write-page` run's report data, references, and benchmark
+  grounding for the touched sections; only search the benchmark again when a fix
+  needs a pattern the prior run has no reference for.
+- An `unanswered` objection with no natural home in the current structure is a
+  structural finding: propose where the answering section goes (usually an FAQ
+  entry, a risk-reducer at the CTA, or a "why us over X" block near the proof).
+- After writing, offer to re-run the `persona` challenge on the result. At most
+  two loops; a third FAIL means the problem is upstream (positioning or proof,
+  not words) — say so instead of rewriting again.
 
 ### When the brief is an audit-page diagnosis
 
@@ -283,7 +307,12 @@ classify it yourself), and the type decides the deliverable:
   voice, not from the MCP - but the section still gets visual grounding: a hero copy
   fix carries 2-3 hero references in `refIds` showing what an audience-explicit,
   proof-backed fold looks like, so the reader sees the destination, not just the new
-  words.
+  words. When `.agents/webanatomy-persona.md` exists, add two moves: label each
+  alternative with the ranked objection it answers (an angle that answers the top
+  objection beats an angle that answers none, and the label makes the user's pick
+  informed), and run the claims-parity check — any headline or claim the persona's
+  Competitor claims map marks as table stakes (3+ competitors say it) must not
+  lead a section; satisfy it lower on the page and lead with what is differentiated.
 - **`design`** - the fix is structure, layout, hierarchy, or visual proof. Ground
   it in the benchmark: recommend the section pattern to follow with the reference
   screenshot and what makes it work.
@@ -334,6 +363,7 @@ Then hand the user the report explicitly. Users do not know an HTML file exists 
 1. Say the visual report is ready and give the full path to `report.html`.
 2. Offer to open it for them, and do it on yes: `open <path>` (macOS), `xdg-open <path>` (Linux), `start <path>` (Windows).
 3. Propose the concrete next move so the report leads to action:
+   - **When `.agents/webanatomy-persona.md` exists (either mode):** offer the `persona` challenge first — "Want the persona to cold-read this draft before you ship it?" One pass, and a FAIL comes back as a surgical brief this skill consumes (Step 1.5). This is the cheapest moment to catch an unanswered objection: before the wireframe, not after the page is live.
    - **Build mode (create flow):** default to `build-page` — "Want me to assemble this into a shareable wireframe?" It takes this copy + the structure + the chosen exemplar's look and produces the page you can show someone.
    - **Improve mode:** "Want me to implement the top fix?", "Want 3-4 copy alternatives for the [weakest section] with different angles?", or `build-page` to see the improved page assembled as a shareable wireframe (exemplar = the current page's own look). Default to implementing the top fix.
 

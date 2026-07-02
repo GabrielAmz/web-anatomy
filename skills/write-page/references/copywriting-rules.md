@@ -15,6 +15,8 @@ or a Locale, those win over the defaults here.
 5. **Active voice.** "We generate the report", not "the report is generated".
 6. **Confident.** Cut "almost", "very", "really", "basically", "just".
 7. **Customer language.** Mirror the words the ICP uses, not internal product names.
+   When `.agents/webanatomy-persona.md` exists its Vocabulary section is the source:
+   use its problem words verbatim, never its bounce words.
 8. **One idea per sentence.** Two commas and an "and" means split it or cut it.
 9. **Honest.** Never invent a stat, a customer name, or a testimonial. Made-up proof
    is the fastest way to lose trust.
@@ -65,6 +67,20 @@ Copy that reads as machine-written kills trust. Cut these:
 
 If a sentence would survive being said out loud by a real operator to a customer, keep
 it. If it sounds like a brochure, cut it.
+
+## Objections and claims parity (when a persona file exists)
+
+`.agents/webanatomy-persona.md` (from the `persona` skill) adds two obligations:
+
+- **Label the angle with the objection it answers.** Each of the 3-4 alternatives
+  names which ranked objection it speaks to (or "none — pure outcome angle"). An
+  angle that answers the top objection usually wins; the label makes the pick
+  informed instead of aesthetic.
+- **Claims parity.** Never lead a section with a claim the persona's Competitor
+  claims map marks as table stakes (3+ competitors say it). Table stakes get
+  satisfied lower on the page; the lead position goes to what is differentiated.
+- **The FAQ is the objection list.** When writing an FAQ section, its questions are
+  the persona's ranked objections in order, not invented questions.
 
 ## Voice, locale, house style
 

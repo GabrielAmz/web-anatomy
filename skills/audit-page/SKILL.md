@@ -3,7 +3,7 @@ name: audit-page
 description: |
   The Audit-altitude diagnosis in Web Anatomy. Audit the current state of a landing page, homepage, pricing page, feature page, or comparator page. Score it against a 49-point CRO rubric, diagnose it section by section, and return a PRIORITIZED list of what to fix first. Diagnosis and prioritization only, with no rewrites, no copy, and no benchmark data required. Use when the user asks to audit my page, what is wrong with my landing page, what should I fix first, review my homepage, critique this page, or shares a URL or a page in their codebase and wants direction before improving. Runs standalone with no MCP connection. Writes a handoff artifact that write-page consumes so the grounded rewrite does not re-diagnose. For the grounded section rework use write-page. To see the market and how the page compares use find-examples.
 metadata:
-  version: 0.3.0
+  version: 0.4.0
 ---
 
 # Audit Page
@@ -70,10 +70,22 @@ not hand-edit those numbers. Use this exact shape:
   "sectorSpecific": [
     { "section": "contact", "opportunity": "Surface the capital-loss risk notice near the form", "why": "regulated finance; judgment, not the rubric" }
   ],
+  "objectionCoverage": [
+    {
+      "objection": "Will this break our HubSpot sync?",
+      "source": "user-stated",
+      "coverage": "unanswered",
+      "where": null
+    }
+  ],
   "startHere": "hero",
   "notes": "industry inferred; capture method + confidence"
 }
 ```
+
+`objectionCoverage` is optional: include it only when
+`.agents/webanatomy-persona.md` exists (Step 4.5). Older consumers ignore it;
+the schema stays `v2`.
 
 Note the split: the `score` block comes from the rubric and the scorer (Step 3,
 facts). `recommendations` come from the free CRO audit (Step 4, judgment) and are
@@ -109,6 +121,12 @@ Check `.agents/webanatomy-context.md` for product, ICP, conversion goal,
 industry, and locale. If missing, proceed from the URL, screenshot, or codebase
 with conservative assumptions. Context makes the problem framing specific instead
 of generic; use it when present, never require it.
+
+Also check `.agents/webanatomy-persona.md` (written by the `persona` skill).
+When it exists, this audit gains the objection-coverage check in Step 4.5. When
+it does not, skip that check silently; never block on it, and only mention the
+`persona` skill in the handoff if objection coverage would clearly have changed
+the read.
 
 ## Step 2 — Get the page accurately (capture, then verify in the DOM)
 
@@ -218,6 +236,27 @@ section that is a top failure cannot also be a strength (Step 5.5). These lead t
 output (Step 5) so the read is not pure criticism, and write-page reuses them as
 its "what's working" block.
 
+## Step 4.5 — Objection coverage (only when a persona exists)
+
+When `.agents/webanatomy-persona.md` exists, run its ranked objections against
+the captured page: for each objection, is it `answered` (addressed, above the
+likely drop-off, credibly), `weak` (addressed but vague, unproven, or buried),
+or `unanswered` (never addressed)? Record where. This is the demand-side read no
+generic CRO rubric gives: the rubric asks "does the page follow best practice",
+this asks "does the page answer the questions this specific reader arrives with".
+
+Rules:
+
+- Judge coverage against the captured DOM/render, same evidence bar as Step 2:
+  never mark an objection `unanswered` from a screenshot alone.
+- An `unanswered` objection ranked in the persona's top 3 is a HIGH
+  recommendation candidate; fold it into Step 4's list (typed `copy` or
+  `design` by what the fix needs) rather than leaving it stranded in the table.
+- Record the full table in `audit.json` under `objectionCoverage` (objection,
+  source tag, coverage, where).
+- This check consumes the persona file; it never invents objections inline. No
+  persona file, no objection coverage.
+
 ## Step 5 — Output
 
 The recommendations are the deliverable. The one-line score is the hook; then a
@@ -235,6 +274,11 @@ Score: <overall>/100 (band <lo>-<hi>)   ·   <one line on where conversion leaks
 WHAT'S WORKING (keep these)
 - **(<section>) <the asset the page already nails>.** <why it helps; keep it through the rework>
 - **(<section>) <asset>.** <why>
+
+<only when a persona file exists:>
+OBJECTION COVERAGE (the reader's questions, from the persona)
+- "<objection>" — ANSWERED (<section>) | WEAK (<section>: <why>) | UNANSWERED
+- "<objection>" — ...
 
 OPPORTUNITIES (priority order)
 

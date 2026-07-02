@@ -8,6 +8,7 @@ After install, every skill is available as a slash command in Claude Code:
 
 ```
 /webanatomy-setup
+/persona
 /find-examples
 /audit-page
 /research-best-practices
@@ -18,14 +19,15 @@ After install, every skill is available as a slash command in Claude Code:
 ## First-run order
 
 1. Run `/webanatomy-setup` once to capture product, ICP, industry, competitors, proof assets, and priority pages. This writes `.agents/webanatomy-context.md`.
-2. Then run the benchmark-backed workflows: `/find-examples` (market view), `/audit-page` (diagnose your page), `/research-best-practices` (tiered ladder for one section), `/write-page` (the grounded rework or a new build), or `/build-page` (assemble structure + copy into a shareable wireframe).
+2. Optionally run `/persona` to deepen the ICP into a sourced reader model (ranked objections with source tags, vocabulary, competitor claims map). This writes `.agents/webanatomy-persona.md`; `audit-page` and `write-page` read it when present.
+3. Then run the benchmark-backed workflows: `/find-examples` (market view), `/audit-page` (diagnose your page), `/research-best-practices` (tiered ladder for one section), `/write-page` (the grounded rework or a new build), or `/build-page` (assemble structure + copy into a shareable wireframe).
 
 ## The two flows
 
 Both end in a shareable wireframe:
 
-- **Improve:** `/audit-page` → `/write-page` → `/build-page` (optional, in your page's own look).
-- **Create:** `/find-examples` (pick one exemplar) → `/write-page` build mode (light outline adopts the exemplar's section order, then writes copy) → `/build-page` (assemble in the exemplar's look).
+- **Improve:** `/audit-page` → `/write-page` → `/persona` challenge (optional cold read; a FAIL loops back to `/write-page`) → `/build-page` (optional, in your page's own look).
+- **Create:** `/find-examples` (pick one exemplar) → `/write-page` build mode (light outline adopts the exemplar's section order, then writes copy) → `/persona` challenge (optional) → `/build-page` (assemble in the exemplar's look).
 
 `write-page` is the copy engine; `build-page` is the terminal assembler. The single chosen exemplar drives both structure and design.
 
